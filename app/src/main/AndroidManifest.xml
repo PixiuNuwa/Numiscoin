@@ -34,6 +34,8 @@
 
         <activity android:name=".CurrencyActivity" />
 
+        <activity android:name=".MarketplaceActivity" />
+
     </application>
 </manifest>
 <!--?xml version="1.0" encoding="utf-8"?>

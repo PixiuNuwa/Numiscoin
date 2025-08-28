@@ -10,22 +10,19 @@ class MarketplaceActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
+        setContentView(R.layout.activity_marketplace)
 
 
 
         val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
-        val logoutButton = findViewById<Button>(R.id.logoutButton)
+
 
         welcomeMessage.text = "Hola."
 
-        logoutButton.setOnClickListener {
-            finish()
-        }
 
         // Configurar menú inferior
         setupBottomMenu()
-        highlightMenuItem(R.id.menuHome) // Marcar Home como seleccionado
+        highlightMenuItem(R.id.menuMarketplace) // Marcar Home como seleccionado
     }
 
 }
