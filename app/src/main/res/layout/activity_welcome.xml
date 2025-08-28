@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:padding="24dp"
         android:gravity="center"
-        android:layout_above="@+id/bottomMenu">
+        android:layout_above="@+id/bottomMenu"
+        android:layout_alignParentTop="true">
 
         <TextView
             android:id="@+id/welcomeTitle"
@@ -62,7 +63,8 @@
             android:gravity="center"
             android:padding="12dp"
             android:clickable="true"
-            android:id="@+id/menuHome">
+            android:id="@+id/menuHome"
+            android:focusable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +91,8 @@
             android:gravity="center"
             android:padding="12dp"
             android:clickable="true"
-            android:id="@+id/menuCalculator">
+            android:id="@+id/menuCalculator"
+            android:focusable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Calculadora"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#888888"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -116,7 +119,8 @@
             android:gravity="center"
             android:padding="12dp"
             android:clickable="true"
-            android:id="@+id/menuCollection">
+            android:id="@+id/menuCollection"
+            android:focusable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -129,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Mi Colección"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#888888"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -143,7 +147,8 @@
             android:gravity="center"
             android:padding="12dp"
             android:clickable="true"
-            android:id="@+id/menuCurrency">
+            android:id="@+id/menuCurrency"
+            android:focusable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -156,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Divisas"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#888888"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -170,7 +175,8 @@
             android:gravity="center"
             android:padding="12dp"
             android:clickable="true"
-            android:id="@+id/menuMarketplace">
+            android:id="@+id/menuMarketplace"
+            android:focusable="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Marketplace"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="#888888"
                 android:textSize="10sp" />
 
         </LinearLayout>

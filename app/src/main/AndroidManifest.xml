@@ -30,6 +30,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".CalculatorActivity" />
+
+        <activity android:name=".CurrencyActivity" />
+
     </application>
 </manifest>
 <!--?xml version="1.0" encoding="utf-8"?>

@@ -2,6 +2,46 @@ package cl.numiscoin2
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.activity.ComponentActivity
+
+class WelcomeActivity : BaseActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_welcome)
+
+        val userName = intent.getStringExtra(EXTRA_USER_NAME) ?: "Usuario"
+
+        val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
+        val logoutButton = findViewById<Button>(R.id.logoutButton)
+
+        welcomeMessage.text = "Hola $userName, has iniciado sesión correctamente."
+
+        logoutButton.setOnClickListener {
+            finish()
+        }
+
+        // Configurar menú inferior
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuHome) // Marcar Home como seleccionado
+    }
+
+    companion object {
+        const val EXTRA_USER_NAME = "extra_user_name"
+
+        fun start(activity: ComponentActivity, userName: String) {
+            val intent = Intent(activity, WelcomeActivity::class.java)
+            intent.putExtra(EXTRA_USER_NAME, userName)
+            activity.startActivity(intent)
+        }
+    }
+}
+
+/*
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -100,4 +140,4 @@ class WelcomeActivity : ComponentActivity() {
             activity.startActivity(intent)
         }
     }
-}
+}*/
