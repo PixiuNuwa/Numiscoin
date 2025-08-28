@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+    <TextView
+        android:id="@+id/coinName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre Moneda"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Año:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/coinYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2023"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Valor:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/coinValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="$100"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Estado:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/coinState"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Excelente"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/coinObservations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Observaciones aquí"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:ellipsize="end" />
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Numiscoin2</string>
+    <string name="title_entrar">ENTRAR</string>
+    <string name="hint_email">Email o Nombre de Usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña? Haz click Aquí</string>
+    <string name="button_continue">CONTINUAR</string>
+    <string name="button_google">Continuar con Google</string>
+    <string name="create_account">¿No tienes una cuenta? CREAR CUENTA</string>
+    <string name="welcome_title">¡Bienvenido!</string>
+    <string name="welcome_message">Hola %s, has iniciado sesión correctamente.</string>
+    <string name="button_logout">Cerrar Sesión</string>
+    <string name="error_title">Error de autenticación</string>
+    <string name="button_accept">Aceptar</string>
+</resources>
