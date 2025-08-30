@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 
 class CurrencyActivity : BaseActivity() {
@@ -113,7 +114,7 @@ class CurrencyActivity : BaseActivity() {
     companion object {
         const val EXTRA_USER_NAME = "extra_user_name"
 
-        fun start(activity: ComponentActivity, userName: String) {
+        fun start(activity: AppCompatActivity, userName: String) {
             val intent = Intent(activity, CurrencyActivity::class.java)
             intent.putExtra(EXTRA_USER_NAME, userName)
             activity.startActivity(intent)

@@ -1,12 +1,11 @@
 package cl.numiscoin2
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 
-class LoginActivity : ComponentActivity() {  // ← DEBE ser ComponentActivity
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
