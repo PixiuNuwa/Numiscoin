@@ -1,34 +1,34 @@
+//<<WelcomeActivity.kt
 package cl.numiscoin2
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class WelcomeActivity : BaseActivity() {
 
-    private lateinit var usuario: Usuario
+    private val TAG = "WelcomeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
+        Log.d(TAG, "onCreate: WelcomeActivity creada")
 
-        // Obtener el objeto Usuario del intent
-        usuario = intent.getParcelableExtra(EXTRA_USUARIO) ?: run {
-            // Si no viene el usuario, crear uno vacío (solo para evitar crash)
-            Usuario(0, "Usuario", "", "", "", "")
-        }
+        // Ahora el usuario viene de la variable heredada de BaseActivity
+        Log.d(TAG, "onCreate: Usuario recibido - ID: ${usuario?.idUsuario}, Nombre: ${usuario?.nombre} ${usuario?.apellido}")
 
-        val userName = intent.getStringExtra(EXTRA_USER_NAME) ?: "${usuario.nombre} ${usuario.apellido}"
+        val userName = intent.getStringExtra(EXTRA_USER_NAME) ?: "${usuario?.nombre ?: ""} ${usuario?.apellido ?: ""}"
 
         val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
 
         welcomeMessage.text = "Hola $userName, has iniciado sesión correctamente.\n" +
-                "Email: ${usuario.email}\n" +
-                "ID: ${usuario.idUsuario}"
+                "Email: ${usuario?.email ?: "N/A"}\n" +
+                "ID: ${usuario?.idUsuario ?: "N/A"}"
 
         logoutButton.setOnClickListener {
             finish()
@@ -37,6 +37,8 @@ class WelcomeActivity : BaseActivity() {
         // Configurar menú inferior
         setupBottomMenu()
         highlightMenuItem(R.id.menuHome) // Marcar Home como seleccionado
+
+        Log.d(TAG, "onCreate: UI configurada correctamente")
     }
 
     companion object {
@@ -44,54 +46,13 @@ class WelcomeActivity : BaseActivity() {
         const val EXTRA_USUARIO = "extra_usuario"
 
         fun start(context: Context, nombreCompleto: String, usuario: Usuario) {
+            Log.d("WelcomeActivity", "start: Iniciando WelcomeActivity con usuario ID: ${usuario.idUsuario}")
             val intent = Intent(context, WelcomeActivity::class.java).apply {
                 putExtra(EXTRA_USER_NAME, nombreCompleto)
-                putExtra(EXTRA_USUARIO, usuario) //
+                putExtra(EXTRA_USUARIO, usuario)
             }
             context.startActivity(intent)
         }
     }
 }
-/*package cl.numiscoin2
-
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AppCompatActivity
-import cl.numiscoin2.CurrencyActivity.Companion.EXTRA_USER_NAME
-
-class WelcomeActivity : BaseActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
-
-        val userName = intent.getStringExtra(EXTRA_USER_NAME) ?: "Usuario"
-
-        val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
-        val logoutButton = findViewById<Button>(R.id.logoutButton)
-
-        welcomeMessage.text = "Hola $userName, has iniciado sesión correctamente."
-
-        logoutButton.setOnClickListener {
-            finish()
-        }
-
-        // Configurar menú inferior
-        setupBottomMenu()
-        highlightMenuItem(R.id.menuHome) // Marcar Home como seleccionado
-    }
-
-    companion object {
-        fun start(context: Context, nombreCompleto: String, usuario: Usuario) {
-            val intent = Intent(context, WelcomeActivity::class.java).apply {
-                putExtra("NOMBRE_COMPLETO", nombreCompleto)
-                putExtra("USUARIO", usuario)
-            }
-            context.startActivity(intent)
-        }
-    }
-}*/
+//>>WelcomeActivity.kt

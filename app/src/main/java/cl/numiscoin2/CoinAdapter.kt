@@ -24,11 +24,11 @@ class CoinAdapter(private val coins: List<Moneda>) : RecyclerView.Adapter<CoinAd
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {
         val coin = coins[position]
 
-        holder.coinName.text = coin.moneda ?: "Sin nombre"
-        holder.coinYear.text = coin.ano ?: "N/A"
-        holder.coinValue.text = coin.valorComercial ?: "N/A"
+        holder.coinName.text = coin.nombre ?: "Sin nombre"
+        holder.coinYear.text = coin.anio ?: "N/A"
+        holder.coinValue.text = coin.pais ?: "N/A"
         holder.coinState.text = coin.estado ?: "N/A"
-        holder.coinObservations.text = coin.observaciones ?: "Sin observaciones"
+        holder.coinObservations.text = coin.descripcion ?: "Sin observaciones"
     }
 
     override fun getItemCount(): Int = coins.size

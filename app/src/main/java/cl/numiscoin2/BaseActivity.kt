@@ -1,3 +1,4 @@
+//<<BaseActivity.kt
 package cl.numiscoin2
 
 import android.content.Intent
@@ -9,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity : AppCompatActivity() {
 
+    // Variable protegida para almacenar el usuario
+    protected var usuario: Usuario? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Las actividades hijas establecerán su propio layout
+        // Obtener el usuario del intent si está disponible
+        usuario = intent.getParcelableExtra(WelcomeActivity.EXTRA_USUARIO)
     }
 
     protected fun setupBottomMenu() {
@@ -20,6 +25,10 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuHome)
             if (this !is WelcomeActivity) {
                 val intent = Intent(this, WelcomeActivity::class.java)
+                // Pasar el usuario si está disponible
+                usuario?.let { user ->
+                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
+                }
                 // Pasar el nombre de usuario si está disponible
                 if (this is CurrencyActivity) {
                     val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
@@ -37,6 +46,10 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCalculator)
             if (this !is CalculatorActivity) {
                 val intent = Intent(this, CalculatorActivity::class.java)
+                // Pasar el usuario si está disponible
+                usuario?.let { user ->
+                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
+                }
                 // Pasar el nombre de usuario si está disponible
                 if (this is CurrencyActivity) {
                     val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
@@ -54,6 +67,10 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCollection)
             if (this !is CollectionActivity) {
                 val intent = Intent(this, CollectionActivity::class.java)
+                // Pasar el usuario si está disponible - ESTA ES LA PARTE CLAVE
+                usuario?.let { user ->
+                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
+                }
                 // Pasar el nombre de usuario si está disponible
                 if (this is CurrencyActivity) {
                     val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
@@ -71,6 +88,10 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCurrency)
             if (this !is CurrencyActivity) {
                 val intent = Intent(this, CurrencyActivity::class.java)
+                // Pasar el usuario si está disponible
+                usuario?.let { user ->
+                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
+                }
                 // Pasar el nombre de usuario si está disponible
                 val userName = when (this) {
                     is WelcomeActivity -> intent.getStringExtra(WelcomeActivity.EXTRA_USER_NAME)
@@ -89,6 +110,10 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuMarketplace)
             if (this !is MarketplaceActivity) {
                 val intent = Intent(this, MarketplaceActivity::class.java)
+                // Pasar el usuario si está disponible
+                usuario?.let { user ->
+                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
+                }
                 // Pasar el nombre de usuario si está disponible
                 if (this is CurrencyActivity) {
                     val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
@@ -122,3 +147,4 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 }
+//>>BaseActivity.kt

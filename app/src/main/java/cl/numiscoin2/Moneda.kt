@@ -1,4 +1,4 @@
-package cl.numiscoin2
+/*package cl.numiscoin2
 
 data class Moneda(
     val codigo: Int? = null,
@@ -23,3 +23,4 @@ data class Moneda(
     val orden: Int? = null,
     val acunada: String? = null
 )
+*/

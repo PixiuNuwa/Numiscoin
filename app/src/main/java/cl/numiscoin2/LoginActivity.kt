@@ -61,7 +61,8 @@ class LoginActivity : AppCompatActivity() {
                 if (success && usuario != null) {
                     // Login exitoso con objeto usuario
                     val nombreCompleto = "${usuario.nombre} ${usuario.apellido}"
-                    WelcomeActivity.start(this, nombreCompleto, usuario)
+                    WelcomeActivity.start(this@LoginActivity, nombreCompleto, usuario)
+                    finish()
                 } else {
                     // Error en el login
                     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
