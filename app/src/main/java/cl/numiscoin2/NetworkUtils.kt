@@ -10,7 +10,7 @@ object NetworkUtils {
     fun performLogin(username: String, password: String, callback: (Boolean, String, Usuario?) -> Unit) {
         Thread {
             try {
-                val url = URL("https://a05d441d8a25.ngrok-free.app/api/login")
+                val url = URL("https://5147bbbf57c8.ngrok-free.app/api/login")
                 val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true

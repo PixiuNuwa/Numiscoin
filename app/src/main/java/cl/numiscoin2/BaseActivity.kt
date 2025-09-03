@@ -1,4 +1,3 @@
-//<<BaseActivity.kt
 package cl.numiscoin2
 
 import android.content.Intent
@@ -147,4 +146,3 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 }
-//>>BaseActivity.kt

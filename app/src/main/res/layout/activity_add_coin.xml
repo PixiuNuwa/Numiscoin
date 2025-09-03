@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar Nueva Moneda"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Campos obligatorios -->
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre (moneda) *"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+			
+		<EditText
+			android:id="@+id/etDescripcion"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="Descripción"
+			android:textColor="@android:color/white"
+			android:textColorHint="#AAAAAA"
+			android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etPais"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID País *"
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAnio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Año *"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Campos de información básica -->
+        <EditText
+            android:id="@+id/etFamilia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Familia"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etIdFamilia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Familia"
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etVariante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Variante"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etCeca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ceca"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etTipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etDisenador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Diseñador"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Campos de valores -->
+        <EditText
+            android:id="@+id/etTotalProducido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Total Producido"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etValorSinCircular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor Sin Circular"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etValorComercial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor Comercial"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etValorAdquirido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor Adquirido"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Estado y observaciones -->
+        <EditText
+            android:id="@+id/etEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estado"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etObservaciones"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Observaciones"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:gravity="top"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Campos adicionales -->
+        <EditText
+            android:id="@+id/etOrden"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Orden"
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etAcunada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Acuñada"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAAAAA"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Sección de foto -->
+        <ImageView
+            android:id="@+id/ivFoto"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:background="#333333"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnSeleccionarFoto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Seleccionar Foto"
+            android:textColor="@android:color/white"
+            android:background="#FF0000FF"
+            android:layout_marginBottom="24dp" />
+			
+		<ImageView
+			android:id="@+id/ivFoto2"
+			android:layout_width="200dp"
+			android:layout_height="200dp"
+			android:layout_below="@id/ivFoto"
+			android:layout_marginTop="16dp"
+			android:visibility="gone"
+			android:scaleType="centerCrop" />
+
+		<Button
+			android:id="@+id/btnSeleccionarFoto2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/btnSeleccionarFoto"
+			android:layout_marginTop="8dp"
+			android:text="Seleccionar Segunda Foto" />
+
+        <!-- Botón guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Guardar Moneda"
+            android:textColor="@android:color/white"
+            android:background="#FF00FF00" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="* Campos obligatorios"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</ScrollView>

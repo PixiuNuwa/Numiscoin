@@ -12,4 +12,5 @@
     <string name="button_logout">Cerrar Sesión</string>
     <string name="error_title">Error de autenticación</string>
     <string name="button_accept">Aceptar</string>
+    <string name="coin_image_desc">Imagen de la moneda</string>
 </resources>

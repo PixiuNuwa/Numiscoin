@@ -3,6 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,6 +36,10 @@
         <activity android:name=".CurrencyActivity" />
 
         <activity android:name=".MarketplaceActivity" />
+
+        <activity
+            android:name=".AddCoinActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
     </application>
 </manifest>
