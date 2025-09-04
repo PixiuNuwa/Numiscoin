@@ -1,5 +1,9 @@
 package cl.numiscoin2
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Moneda(
     val id: Int,
     val nombre: String,
@@ -9,7 +13,7 @@ data class Moneda(
     val estado: String,
     val valor: String,
     val fotos: List<FotoObjeto>? = null // Agregado campo fotos
-)
+): Parcelable
 
 data class Coleccion(
     val id: Int,
@@ -19,6 +23,7 @@ data class Coleccion(
     val fechaCreacion: String
 )
 
+@Parcelize
 data class ObjetoColeccion(
     val id: Int,
     val nombre: String,
@@ -31,8 +36,9 @@ data class ObjetoColeccion(
     val fechaCreacion: String,
     val monedaInfo: MonedaInfo?,
     val fechaAgregado: String
-)
+): Parcelable
 
+@Parcelize
 data class MonedaInfo(
     val id: Int,
     val idObjeto: Int, // Cambiado de Long a Int para consistencia
@@ -50,8 +56,9 @@ data class MonedaInfo(
     val observaciones: String?,
     val orden: Int?,
     val acunada: String?
-)
+): Parcelable
 
+@Parcelize
 data class FotoObjeto(
     val id: Int, // Cambiado de Long a Int para consistencia
     val url: String,
@@ -60,7 +67,7 @@ data class FotoObjeto(
     val esPrincipal: Boolean?,
     val fechaCreacion: String?,
     val orden: Int?
-)
+): Parcelable
 
 data class ParamRequest(
     val nombre: String,

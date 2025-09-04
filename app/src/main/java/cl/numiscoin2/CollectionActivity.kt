@@ -15,12 +15,13 @@ import com.google.gson.reflect.TypeToken
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CollectionActivity : BaseActivity() {
+class CollectionActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
 
     private val TAG = "CollectionActivity"
     private var primeraColeccion: Coleccion? = null
     private val REQUEST_ADD_COIN = 1
     private var isLoading = false
+    private var objetosCompletos: List<ObjetoColeccion> = emptyList() // ← AGREGAR esta variable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,7 @@ class CollectionActivity : BaseActivity() {
         }
     }
 
-    // Función para mostrar monedas
+    // Función para mostrar monedas - MODIFICADA
     private fun displayCoins(coins: List<Moneda>) {
         Log.d(TAG, "displayCoins: Mostrando ${coins.size} monedas en la UI")
         val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
@@ -109,10 +110,22 @@ class CollectionActivity : BaseActivity() {
 
         collectionInfo.text = "Tu colección (${coins.size} objetos)"
         coinsRecyclerView.visibility = android.view.View.VISIBLE
-        coinsRecyclerView.adapter = CoinAdapter(coins)
+
+        // Crear adapter con ambos parámetros y establecer listener
+        val adapter = CoinAdapter(coins, objetosCompletos)
+        adapter.setOnItemClickListener(this)
+        coinsRecyclerView.adapter = adapter
     }
 
-    // Función para cargar la colección desde el servidor
+    // Implementación del listener para clicks - AGREGAR este método
+    override fun onItemClick(objeto: ObjetoColeccion) {
+        Log.d(TAG, "onItemClick: Objeto seleccionado: ${objeto.nombre}")
+        val intent = Intent(this, CoinDetailActivity::class.java)
+        intent.putExtra("moneda", objeto)
+        startActivity(intent)
+    }
+
+    // Función para cargar la colección desde el servidor - MODIFICADA
     private fun cargarColeccionDesdeServidor() {
         showLoading(true)
         val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
@@ -168,6 +181,9 @@ class CollectionActivity : BaseActivity() {
 
                             val objetoListType = object : TypeToken<List<ObjetoColeccion>>() {}.type
                             val objetos = gson.fromJson<List<ObjetoColeccion>>(objetosResponse, objetoListType)
+
+                            // GUARDAR los objetos completos - AGREGAR esta línea
+                            objetosCompletos = objetos ?: emptyList()
 
                             // Convertir ObjetoColeccion a Moneda para el adaptador existente
                             val monedas = objetos?.map { objeto ->

@@ -37,9 +37,9 @@
 
         <activity android:name=".MarketplaceActivity" />
 
-        <activity
-            android:name=".AddCoinActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".AddCoinActivity" />
+
+        <activity android:name=".CoinDetailActivity"/>
 
     </application>
 </manifest>

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize") // ← AGREGAR ESTA LÍNEA
 }
 
 android {
@@ -58,8 +59,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material)
 
-    //implementation(libs.androidx.navigation.compose.jvmstubs)
-    //implementation(libs.androidx.navigation.compose.android)
     implementation(libs.support.annotations)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
