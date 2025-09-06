@@ -1,16 +1,28 @@
 package cl.numiscoin2
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.net.ssl.HttpsURLConnection
+import java.net.URL
 
 class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var objeto: ObjetoColeccion
+    private lateinit var deleteButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +33,8 @@ class CoinDetailActivity : AppCompatActivity() {
 
         // Configurar la UI
         setupUI()
+        // Configurar botón de eliminar
+        setupDeleteButton()
     }
 
     private fun setupUI() {
@@ -49,6 +63,93 @@ class CoinDetailActivity : AppCompatActivity() {
         // Configurar carrusel de imágenes si hay fotos
         setupImageCarousel()
     }
+
+    private fun setupDeleteButton() {
+        deleteButton = Button(this).apply {
+            text = "Eliminar Moneda"
+            setBackgroundColor(resources.getColor(android.R.color.holo_red_dark))
+            setTextColor(resources.getColor(android.R.color.white))
+        }
+
+        // Agregar el botón al layout principal
+        val layout = findViewById<LinearLayout>(R.id.mainLayout)
+        layout.addView(deleteButton)
+
+        deleteButton.setOnClickListener {
+            showDeleteConfirmationDialog()
+        }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Estás seguro de que quieres eliminar esta moneda? Esta acción no se puede deshacer.")
+            .setPositiveButton("Eliminar") { dialog, which ->
+                deleteMoneda()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    // ... (código anterior sin cambios)
+
+    private fun deleteMoneda() {
+        NetworkUtils.deleteMoneda(objeto.id) { success, error ->
+            runOnUiThread {
+                if (success) {
+                    Toast.makeText(this@CoinDetailActivity, "Moneda eliminada exitosamente", Toast.LENGTH_SHORT).show()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("deleted", true)
+                    setResult(RESULT_OK, resultIntent)
+                    finish()
+                } else {
+                    Toast.makeText(this@CoinDetailActivity, error ?: "Error al eliminar la moneda", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+// ... (código posterior sin cambios)
+
+    /*private fun deleteMoneda() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("https://5147bbbf57c8.ngrok-free.app/api/jdbc/monedas/${objeto.id}")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "DELETE"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                val response = if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    connection.inputStream.bufferedReader().use { it.readText() }
+                } else {
+                    connection.errorStream.bufferedReader().use { it.readText() }
+                }
+
+                withContext(Dispatchers.Main) {
+                    if (responseCode == HttpsURLConnection.HTTP_OK) {
+                        Toast.makeText(this@CoinDetailActivity, "Moneda eliminada exitosamente", Toast.LENGTH_SHORT).show()
+
+                        // Crear intent de resultado para actualizar la CollectionActivity
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("deleted", true)
+                        setResult(RESULT_OK, resultIntent)
+
+                        finish() // Cerrar esta actividad
+                    } else {
+                        Toast.makeText(this@CoinDetailActivity, "Error al eliminar la moneda", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@CoinDetailActivity, "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }*/
 
     private fun setupImageCarousel() {
         val fotos = objeto.fotos

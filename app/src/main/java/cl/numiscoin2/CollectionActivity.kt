@@ -87,6 +87,10 @@ class CollectionActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
             Log.d(TAG, "Moneda agregada exitosamente, recargando colección...")
             cargarColeccionDesdeServidor()
         }
+        else if (resultCode == RESULT_OK && data?.getBooleanExtra("deleted", false) == true) {
+            Log.d(TAG, "Moneda eliminada, recargando colección...")
+            cargarColeccionDesdeServidor()
+        }
     }
 
     // Función para mostrar/ocultar loading
@@ -122,11 +126,87 @@ class CollectionActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
         Log.d(TAG, "onItemClick: Objeto seleccionado: ${objeto.nombre}")
         val intent = Intent(this, CoinDetailActivity::class.java)
         intent.putExtra("moneda", objeto)
-        startActivity(intent)
+        //startActivity(intent)
+        startActivityForResult(intent, 2)
     }
 
-    // Función para cargar la colección desde el servidor - MODIFICADA
+    // ... (código anterior sin cambios)
+
     private fun cargarColeccionDesdeServidor() {
+        showLoading(true)
+        val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
+        collectionInfo.text = "Cargando tu colección..."
+        Log.d(TAG, "cargarColeccionDesdeServidor: Iniciando carga de colección")
+
+        if (usuario == null || usuario?.idUsuario == 0L) {
+            Log.e(TAG, "cargarColeccionDesdeServidor: Usuario no válido")
+            showLoading(false)
+            collectionInfo.text = "Error: Usuario no identificado"
+            Toast.makeText(this, "Error al identificar el usuario", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Obtener colecciones del usuario
+        NetworkUtils.getUserCollections(usuario!!.idUsuario) { colecciones, error ->
+            runOnUiThread {
+                if (error != null) {
+                    showLoading(false)
+                    collectionInfo.text = "Error al cargar colecciones"
+                    Toast.makeText(this@CollectionActivity, error, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+
+                if (colecciones != null && colecciones.isNotEmpty()) {
+                    primeraColeccion = colecciones[0]
+                    Log.d("CollectionDebug", "Colección encontrada: ID ${primeraColeccion?.id}, Nombre: ${primeraColeccion?.nombre}")
+
+                    // Obtener objetos de la colección
+                    NetworkUtils.getCollectionObjects(primeraColeccion!!.id) { objetos, errorObjetos ->
+                        runOnUiThread {
+                            showLoading(false)
+
+                            if (errorObjetos != null) {
+                                collectionInfo.text = "Error al cargar objetos"
+                                Toast.makeText(this@CollectionActivity, errorObjetos, Toast.LENGTH_SHORT).show()
+                                return@runOnUiThread
+                            }
+
+                            objetosCompletos = objetos ?: emptyList()
+
+                            // Convertir ObjetoColeccion a Moneda para el adaptador existente
+                            val monedas = objetos?.map { objeto ->
+                                Moneda(
+                                    id = objeto.id,
+                                    nombre = objeto.nombre,
+                                    descripcion = objeto.descripcion,
+                                    pais = "ID País: ${objeto.idPais}",
+                                    anio = objeto.anio.toString(),
+                                    estado = objeto.monedaInfo?.estado ?: "Sin información",
+                                    valor = objeto.monedaInfo?.valorAdquirido ?: "Sin valor",
+                                    fotos = objeto.fotos
+                                )
+                            } ?: emptyList()
+
+                            if (monedas.isNotEmpty()) {
+                                displayCoins(monedas)
+                            } else {
+                                collectionInfo.text = "No tienes objetos en tu colección '${primeraColeccion?.nombre}'"
+                                Toast.makeText(this@CollectionActivity, "Colección vacía", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                } else {
+                    showLoading(false)
+                    collectionInfo.text = "No tienes colecciones creadas"
+                    Toast.makeText(this@CollectionActivity, "No se encontraron colecciones", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+// ... (código posterior sin cambios)
+    // Función para cargar la colección desde el servidor - MODIFICADA
+    /*private fun cargarColeccionDesdeServidor() {
         showLoading(true)
         val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
         collectionInfo.text = "Cargando tu colección..."
@@ -243,7 +323,7 @@ class CollectionActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
                 }
             }
         }.start()
-    }
+    }*/
 }
 /*package cl.numiscoin2
 

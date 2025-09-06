@@ -230,7 +230,64 @@ class AddCoinActivity : AppCompatActivity() {
         }.start()
     }
 
+    // ... (código anterior sin cambios)
+
     private fun enviarDatosAlServidor(monedaRequest: MonedaRequest) {
+        NetworkUtils.createMoneda(monedaRequest) { idObjeto, error ->
+            runOnUiThread {
+                if (error != null) {
+                    hideLoading()
+                    setResult(Activity.RESULT_CANCELED)
+                    Toast.makeText(this@AddCoinActivity, error, Toast.LENGTH_SHORT).show()
+                    finish()
+                    return@runOnUiThread
+                }
+
+                if (idObjeto != null) {
+                    Toast.makeText(this@AddCoinActivity, "Moneda creada exitosamente", Toast.LENGTH_SHORT).show()
+
+                    // Si hay fotos seleccionadas, enviarlas al servidor
+                    if (fotoUri != null || fotoUri2 != null) {
+                        Log.d(TAG, "Hay fotos, enviando al servidor con objeto:${idObjeto}")
+                        Thread {
+                            try {
+                                Log.d(TAG, "Llamando a subir fotos")
+                                enviarFotosAlServidor(idObjeto)
+                            } catch (e: Exception) {
+                                Log.e(TAG, "Error al enviar fotos: ${e.message}")
+                                hideLoading()
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
+                        }.start()
+                    } else {
+                        Log.d(TAG, "No hay fotos para subir")
+                        hideLoading()
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                } else {
+                    hideLoading()
+                    setResult(Activity.RESULT_CANCELED)
+                    Toast.makeText(this@AddCoinActivity, "Error al crear la moneda", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
+        }
+    }
+
+    /*private fun enviarFotoIndividualAlServidor(idObjeto: Long, fotoUri: Uri, numeroFoto: Int) {
+        NetworkUtils.uploadPhoto(idObjeto, fotoUri, this, numeroFoto) { success, error ->
+            if (error != null) {
+                Log.e(TAG, "Error al enviar foto $numeroFoto: $error")
+            } else {
+                Log.d(TAG, "Foto $numeroFoto subida exitosamente")
+            }
+        }
+    }*/
+
+// ... (código posterior sin cambios)
+    /*private fun enviarDatosAlServidor(monedaRequest: MonedaRequest) {
         val url = URL("https://5147bbbf57c8.ngrok-free.app/api/jdbc/monedas")
         val connection = url.openConnection() as HttpURLConnection
 
@@ -321,9 +378,8 @@ class AddCoinActivity : AppCompatActivity() {
         } finally {
             connection.disconnect()
         }
-    }
+    }*/
 
-    // NUEVO MÉTODO: Enviar ambas fotos al servidor
     private fun enviarFotosAlServidor(idObjeto: Long) {
         val fotos = mutableListOf<Uri>()
 
@@ -332,33 +388,44 @@ class AddCoinActivity : AppCompatActivity() {
         fotoUri2?.let { fotos.add(it) }
 
         var fotosSubidasExitosamente = 0
-        var errores = mutableListOf<String>()
+        var totalFotos = fotos.size
 
         for ((index, fotoUri) in fotos.withIndex()) {
-            try {
-                enviarFotoIndividualAlServidor(idObjeto, fotoUri, index + 1)
-                fotosSubidasExitosamente++
-            } catch (e: Exception) {
-                Log.e(TAG, "Error al enviar foto ${index + 1}: ${e.message}")
-                errores.add("Foto ${index + 1}: ${e.message}")
+            NetworkUtils.uploadPhoto(idObjeto, fotoUri, this, index + 1) { success, error ->
+                if (success) {
+                    fotosSubidasExitosamente++
+                    Log.d(TAG, "Foto ${index + 1} subida exitosamente")
+                } else {
+                    Log.e(TAG, "Error al enviar foto ${index + 1}: $error")
+                }
+
+                // Verificar si todas las fotos han sido procesadas
+                if (fotosSubidasExitosamente + (index + 1 - fotosSubidasExitosamente) == totalFotos) {
+                    runOnUiThread {
+                        hideLoading()
+
+                        if (fotosSubidasExitosamente == totalFotos) {
+                            Toast.makeText(this@AddCoinActivity, "Todas las fotos subidas exitosamente", Toast.LENGTH_SHORT).show()
+                        } else if (fotosSubidasExitosamente > 0) {
+                            Toast.makeText(this@AddCoinActivity, "${fotosSubidasExitosamente} de ${totalFotos} fotos subidas, pero con errores", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this@AddCoinActivity, "Error al subir todas las fotos", Toast.LENGTH_SHORT).show()
+                        }
+
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                }
             }
         }
 
-        runOnUiThread {
-            hideLoading()
-
-            if (fotosSubidasExitosamente == fotos.size) {
-                Toast.makeText(this, "Todas las fotos subidas exitosamente", Toast.LENGTH_SHORT).show()
+        // Si no hay fotos para subir
+        if (totalFotos == 0) {
+            runOnUiThread {
+                hideLoading()
                 setResult(Activity.RESULT_OK)
-            } else if (fotosSubidasExitosamente > 0) {
-                Toast.makeText(this, "${fotosSubidasExitosamente} de ${fotos.size} fotos subidas, pero con errores", Toast.LENGTH_LONG).show()
-                setResult(Activity.RESULT_OK)
-            } else {
-                Toast.makeText(this, "Error al subir todas las fotos", Toast.LENGTH_SHORT).show()
-                setResult(Activity.RESULT_OK) // Aún así consideramos éxito porque la moneda se creó
+                finish()
             }
-
-            finish()
         }
     }
 

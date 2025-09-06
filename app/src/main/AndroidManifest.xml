@@ -39,7 +39,9 @@
 
         <activity android:name=".AddCoinActivity" />
 
-        <activity android:name=".CoinDetailActivity"/>
+        <activity android:name=".CoinDetailActivity" />
+
+        <activity android:name=".RegisterActivity" />
 
     </application>
 </manifest>

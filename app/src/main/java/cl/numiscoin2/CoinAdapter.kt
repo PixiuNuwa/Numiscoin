@@ -35,12 +35,13 @@ class CoinAdapter(
     }
 
     private fun construirUrlCompleta(urlRelativa: String): String {
-        val baseUrl = "https://numiscoin.store/uploads/" // ← Cambiar a esta URL según tu JSON
-        return if (urlRelativa.startsWith("http")) {
-            urlRelativa
-        } else {
-            baseUrl + urlRelativa
-        }
+        return NetworkUtils.construirUrlCompleta(urlRelativa)
+//        val baseUrl = "https://numiscoin.store/uploads/" // ← Cambiar a esta URL según tu JSON
+//        return if (urlRelativa.startsWith("http")) {
+//            urlRelativa
+//        } else {
+//            baseUrl + urlRelativa
+//        }
     }
 
     override fun onBindViewHolder(holder: CoinViewHolder, position: Int) {

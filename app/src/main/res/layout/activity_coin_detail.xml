@@ -6,6 +6,7 @@
     android:padding="16dp">
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -38,29 +39,69 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/tvNombre"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            android:stretchColumns="1"
+            android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/tvDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvNombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvAnio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvDescripcion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvPais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Año:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvAnio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="País:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvPais"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
+
+        </TableLayout>
 
         <!-- Información de la moneda -->
         <TextView
@@ -71,77 +112,180 @@
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/tvFamilia"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            android:stretchColumns="1">
 
-        <TextView
-            android:id="@+id/tvVariante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Familia:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvFamilia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvCeca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Variante:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvVariante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvTipo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ceca:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvCeca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvDisenador"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvTipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvTotalProducido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diseñador:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvDisenador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvValorSinCircular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Producido:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvTotalProducido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvValorComercial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor Sin Circular:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvValorSinCircular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvValorAdquirido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor Comercial:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvValorComercial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvEstado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor Adquirido:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvValorAdquirido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvObservaciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estado:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tvAcunada"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Observaciones:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvObservaciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acuñada:"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"/>
+                <TextView
+                    android:id="@+id/tvAcunada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 

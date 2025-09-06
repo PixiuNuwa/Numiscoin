@@ -19,12 +19,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mi Colección de Monedas"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="Mi Colección"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/collectionInfo"

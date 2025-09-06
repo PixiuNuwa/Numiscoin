@@ -48,36 +48,36 @@
     <LinearLayout
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@android:color/white"
+        android:background="#2D3330"
         android:layout_alignParentBottom="true"
         android:weightSum="5">
 
         <!-- Botón 1: Home -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="12dp"
+            android:padding="8dp"
             android:clickable="true"
             android:id="@+id/menuHome"
             android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🏠"
-                android:textSize="20sp" />
-
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home_selected"
+                android:tint="#FFF3D6" />
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Home"
-                android:textColor="#FF0000FF"
+                android:textColor="#FFF3D6"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -85,111 +85,111 @@
         <!-- Botón 2: Calculadora -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="12dp"
+            android:padding="8dp"
             android:clickable="true"
             android:id="@+id/menuCalculator"
             android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🧮"
-                android:textSize="20sp" />
-
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_calculator"
+                android:tint="#ABA693" />
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Calculadora"
-                android:textColor="#888888"
+                android:textColor="#ABA693"
                 android:textSize="10sp" />
 
         </LinearLayout>
 
-        <!-- Botón 3: Mi Colección -->
+        <!-- Botón 3: Mi Orientario -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="12dp"
+            android:padding="8dp"
             android:clickable="true"
             android:id="@+id/menuCollection"
             android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="📓"
-                android:textSize="20sp" />
-
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_collection"
+                android:tint="#ABA693" />
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Mi Colección"
-                android:textColor="#888888"
+                android:text="Colección"
+                android:textColor="#ABA693"
                 android:textSize="10sp" />
 
         </LinearLayout>
 
-        <!-- Botón 4: Divisas -->
+        <!-- Botón 4: Diverse -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="12dp"
+            android:padding="8dp"
             android:clickable="true"
             android:id="@+id/menuCurrency"
             android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="💲"
-                android:textSize="20sp" />
-
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_currency"
+                android:tint="#ABA693" />
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Divisas"
-                android:textColor="#888888"
+                android:textColor="#ABA693"
                 android:textSize="10sp" />
 
         </LinearLayout>
 
-        <!-- Botón 5: Marketplace -->
+        <!-- Botón 5: Nivelaciones -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="12dp"
+            android:padding="8dp"
             android:clickable="true"
             android:id="@+id/menuMarketplace"
             android:focusable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🛒"
-                android:textSize="20sp" />
-
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_marketplace"
+                android:tint="#ABA693" />
+                
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Marketplace"
-                android:textColor="#888888"
+                android:text="MarketPlace"
+                android:textColor="#ABA693"
                 android:textSize="10sp" />
 
         </LinearLayout>
