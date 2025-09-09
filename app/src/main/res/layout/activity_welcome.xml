@@ -124,7 +124,7 @@
 
         </LinearLayout>
 
-        <!-- Botón 3: Mi Orientario -->
+        <!-- Botón 3: Mi Coleccion -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -152,7 +152,7 @@
 
         </LinearLayout>
 
-        <!-- Botón 4: Diverse -->
+        <!-- Botón 4: Divisas -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -180,7 +180,7 @@
 
         </LinearLayout>
 
-        <!-- Botón 5: Nivelaciones -->
+        <!-- Botón 5: Market Place -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"

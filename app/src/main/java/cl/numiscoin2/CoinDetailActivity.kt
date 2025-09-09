@@ -12,12 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import javax.net.ssl.HttpsURLConnection
-import java.net.URL
 
 class CoinDetailActivity : AppCompatActivity() {
 
@@ -65,15 +59,7 @@ class CoinDetailActivity : AppCompatActivity() {
     }
 
     private fun setupDeleteButton() {
-        deleteButton = Button(this).apply {
-            text = "Eliminar Moneda"
-            setBackgroundColor(resources.getColor(android.R.color.holo_red_dark))
-            setTextColor(resources.getColor(android.R.color.white))
-        }
-
-        // Agregar el botón al layout principal
-        val layout = findViewById<LinearLayout>(R.id.mainLayout)
-        layout.addView(deleteButton)
+        deleteButton = findViewById(R.id.btnDelete)
 
         deleteButton.setOnClickListener {
             showDeleteConfirmationDialog()
