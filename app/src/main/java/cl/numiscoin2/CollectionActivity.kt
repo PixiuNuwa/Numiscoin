@@ -130,8 +130,6 @@ class CollectionActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
         startActivityForResult(intent, 2)
     }
 
-    // ... (código anterior sin cambios)
-
     private fun cargarColeccionDesdeServidor() {
         showLoading(true)
         val collectionInfo = findViewById<TextView>(R.id.collectionInfo)

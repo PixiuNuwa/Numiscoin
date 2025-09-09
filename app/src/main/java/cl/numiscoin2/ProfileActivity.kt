@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
+        val helpButton = findViewById<Button>(R.id.helpButton)
         val profileAvatar = findViewById<ImageView>(R.id.profileAvatar)
         val profileName = findViewById<TextView>(R.id.profileName)
         val profileEmail = findViewById<TextView>(R.id.profileEmail)
@@ -66,6 +68,11 @@ class ProfileActivity : AppCompatActivity() {
 
         backButton.setOnClickListener {
             finish()
+        }
+
+        helpButton.setOnClickListener {
+            val intent = Intent(this, HelpActivity::class.java)
+            startActivity(intent)
         }
     }
 

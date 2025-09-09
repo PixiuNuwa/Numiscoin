@@ -66,6 +66,16 @@
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
+        <!-- Botón de Ayuda -->
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ayuda"
+            android:layout_marginTop="32dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/purple_200" />
+
     </LinearLayout>
 
 </RelativeLayout>

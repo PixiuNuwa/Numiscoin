@@ -47,6 +47,8 @@
 
         <activity android:name=".ProfileActivity" />
 
+        <activity android:name=".HelpActivity" />
+
     </application>
 </manifest>
 <!--?xml version="1.0" encoding="utf-8"?>
