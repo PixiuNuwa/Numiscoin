@@ -13,6 +13,9 @@ class CurrencyActivity : BaseActivity() {
     private val usdRate = 950.0 // 1 USD = 950 CLP
     private val eurRate = 1020.0 // 1 EUR = 1020 CLP
 
+    private val goldUsdPerOz = 1950.0 // 1 onza de oro = 1950 USD
+    private val goldEurPerOz = goldUsdPerOz * (eurRate / usdRate) // Calculado basado en tasas
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency)
@@ -28,9 +31,17 @@ class CurrencyActivity : BaseActivity() {
         val convertButton = findViewById<Button>(R.id.convertButton)
         val resultText = findViewById<TextView>(R.id.resultText)
 
+        val goldUsdPerOzText = findViewById<TextView>(R.id.goldUsdPerOz)
+        val goldEurPerOzText = findViewById<TextView>(R.id.goldEurPerOz)
+        val goldUsdPerGramText = findViewById<TextView>(R.id.goldUsdPerGram)
+        val goldEurPerGramText = findViewById<TextView>(R.id.goldEurPerGram)
+
         welcomeMessage.text = "Bienvenido $userName"
         usdRateText.text = "1 USD = ${usdRate.toInt()} CLP"
         eurRateText.text = "1 EUR = ${eurRate.toInt()} CLP"
+
+        // Configurar valores del oro
+        setupGoldPrices(goldUsdPerOzText, goldEurPerOzText, goldUsdPerGramText, goldEurPerGramText)
 
         // Configurar spinners
         val currencies = arrayOf("CLP", "USD", "EUR")
@@ -91,6 +102,23 @@ class CurrencyActivity : BaseActivity() {
         // Configurar menú inferior
         setupBottomMenu()
         highlightMenuItem(R.id.menuCurrency) // Marcar Divisas como seleccionado
+    }
+
+    private fun setupGoldPrices(
+        goldUsdPerOzText: TextView,
+        goldEurPerOzText: TextView,
+        goldUsdPerGramText: TextView,
+        goldEurPerGramText: TextView
+    ) {
+        // Calcular precio por gramo (1 onza = 31.1035 gramos)
+        val goldUsdPerGram = goldUsdPerOz / 31.1035
+        val goldEurPerGram = goldEurPerOz / 31.1035
+
+        // Actualizar textos
+        goldUsdPerOzText.text = String.format("$%.2f", goldUsdPerOz)
+        goldEurPerOzText.text = String.format("€%.2f", goldEurPerOz)
+        goldUsdPerGramText.text = String.format("$%.2f", goldUsdPerGram)
+        goldEurPerGramText.text = String.format("€%.2f", goldEurPerGram)
     }
 
     private fun convertCurrency(amount: Double, from: String, to: String): Double {
