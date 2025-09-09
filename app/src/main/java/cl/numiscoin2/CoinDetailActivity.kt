@@ -42,7 +42,7 @@ class CoinDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvNombre).text = objeto.nombre
         findViewById<TextView>(R.id.tvDescripcion).text = objeto.descripcion
         findViewById<TextView>(R.id.tvAnio).text = objeto.anio.toString()
-        findViewById<TextView>(R.id.tvPais).text = "ID País: ${objeto.idPais}"
+        findViewById<TextView>(R.id.tvPais).text = objeto.nombrePais
 
         // Información de moneda
         objeto.monedaInfo?.let { info ->
@@ -91,8 +91,6 @@ class CoinDetailActivity : AppCompatActivity() {
             .show()
     }
 
-    // ... (código anterior sin cambios)
-
     private fun deleteMoneda() {
         NetworkUtils.deleteMoneda(objeto.id) { success, error ->
             runOnUiThread {
@@ -108,48 +106,6 @@ class CoinDetailActivity : AppCompatActivity() {
             }
         }
     }
-
-// ... (código posterior sin cambios)
-
-    /*private fun deleteMoneda() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val url = URL("https://5147bbbf57c8.ngrok-free.app/api/jdbc/monedas/${objeto.id}")
-                val connection = url.openConnection() as HttpsURLConnection
-                connection.requestMethod = "DELETE"
-                connection.setRequestProperty("Accept", "application/json")
-
-                val responseCode = connection.responseCode
-                val response = if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    connection.inputStream.bufferedReader().use { it.readText() }
-                } else {
-                    connection.errorStream.bufferedReader().use { it.readText() }
-                }
-
-                withContext(Dispatchers.Main) {
-                    if (responseCode == HttpsURLConnection.HTTP_OK) {
-                        Toast.makeText(this@CoinDetailActivity, "Moneda eliminada exitosamente", Toast.LENGTH_SHORT).show()
-
-                        // Crear intent de resultado para actualizar la CollectionActivity
-                        val resultIntent = Intent()
-                        resultIntent.putExtra("deleted", true)
-                        setResult(RESULT_OK, resultIntent)
-
-                        finish() // Cerrar esta actividad
-                    } else {
-                        Toast.makeText(this@CoinDetailActivity, "Error al eliminar la moneda", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                connection.disconnect()
-
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@CoinDetailActivity, "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }*/
 
     private fun setupImageCarousel() {
         val fotos = objeto.fotos

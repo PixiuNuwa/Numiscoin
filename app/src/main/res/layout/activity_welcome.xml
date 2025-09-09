@@ -4,6 +4,20 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
+    <!-- Botón de avatar en esquina superior derecha -->
+    <ImageButton
+        android:id="@+id/profileButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/circle_white_background"
+        android:scaleType="centerCrop"
+        android:contentDescription="Perfil de usuario"
+        android:elevation="8dp" />
+
     <!-- Contenido principal -->
     <LinearLayout
         android:id="@+id/mainContent"

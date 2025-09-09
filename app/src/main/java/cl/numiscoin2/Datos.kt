@@ -29,6 +29,7 @@ data class ObjetoColeccion(
     val nombre: String,
     val descripcion: String,
     val idPais: Int,
+    val nombrePais: String? = null,
     val anio: Int,
     val idTipoObjeto: Int,
     val idUsuario: Int,

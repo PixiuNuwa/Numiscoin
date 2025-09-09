@@ -14,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
     private val gson = Gson()
-    private const val BASE_URL = "https://da175ab5c7ee.ngrok-free.app"
+    private const val BASE_URL = "https://7194210bd27e.ngrok-free.app"
     private const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     // Función existente
@@ -105,6 +105,7 @@ object NetworkUtils {
                 val responseCode = connection.responseCode
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("getCollectionObjects",response)
                     val objetoListType = object : TypeToken<List<ObjetoColeccion>>() {}.type
                     val objetos = gson.fromJson<List<ObjetoColeccion>>(response, objetoListType)
                     callback(objetos, null)
@@ -351,6 +352,32 @@ object NetworkUtils {
                     val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
                         ?: "Sin detalles"
                     callback(false, "Error $responseCode: $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(false, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun recoverPassword(email: String, callback: (Boolean, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/password/forgot?email=${URLEncoder.encode(email, "UTF-8")}")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "POST"
+                connection.doOutput = true
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    callback(true, response)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(false, "Error del servidor: $responseCode - $errorResponse")
                 }
                 connection.disconnect()
             } catch (e: Exception) {

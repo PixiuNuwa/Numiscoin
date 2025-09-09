@@ -1,4 +1,3 @@
-//<<WelcomeActivity.kt
 package cl.numiscoin2
 
 import android.content.Context
@@ -6,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 
 class WelcomeActivity : BaseActivity() {
 
@@ -25,10 +26,31 @@ class WelcomeActivity : BaseActivity() {
 
         val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
+        val profileButton = findViewById<ImageButton>(R.id.profileButton)
 
         welcomeMessage.text = "Hola $userName, has iniciado sesión correctamente.\n" +
                 "Email: ${usuario?.email ?: "N/A"}\n" +
                 "ID: ${usuario?.idUsuario ?: "N/A"}"
+
+        // Configurar botón de perfil
+        profileButton.setOnClickListener {
+            usuario?.let {
+                ProfileActivity.start(this, it)
+            }
+        }
+
+        // Cargar avatar si existe
+        usuario?.let { user ->
+            if (user.foto.isNotEmpty()) {
+                val fotoUrl = NetworkUtils.construirUrlCompleta(user.foto)
+                Glide.with(this)
+                    .load(fotoUrl)
+                    .placeholder(R.drawable.circle_white_background)
+                    .error(R.drawable.circle_white_background)
+                    .circleCrop()
+                    .into(profileButton)
+            }
+        }
 
         logoutButton.setOnClickListener {
             finish()
@@ -55,4 +77,3 @@ class WelcomeActivity : BaseActivity() {
         }
     }
 }
-//>>WelcomeActivity.kt
