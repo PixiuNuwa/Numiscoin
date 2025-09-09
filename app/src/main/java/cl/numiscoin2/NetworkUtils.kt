@@ -385,4 +385,29 @@ object NetworkUtils {
             }
         }.start()
     }
+
+    fun getPaises(callback: (List<Pais>?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/util/paises")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val paises = gson.fromJson(response, Array<Pais>::class.java).toList()
+                    callback(paises, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
 }

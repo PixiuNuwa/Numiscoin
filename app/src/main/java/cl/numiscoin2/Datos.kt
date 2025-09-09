@@ -98,3 +98,10 @@ data class MonedaRequest(
     val orden: Int? = null,
     val acunada: String? = null
 )
+
+data class Pais(
+    val idPais: Int,
+    val nombre: String,
+    val continente: String,
+    val seleccionado: String
+)

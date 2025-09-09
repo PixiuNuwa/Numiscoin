@@ -40,7 +40,7 @@
 			android:textColorHint="#AAAAAA"
 			android:layout_marginBottom="8dp" />
 
-        <EditText
+        <!--EditText
             android:id="@+id/etPais"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,14 @@
             android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" /-->
+        <Spinner
+            android:id="@+id/spPais"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/white"
+            android:padding="12dp"/>
 
         <EditText
             android:id="@+id/etAnio"
