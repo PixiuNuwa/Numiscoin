@@ -14,8 +14,8 @@ import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
     private val gson = Gson()
-    private const val BASE_URL = "https://91474b51825c.ngrok-free.app"
-    private const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
+    private const val BASE_URL = "https://dcf4be963faf.ngrok-free.app"
+    public const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     // Función existente
     fun performLogin(username: String, password: String, callback: (Boolean, String, Usuario?) -> Unit) {
@@ -398,6 +398,61 @@ object NetworkUtils {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     val paises = gson.fromJson(response, Array<Pais>::class.java).toList()
+                    callback(paises, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun getCollectionObjectTypes(collectionId: Int, callback: (List<TipoObjeto>?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/colecciones/$collectionId/tipos")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("getCollectionObjectTypes", response)
+                    val tipoListType = object : TypeToken<List<TipoObjeto>>() {}.type
+                    val tipos = gson.fromJson<List<TipoObjeto>>(response, tipoListType)
+                    callback(tipos, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    // Agregar en NetworkUtils.kt
+    fun getPaisesPorColeccionYTipo(idColeccion: Int, idTipoObjeto: Int, callback: (List<Pais>?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/colecciones/$idColeccion/tipos/$idTipoObjeto/paises")
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("getPaisesPorColeccionYTipo", response)
+                    val paisListType = object : TypeToken<List<Pais>>() {}.type
+                    val paises = gson.fromJson<List<Pais>>(response, paisListType)
                     callback(paises, null)
                 } else {
                     val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }

@@ -103,5 +103,11 @@ data class Pais(
     val idPais: Int,
     val nombre: String,
     val continente: String,
-    val seleccionado: String
+    val seleccionado: String,
+    val foto: String
+)
+
+data class TipoObjeto(
+    val id: Int,
+    val nombre: String
 )

@@ -15,26 +15,36 @@
         android:layout_above="@+id/bottomMenu"
         android:layout_alignParentTop="true">
 
-        <!-- Header -->
-        <TextView
+        <!-- Header con botón de volver -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="Mi Colección"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
 
-        <TextView
-            android:id="@+id/collectionInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cargando tu colección..."
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="←"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:background="@null"
+                android:layout_marginEnd="16dp"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Objetos"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <!-- Progress Bar -->
         <ProgressBar
@@ -44,43 +54,32 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp" />
 
-        <!-- Contenedor para los botones de tipos de objetos -->
-        <LinearLayout
-            android:id="@+id/tiposContainer"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
-        <!-- Botón de retroceso -->
-        <Button
-            android:id="@+id/backButton"
+            <LinearLayout
+                android:id="@+id/paisesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"/>
+
+        </ScrollView>
+
+        <!-- Lista de objetos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/objetosRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="#FF0000FF"
-            android:text="Volver"
-            android:textColor="@android:color/white"
-            android:visibility="invisible" />
+            android:layout_height="match_parent"
+            android:visibility="visible" />
 
     </LinearLayout>
 
-    <!-- Botón flotante para agregar moneda -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddCoin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="24dp"
-        android:layout_above="@+id/bottomMenu"
-        android:src="@drawable/ic_add"
-        android:contentDescription="Agregar objeto"
-        app:backgroundTint="#FF0000FF"
-        app:tint="@android:color/white" />
-
-    <!-- Menú inferior (sin cambios) -->
-    <!-- Menú inferior -->
+    <!-- Menú inferior (igual que antes) -->
     <LinearLayout
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
