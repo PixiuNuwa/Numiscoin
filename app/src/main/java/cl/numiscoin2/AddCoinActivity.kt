@@ -3,8 +3,13 @@ package cl.numiscoin2
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -14,10 +19,14 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.google.gson.Gson
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AddCoinActivity : AppCompatActivity() {
 
@@ -41,14 +50,35 @@ class AddCoinActivity : AppCompatActivity() {
     private lateinit var etAcunada: EditText
     private lateinit var ivFoto: ImageView
     private lateinit var ivFoto2: ImageView
-    private lateinit var btnSeleccionarFoto: Button
-    private lateinit var btnSeleccionarFoto2: Button
+    private lateinit var ivFoto3: ImageView
+    private lateinit var ivFoto4: ImageView
+    private lateinit var btnGaleria1: Button
+    private lateinit var btnCamara1: Button
+    private lateinit var btnGaleria2: Button
+    private lateinit var btnCamara2: Button
+    private lateinit var btnGaleria3: Button
+    private lateinit var btnCamara3: Button
+    private lateinit var btnGaleria4: Button
+    private lateinit var btnCamara4: Button
     private lateinit var btnGuardar: Button
 
     private var fotoUri: Uri? = null
     private var fotoUri2: Uri? = null
-    private val PICK_IMAGE_REQUEST = 1
+    private var fotoUri3: Uri? = null
+    private var fotoUri4: Uri? = null
+
+    private val PICK_IMAGE_REQUEST_1 = 1
     private val PICK_IMAGE_REQUEST_2 = 2
+    private val PICK_IMAGE_REQUEST_3 = 3
+    private val PICK_IMAGE_REQUEST_4 = 4
+    private val TAKE_PHOTO_REQUEST_1 = 101
+    private val TAKE_PHOTO_REQUEST_2 = 102
+    private val TAKE_PHOTO_REQUEST_3 = 103
+    private val TAKE_PHOTO_REQUEST_4 = 104
+
+    private var currentPhotoPath: String? = null
+    private var currentPhotoRequestCode: Int = 0
+
     private val TAG = "AddCoinActivity"
     private val gson = Gson()
     private var progressDialog: ProgressDialog? = null
@@ -112,10 +142,21 @@ class AddCoinActivity : AppCompatActivity() {
         etObservaciones = findViewById(R.id.etObservaciones)
         etOrden = findViewById(R.id.etOrden)
         etAcunada = findViewById(R.id.etAcunada)
+
         ivFoto = findViewById(R.id.ivFoto)
         ivFoto2 = findViewById(R.id.ivFoto2)
-        btnSeleccionarFoto = findViewById(R.id.btnSeleccionarFoto)
-        btnSeleccionarFoto2 = findViewById(R.id.btnSeleccionarFoto2)
+        ivFoto3 = findViewById(R.id.ivFoto3)
+        ivFoto4 = findViewById(R.id.ivFoto4)
+
+        btnGaleria1 = findViewById(R.id.btnGaleria1)
+        btnCamara1 = findViewById(R.id.btnCamara1)
+        btnGaleria2 = findViewById(R.id.btnGaleria2)
+        btnCamara2 = findViewById(R.id.btnCamara2)
+        btnGaleria3 = findViewById(R.id.btnGaleria3)
+        btnCamara3 = findViewById(R.id.btnCamara3)
+        btnGaleria4 = findViewById(R.id.btnGaleria4)
+        btnCamara4 = findViewById(R.id.btnCamara4)
+
         btnGuardar = findViewById(R.id.btnGuardar)
     }
 
@@ -129,8 +170,14 @@ class AddCoinActivity : AppCompatActivity() {
         runOnUiThread {
             progressDialog?.show()
             btnGuardar.isEnabled = false
-            btnSeleccionarFoto.isEnabled = false
-            btnSeleccionarFoto2.isEnabled = false
+            btnGaleria1.isEnabled = false
+            btnCamara1.isEnabled = false
+            btnGaleria2.isEnabled = false
+            btnCamara2.isEnabled = false
+            btnGaleria3.isEnabled = false
+            btnCamara3.isEnabled = false
+            btnGaleria4.isEnabled = false
+            btnCamara4.isEnabled = false
         }
     }
 
@@ -138,19 +185,29 @@ class AddCoinActivity : AppCompatActivity() {
         runOnUiThread {
             progressDialog?.dismiss()
             btnGuardar.isEnabled = true
-            btnSeleccionarFoto.isEnabled = true
-            btnSeleccionarFoto2.isEnabled = true
+            btnGaleria1.isEnabled = true
+            btnCamara1.isEnabled = true
+            btnGaleria2.isEnabled = true
+            btnCamara2.isEnabled = true
+            btnGaleria3.isEnabled = true
+            btnCamara3.isEnabled = true
+            btnGaleria4.isEnabled = true
+            btnCamara4.isEnabled = true
         }
     }
 
     private fun setupListeners() {
-        btnSeleccionarFoto.setOnClickListener {
-            seleccionarFoto(PICK_IMAGE_REQUEST)
-        }
+        btnGaleria1.setOnClickListener { seleccionarFoto(PICK_IMAGE_REQUEST_1) }
+        btnCamara1.setOnClickListener { tomarFoto(TAKE_PHOTO_REQUEST_1) }
 
-        btnSeleccionarFoto2.setOnClickListener {
-            seleccionarFoto(PICK_IMAGE_REQUEST_2)
-        }
+        btnGaleria2.setOnClickListener { seleccionarFoto(PICK_IMAGE_REQUEST_2) }
+        btnCamara2.setOnClickListener { tomarFoto(TAKE_PHOTO_REQUEST_2) }
+
+        btnGaleria3.setOnClickListener { seleccionarFoto(PICK_IMAGE_REQUEST_3) }
+        btnCamara3.setOnClickListener { tomarFoto(TAKE_PHOTO_REQUEST_3) }
+
+        btnGaleria4.setOnClickListener { seleccionarFoto(PICK_IMAGE_REQUEST_4) }
+        btnCamara4.setOnClickListener { tomarFoto(TAKE_PHOTO_REQUEST_4) }
 
         btnGuardar.setOnClickListener {
             guardarMoneda()
@@ -160,6 +217,97 @@ class AddCoinActivity : AppCompatActivity() {
     private fun seleccionarFoto(requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, requestCode)
+    }
+
+    /*private fun tomarFoto(requestCode: Int) {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    Toast.makeText(this, "Error creando archivo", Toast.LENGTH_SHORT).show()
+                    null
+                }
+
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "${packageName}.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    currentPhotoRequestCode = requestCode
+                    startActivityForResult(takePictureIntent, requestCode)
+                }
+            }
+        }
+    }*/
+    private fun tomarFoto(requestCode: Int) {
+        val intent = Intent(this, CameraWithOverlayActivity::class.java)
+        currentPhotoRequestCode = requestCode
+        startActivityForResult(intent, requestCode)
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun procesarFotoCircular(imagePath: String): Uri? {
+        try {
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(imagePath, options)
+
+            // Calcular escala para evitar OutOfMemory
+            var scale = 1
+            while (options.outWidth / scale / 2 >= 1024 && options.outHeight / scale / 2 >= 1024) {
+                scale *= 2
+            }
+
+            options.inJustDecodeBounds = false
+            options.inSampleSize = scale
+            val originalBitmap = BitmapFactory.decodeFile(imagePath, options)
+
+            // Crear bitmap cuadrado del tamaño del círculo
+            val size = minOf(originalBitmap.width, originalBitmap.height)
+            val circularBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(circularBitmap)
+
+            // Calcular posición para centrar el círculo
+            val left = (originalBitmap.width - size) / 2
+            val top = (originalBitmap.height - size) / 2
+            val srcRect = Rect(left, top, left + size, top + size)
+            val dstRect = Rect(0, 0, size, size)
+
+            // Dibujar la parte circular
+            canvas.drawBitmap(originalBitmap, srcRect, dstRect, null)
+
+            // Guardar la imagen procesada
+            val file = File.createTempFile(
+                "circular_${System.currentTimeMillis()}",
+                ".jpg",
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            )
+
+            FileOutputStream(file).use { out ->
+                circularBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+            }
+
+            return Uri.fromFile(file)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error procesando foto circular: ${e.message}")
+            return null
+        }
     }
 
     private fun guardarMoneda() {
@@ -258,7 +406,7 @@ class AddCoinActivity : AppCompatActivity() {
                     Toast.makeText(this@AddCoinActivity, "Moneda creada exitosamente", Toast.LENGTH_SHORT).show()
 
                     // Si hay fotos seleccionadas, enviarlas al servidor
-                    if (fotoUri != null || fotoUri2 != null) {
+                    if (fotoUri != null || fotoUri2 != null || fotoUri3 != null || fotoUri4 != null) {
                         Log.d(TAG, "Hay fotos, enviando al servidor con objeto:${idObjeto}")
                         Thread {
                             try {
@@ -289,22 +437,27 @@ class AddCoinActivity : AppCompatActivity() {
 
 
     private fun enviarFotosAlServidor(idObjeto: Long) {
-        val fotos = mutableListOf<Uri>()
+        val fotos = mutableListOf<Pair<Uri, Int>>()
 
-        // Agregar las fotos que existen a la lista
-        fotoUri?.let { fotos.add(it) }
-        fotoUri2?.let { fotos.add(it) }
+        // Agregar las fotos que existen a la lista con su número correspondiente
+        fotoUri?.let { fotos.add(Pair(it, 1)) }
+        fotoUri2?.let { fotos.add(Pair(it, 2)) }
+        fotoUri3?.let { fotos.add(Pair(it, 3)) }
+        fotoUri4?.let { fotos.add(Pair(it, 4)) }
 
         var fotosSubidasExitosamente = 0
-        var totalFotos = fotos.size
+        val totalFotos = fotos.size
 
-        for ((index, fotoUri) in fotos.withIndex()) {
-            NetworkUtils.uploadPhoto(idObjeto, fotoUri, this, index + 1) { success, error ->
+        for ((index, fotoPair) in fotos.withIndex()) {
+            val fotoUri = fotoPair.first // Extraer el Uri del Pair
+            val numeroFoto = fotoPair.second // Extraer el número de foto
+
+            NetworkUtils.uploadPhoto(idObjeto, fotoUri, this, numeroFoto) { success, error ->
                 if (success) {
                     fotosSubidasExitosamente++
-                    Log.d(TAG, "Foto ${index + 1} subida exitosamente")
+                    Log.d(TAG, "Foto $numeroFoto subida exitosamente")
                 } else {
-                    Log.e(TAG, "Error al enviar foto ${index + 1}: $error")
+                    Log.e(TAG, "Error al enviar foto $numeroFoto: $error")
                 }
 
                 // Verificar si todas las fotos han sido procesadas
@@ -401,21 +554,128 @@ class AddCoinActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && data != null) {
+        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                PICK_IMAGE_REQUEST -> {
-                    fotoUri = data.data
+                PICK_IMAGE_REQUEST_1 -> {
+                    fotoUri = data?.data
                     ivFoto.setImageURI(fotoUri)
                     ivFoto.visibility = ImageView.VISIBLE
                 }
                 PICK_IMAGE_REQUEST_2 -> {
-                    fotoUri2 = data.data
+                    fotoUri2 = data?.data
                     ivFoto2.setImageURI(fotoUri2)
                     ivFoto2.visibility = ImageView.VISIBLE
+                }
+                PICK_IMAGE_REQUEST_3 -> {
+                    fotoUri3 = data?.data
+                    ivFoto3.setImageURI(fotoUri3)
+                    ivFoto3.visibility = ImageView.VISIBLE
+                }
+                PICK_IMAGE_REQUEST_4 -> {
+                    fotoUri4 = data?.data
+                    ivFoto4.setImageURI(fotoUri4)
+                    ivFoto4.visibility = ImageView.VISIBLE
+                }
+                in arrayOf(TAKE_PHOTO_REQUEST_1, TAKE_PHOTO_REQUEST_2,
+                    TAKE_PHOTO_REQUEST_3, TAKE_PHOTO_REQUEST_4) -> {
+
+                    val photoPath = data?.getStringExtra(CameraWithOverlayActivity.EXTRA_OUTPUT_URI)
+                    photoPath?.let { path ->
+                        val processedUri = procesarFotoCircular(path)
+                        processedUri?.let { uri ->
+                            when (requestCode) {
+                                TAKE_PHOTO_REQUEST_1 -> {
+                                    fotoUri = uri
+                                    ivFoto.setImageURI(uri)
+                                    ivFoto.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_2 -> {
+                                    fotoUri2 = uri
+                                    ivFoto2.setImageURI(uri)
+                                    ivFoto2.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_3 -> {
+                                    fotoUri3 = uri
+                                    ivFoto3.setImageURI(uri)
+                                    ivFoto3.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_4 -> {
+                                    fotoUri4 = uri
+                                    ivFoto4.setImageURI(uri)
+                                    ivFoto4.visibility = ImageView.VISIBLE
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PICK_IMAGE_REQUEST_1 -> {
+                    fotoUri = data?.data
+                    ivFoto.setImageURI(fotoUri)
+                    ivFoto.visibility = ImageView.VISIBLE
+                }
+                PICK_IMAGE_REQUEST_2 -> {
+                    fotoUri2 = data?.data
+                    ivFoto2.setImageURI(fotoUri2)
+                    ivFoto2.visibility = ImageView.VISIBLE
+                }
+                PICK_IMAGE_REQUEST_3 -> {
+                    fotoUri3 = data?.data
+                    ivFoto3.setImageURI(fotoUri3)
+                    ivFoto3.visibility = ImageView.VISIBLE
+                }
+                PICK_IMAGE_REQUEST_4 -> {
+                    fotoUri4 = data?.data
+                    ivFoto4.setImageURI(fotoUri4)
+                    ivFoto4.visibility = ImageView.VISIBLE
+                }
+                in arrayOf(TAKE_PHOTO_REQUEST_1, TAKE_PHOTO_REQUEST_2,
+                    TAKE_PHOTO_REQUEST_3, TAKE_PHOTO_REQUEST_4) -> {
+
+                    currentPhotoPath?.let { path ->
+                        val processedUri = procesarFotoCircular(path)
+                        processedUri?.let { uri ->
+                            when (requestCode) {
+                                TAKE_PHOTO_REQUEST_1 -> {
+                                    fotoUri = uri
+                                    ivFoto.setImageURI(uri)
+                                    ivFoto.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_2 -> {
+                                    fotoUri2 = uri
+                                    ivFoto2.setImageURI(uri)
+                                    ivFoto2.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_3 -> {
+                                    fotoUri3 = uri
+                                    ivFoto3.setImageURI(uri)
+                                    ivFoto3.visibility = ImageView.VISIBLE
+                                }
+                                TAKE_PHOTO_REQUEST_4 -> {
+                                    fotoUri4 = uri
+                                    ivFoto4.setImageURI(uri)
+                                    ivFoto4.visibility = ImageView.VISIBLE
+                                }
+                            }
+                        }
+                    }
+
+                    // Eliminar archivo temporal original
+                    currentPhotoPath?.let { path ->
+                        File(path).delete()
+                    }
+                }
+            }
+        }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()

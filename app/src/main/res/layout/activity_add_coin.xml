@@ -200,41 +200,194 @@
             android:layout_marginBottom="24dp" />
 
         <!-- Sección de foto -->
-        <ImageView
-            android:id="@+id/ivFoto"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:background="#333333"
-            android:visibility="gone"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp" />
-
-        <Button
-            android:id="@+id/btnSeleccionarFoto"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Seleccionar Foto"
+            android:layout_height="wrap_content"
+            android:text="Fotos de la moneda"
             android:textColor="@android:color/white"
-            android:background="#FF0000FF"
-            android:layout_marginBottom="24dp" />
-			
-		<ImageView
-			android:id="@+id/ivFoto2"
-			android:layout_width="200dp"
-			android:layout_height="200dp"
-			android:layout_below="@id/ivFoto"
-			android:layout_marginTop="16dp"
-			android:visibility="gone"
-			android:scaleType="centerCrop" />
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
-		<Button
-			android:id="@+id/btnSeleccionarFoto2"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/btnSeleccionarFoto"
-			android:layout_marginTop="8dp"
-			android:text="Seleccionar Segunda Foto" />
+        <!-- Foto 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivFoto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:background="#333333"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnGaleria1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Galería 1"
+                    android:textColor="@android:color/white"
+                    android:background="#FF0000FF"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnCamara1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Cámara 1"
+                    android:textColor="@android:color/white"
+                    android:background="#FFFF0000"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Foto 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivFoto2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:background="#333333"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnGaleria2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Galería 2"
+                    android:textColor="@android:color/white"
+                    android:background="#FF0000FF"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnCamara2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Cámara 2"
+                    android:textColor="@android:color/white"
+                    android:background="#FFFF0000"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Foto 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/ivFoto3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:background="#333333"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnGaleria3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Galería 3"
+                    android:textColor="@android:color/white"
+                    android:background="#FF0000FF"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnCamara3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Cámara 3"
+                    android:textColor="@android:color/white"
+                    android:background="#FFFF0000"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Foto 4 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivFoto4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:background="#333333"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnGaleria4"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Galería 4"
+                    android:textColor="@android:color/white"
+                    android:background="#FF0000FF"
+                    android:layout_marginEnd="4dp"/>
+
+                <Button
+                    android:id="@+id/btnCamara4"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Cámara 4"
+                    android:textColor="@android:color/white"
+                    android:background="#FFFF0000"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- Botón guardar -->
         <Button
