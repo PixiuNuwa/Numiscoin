@@ -139,43 +139,6 @@ class CameraWithOverlayActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun setCameraDisplayOrientation() {
-        try {
-            val info = Camera.CameraInfo()
-            Camera.getCameraInfo(0, info)
-
-            val rotation = windowManager.defaultDisplay.rotation
-            Log.i("CAMARA","Rotacion: ${rotation}")
-            var degrees = when (rotation) {
-                Surface.ROTATION_0 -> 0
-                Surface.ROTATION_90 -> 90
-                Surface.ROTATION_180 -> 180
-                Surface.ROTATION_270 -> 270
-                else -> 0
-            }
-
-            var result: Int
-            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                result = (info.orientation + degrees) % 360
-                result = (360 - result) % 360
-            } else {
-                result = (info.orientation - degrees + 360) % 360
-            }
-
-
-
-            camera.setDisplayOrientation(result)
-
-            Log.i("CAMARA","Orientacion es: ${result}")
-            val parameters = camera.parameters
-            result = 0
-            parameters.setRotation(result) // Esto hace que la foto se guarde en vertical
-            camera.parameters = parameters
-
-        } catch (e: Exception) {
-            Log.e("Camera", "Error setting camera orientation: ${e.message}")
-        }
-    }*/
     private fun setCameraDisplayOrientation() {
         try {
             val info = Camera.CameraInfo()

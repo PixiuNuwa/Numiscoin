@@ -57,6 +57,8 @@
 
         <activity android:name=".CoinDetailActivity" />
 
+        <activity android:name=".EditCoinActivity" />
+
         <activity android:name=".RegisterActivity" />
 
         <activity android:name=".RecoverPasswordActivity" />

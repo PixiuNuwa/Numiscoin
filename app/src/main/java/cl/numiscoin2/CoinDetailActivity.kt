@@ -1,5 +1,7 @@
 package cl.numiscoin2
 
+import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -12,11 +14,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import android.util.Log
 
 class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var objeto: ObjetoColeccion
     private lateinit var deleteButton: Button
+    private lateinit var editButton: Button
+
+    companion object {
+        private const val EDIT_COIN_REQUEST = 1001
+        const val EXTRA_MONEDA_ACTUALIZADA = "moneda_actualizada"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +38,8 @@ class CoinDetailActivity : AppCompatActivity() {
         setupUI()
         // Configurar botón de eliminar
         setupDeleteButton()
+
+        setupEditButton()
     }
 
     private fun setupUI() {
@@ -110,5 +121,53 @@ class CoinDetailActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             // Opcional: puedes agregar indicadores o números
         }.attach()
+    }
+
+    private fun setupEditButton() {
+        editButton = findViewById<Button>(R.id.btnEdit)
+        editButton.setOnClickListener {
+            val intent = Intent(this, EditCoinActivity::class.java)
+            intent.putExtra("moneda", objeto)
+            startActivityForResult(intent, EDIT_COIN_REQUEST)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == EDIT_COIN_REQUEST && resultCode == Activity.RESULT_OK) {
+
+            Toast.makeText(this, "Moneda actualizada exitosamente", Toast.LENGTH_SHORT).show()
+            recargarMoneda()
+        }
+    }
+
+    private fun recargarMoneda() {
+        Log.i("MONEDA","IN")
+        // Mostrar progress bar o indicador de carga
+        val progressDialog = ProgressDialog(this).apply {
+            setMessage("Cargando datos actualizados...")
+            Log.i("MONEDA","Cargando datos actualizados...")
+            setCancelable(false)
+            show()
+        }
+
+        // Llamar al servidor para obtener los datos actualizados
+        NetworkUtils.obtenerMonedaPorId(objeto.id) { monedaActualizada, error ->
+            runOnUiThread {
+                Log.i("MONEDA","obteniendo moneda por ID")
+                progressDialog.dismiss()
+
+                if (monedaActualizada != null) {
+                    // Actualizar el objeto y la UI
+                    Log.i("MONEDA","actualizar objeto y UI")
+                    objeto = monedaActualizada
+                    setupUI() // Volver a configurar la UI con los nuevos datos
+                    Toast.makeText(this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al cargar datos actualizados: $error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }

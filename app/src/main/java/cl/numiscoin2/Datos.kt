@@ -33,10 +33,10 @@ data class ObjetoColeccion(
     val anio: Int,
     val idTipoObjeto: Int,
     val idUsuario: Int,
-    val fotos: List<FotoObjeto>?, // ✅ Correcto
-    val fechaCreacion: String,
-    val monedaInfo: MonedaInfo?,
-    val fechaAgregado: String
+    val fotos: List<FotoObjeto>?,
+    val monedaInfo: MonedaInfo?
+    //val fechaCreacion: String?,
+    //val fechaAgregado: String?
 ): Parcelable
 
 @Parcelize

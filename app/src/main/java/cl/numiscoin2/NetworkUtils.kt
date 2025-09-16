@@ -1,20 +1,19 @@
 package cl.numiscoin2
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.*
-import java.net.HttpURLConnection
+//import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
     private val gson = Gson()
-    private const val BASE_URL = "https://c99587ec987f.ngrok-free.app"
+    private const val BASE_URL = "https://7be5289e8882.ngrok-free.app" //"http://c99587ec987f.ngrok-free.app"
     public const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     // Función existente
@@ -71,12 +70,12 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/colecciones/usuario/$userId")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     val coleccionListType = object : TypeToken<List<Coleccion>>() {}.type
                     val colecciones = gson.fromJson<List<Coleccion>>(response, coleccionListType)
@@ -98,12 +97,12 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/colecciones/$collectionId/objetos")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     Log.d("getCollectionObjects",response)
                     val objetoListType = object : TypeToken<List<ObjetoColeccion>>() {}.type
@@ -126,7 +125,7 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/monedas")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"
                 connection.setRequestProperty("Content-Type", "application/json")
                 connection.setRequestProperty("Accept", "application/json")
@@ -139,7 +138,7 @@ object NetworkUtils {
                 }
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     val responseObj = gson.fromJson(response, Map::class.java)
                     val success = responseObj["success"] as? Boolean
@@ -166,7 +165,7 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/upload/images")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
                 connection.useCaches = false
@@ -204,7 +203,7 @@ object NetworkUtils {
                 outputStream.close()
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     callback(true, null)
                 } else {
                     val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
@@ -308,7 +307,7 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/upload/photos")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true
                 connection.useCaches = false
@@ -346,7 +345,7 @@ object NetworkUtils {
                 outputStream.close()
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     callback(true, null)
                 } else {
                     val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
@@ -390,12 +389,12 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/util/paises")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     val paises = gson.fromJson(response, Array<Pais>::class.java).toList()
                     callback(paises, null)
@@ -415,12 +414,12 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/colecciones/$collectionId/tipos")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     Log.d("getCollectionObjectTypes", response)
                     val tipoListType = object : TypeToken<List<TipoObjeto>>() {}.type
@@ -443,12 +442,12 @@ object NetworkUtils {
         Thread {
             try {
                 val url = URL("$BASE_URL/api/jdbc/colecciones/$idColeccion/tipos/$idTipoObjeto/paises")
-                val connection = url.openConnection() as HttpURLConnection
+                val connection = url.openConnection() as HttpsURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
 
                 val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     val response = connection.inputStream.bufferedReader().use { it.readText() }
                     Log.d("getPaisesPorColeccionYTipo", response)
                     val paisListType = object : TypeToken<List<Pais>>() {}.type
@@ -461,6 +460,75 @@ object NetworkUtils {
                 }
                 connection.disconnect()
             } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun actualizarMoneda(idObjeto: Long, monedaRequest: MonedaRequest, callback: (Boolean, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/monedas/$idObjeto")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "PUT"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.setRequestProperty("Accept", "application/json")
+                connection.doOutput = true
+
+                val json = gson.toJson(monedaRequest)
+                OutputStreamWriter(connection.outputStream, "UTF-8").use { writer ->
+                    writer.write(json)
+                    writer.flush()
+                }
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val responseObj = gson.fromJson(response, Map::class.java)
+                    val success = responseObj["success"] as? Boolean ?: false
+
+                    if (success) {
+                        callback(true, null)
+                    } else {
+                        callback(false, responseObj["message"] as? String ?: "Error desconocido")
+                    }
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(false, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(false, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    // Agregar en NetworkUtils.kt
+    fun obtenerMonedaPorId(idObjeto: Int, callback: (ObjetoColeccion?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/monedas/$idObjeto/detalle")
+                Log.i("NetworkUtils","obteniendo moneda desde ${url}")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    Log.i("NetworkUtils","llego objeto moneda")
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val moneda = gson.fromJson(response, ObjetoColeccion::class.java)
+                    callback(moneda, null)
+                } else {
+                    Log.i("NetworkUtils","NO llego objeto moneda")
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                Log.i("NetworkUtils","Error de conexión: ${e.message}")
                 callback(null, "Error de conexión: ${e.message}")
             }
         }.start()
