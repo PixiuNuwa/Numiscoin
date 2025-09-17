@@ -13,7 +13,7 @@ import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
     private val gson = Gson()
-    private const val BASE_URL = "https://7be5289e8882.ngrok-free.app" //"http://c99587ec987f.ngrok-free.app"
+    private const val BASE_URL = "https://bb41cd88bd94.ngrok-free.app" //"https://7be5289e8882.ngrok-free.app"
     public const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     // Función existente
@@ -530,6 +530,100 @@ object NetworkUtils {
             } catch (e: Exception) {
                 Log.i("NetworkUtils","Error de conexión: ${e.message}")
                 callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun actualizarUsuario(idUsuario: Long, nombre: String, apellido: String, email: String, callback: (Boolean, String, Usuario?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/usuarios")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "PUT"
+                connection.doOutput = true
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                connection.setRequestProperty("Accept", "application/json")
+
+                Log.d("UpdateUserDebug", "Actualizando usuario: $idUsuario")
+
+                val postData = "idUsuario=${URLEncoder.encode(idUsuario.toString(), "UTF-8")}&" +
+                        "nombre=${URLEncoder.encode(nombre, "UTF-8")}&" +
+                        "apellido=${URLEncoder.encode(apellido, "UTF-8")}&" +
+                        "email=${URLEncoder.encode(email, "UTF-8")}"
+
+                connection.outputStream.use { os ->
+                    os.write(postData.toByteArray(Charsets.UTF_8))
+                    os.flush()
+                }
+
+                val responseCode = connection.responseCode
+                Log.d("UpdateUserDebug", "Código de respuesta: $responseCode")
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("UpdateUserDebug", "Respuesta del servidor: $response")
+
+                    try {
+                        val usuario = gson.fromJson(response, Usuario::class.java)
+                        callback(true, "Usuario actualizado exitosamente", usuario)
+                    } catch (e: Exception) {
+                        Log.e("UpdateUserError", "Error al parsear JSON", e)
+                        callback(true, "Usuario actualizado pero error al parsear respuesta", null)
+                    }
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    Log.d("UpdateUserDebug", "Error del servidor: $errorResponse")
+                    callback(false, "Error al actualizar usuario: $errorResponse", null)
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                Log.e("UpdateUserError", "Excepción al actualizar usuario", e)
+                callback(false, "Error de conexión: ${e.message ?: "Desconocido"}", null)
+            }
+        }.start()
+    }
+
+    // Agregar en NetworkUtils.kt
+    fun cambiarPassword(idUsuario: Long, nuevaPassword: String, callback: (Boolean, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("$BASE_URL/api/jdbc/usuarios/password")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "PUT"
+                connection.doOutput = true
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                connection.setRequestProperty("Accept", "application/json")
+
+                Log.d("ChangePasswordDebug", "Cambiando password para usuario: $idUsuario")
+
+                val postData = "idUsuario=${URLEncoder.encode(idUsuario.toString(), "UTF-8")}&" +
+                        "password=${URLEncoder.encode(nuevaPassword, "UTF-8")}"
+
+                connection.outputStream.use { os ->
+                    os.write(postData.toByteArray(Charsets.UTF_8))
+                    os.flush()
+                }
+
+                val responseCode = connection.responseCode
+                Log.d("ChangePasswordDebug", "Código de respuesta: $responseCode")
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    callback(true, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader().use { it?.readText() }
+                        ?: "Error sin mensaje"
+                    Log.d("ChangePasswordDebug", "Error del servidor: $errorResponse")
+                    callback(false, "Error del servidor: $responseCode - $errorResponse")
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                Log.e("ChangePasswordError", "Excepción al cambiar password", e)
+                callback(false, "Error de conexión: ${e.message ?: "Desconocido"}")
             }
         }.start()
     }

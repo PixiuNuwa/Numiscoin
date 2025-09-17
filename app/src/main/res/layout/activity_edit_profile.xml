@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Foto de perfil con opción para cambiarla -->
+        <ImageView
+            android:id="@+id/editProfileAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/changePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Foto"
+            android:layout_marginBottom="32dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/blue_500" />
+
+        <!-- Campos editables -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue_500"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apellido"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editProfileLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue_500"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue_500"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Botón para guardar cambios de perfil -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Datos Personales"
+            android:layout_marginTop="32dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/blue_500" />
+
+        <!-- Separador -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginVertical="24dp" />
+
+        <!-- Campos para cambiar contraseña (SIEMPRE VISIBLES) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Contraseña"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nueva Contraseña"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editProfilePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue_500"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirmar Contraseña"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/editProfileConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:backgroundTint="@color/blue_500"
+            android:layout_marginBottom="16dp" />
+
+
+        <Button
+            android:id="@+id/changePasswordButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambiar Contraseña"
+            android:layout_marginBottom="32dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/blue_500" />
+
+        <!-- Botón para cancelar -->
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volver"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/darker_gray" />
+
+    </LinearLayout>
+</ScrollView>

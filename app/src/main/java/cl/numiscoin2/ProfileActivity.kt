@@ -1,5 +1,6 @@
 package cl.numiscoin2
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,17 +17,28 @@ import com.bumptech.glide.request.RequestOptions
 
 class ProfileActivity : AppCompatActivity() {
 
+    private lateinit var profileAvatar: ImageView
+    private lateinit var profileName: TextView
+    private lateinit var profileEmail: TextView
+    private lateinit var profileId: TextView
+    private lateinit var profileDate: TextView
+
+    private var usuario: Usuario? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
         val helpButton = findViewById<Button>(R.id.helpButton)
-        val profileAvatar = findViewById<ImageView>(R.id.profileAvatar)
-        val profileName = findViewById<TextView>(R.id.profileName)
-        val profileEmail = findViewById<TextView>(R.id.profileEmail)
-        val profileId = findViewById<TextView>(R.id.profileId)
-        val profileDate = findViewById<TextView>(R.id.profileDate)
+        val editButton = findViewById<Button>(R.id.editButton)
+
+        // Inicializar las vistas usando las propiedades de la clase
+        profileAvatar = findViewById(R.id.profileAvatar)
+        profileName = findViewById(R.id.profileName)
+        profileEmail = findViewById(R.id.profileEmail)
+        profileId = findViewById(R.id.profileId)
+        profileDate = findViewById(R.id.profileDate)
 
         // Obtener usuario de la intent
         val usuario = intent.getParcelableExtra<Usuario>("usuario")
@@ -74,6 +86,12 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, HelpActivity::class.java)
             startActivity(intent)
         }
+
+        editButton.setOnClickListener {
+            usuario?.let { user ->
+                EditProfileActivity.start(this, user, 1)
+            }
+        }
     }
 
     companion object {
@@ -82,6 +100,33 @@ class ProfileActivity : AppCompatActivity() {
                 putExtra("usuario", usuario)
             }
             context.startActivity(intent)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val usuarioActualizado = data?.getParcelableExtra<Usuario>("usuarioActualizado")
+            usuarioActualizado?.let { user ->
+                // Actualizar la vista con los nuevos datos
+                profileName.text = "${user.nombre} ${user.apellido}"
+                profileEmail.text = user.email
+
+                // Si hay una nueva foto, cargarla
+                if (user.foto.isNotEmpty() && user.foto != "null") {
+                    val fotoUrl = NetworkUtils.construirUrlCompleta(user.foto)
+                    Glide.with(this)
+                        .load(fotoUrl)
+                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .placeholder(android.R.color.darker_gray)
+                        .error(android.R.drawable.ic_menu_gallery)
+                        .into(profileAvatar)
+                }
+
+                // Actualizar el objeto usuario
+                usuario = user
+            }
         }
     }
 }
