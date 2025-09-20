@@ -19,10 +19,12 @@ class WelcomeActivity : BaseActivity() {
         setContentView(R.layout.activity_welcome)
         Log.d(TAG, "onCreate: WelcomeActivity creada")
 
-        // Ahora el usuario viene de la variable heredada de BaseActivity
-        Log.d(TAG, "onCreate: Usuario recibido - ID: ${usuario?.idUsuario}, Nombre: ${usuario?.nombre} ${usuario?.apellido}")
+        //Log.d(TAG, "onCreate: Usuario recibido - ID: ${usuario?.idUsuario}, Nombre: ${usuario?.nombre} ${usuario?.apellido}")
+        usuario = SessionManager.usuario
 
-        val userName = intent.getStringExtra(EXTRA_USER_NAME) ?: "${usuario?.nombre ?: ""} ${usuario?.apellido ?: ""}"
+        Log.d(TAG, "onCreate: Usuario obtenido - ID: ${usuario?.idUsuario}")
+
+        val userName = "${usuario?.nombre ?: ""} ${usuario?.apellido ?: ""}".trim()
 
         val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
@@ -34,9 +36,7 @@ class WelcomeActivity : BaseActivity() {
 
         // Configurar botón de perfil
         profileButton.setOnClickListener {
-            usuario?.let {
-                ProfileActivity.start(this, it)
-            }
+            ProfileActivity.start(this)
         }
 
         // Cargar avatar si existe
@@ -64,15 +64,9 @@ class WelcomeActivity : BaseActivity() {
     }
 
     companion object {
-        const val EXTRA_USER_NAME = "extra_user_name"
-        const val EXTRA_USUARIO = "extra_usuario"
-
-        fun start(context: Context, nombreCompleto: String, usuario: Usuario) {
-            Log.d("WelcomeActivity", "start: Iniciando WelcomeActivity con usuario ID: ${usuario.idUsuario}")
-            val intent = Intent(context, WelcomeActivity::class.java).apply {
-                putExtra(EXTRA_USER_NAME, nombreCompleto)
-                putExtra(EXTRA_USUARIO, usuario)
-            }
+        fun start(context: Context) {
+            Log.d("WelcomeActivity", "start: Iniciando WelcomeActivity")
+            val intent = Intent(context, WelcomeActivity::class.java)
             context.startActivity(intent)
         }
     }

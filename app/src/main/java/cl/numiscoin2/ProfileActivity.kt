@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -23,7 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profileId: TextView
     private lateinit var profileDate: TextView
 
-    private var usuario: Usuario? = null
+    //private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,23 +41,22 @@ class ProfileActivity : AppCompatActivity() {
         profileId = findViewById(R.id.profileId)
         profileDate = findViewById(R.id.profileDate)
 
-        // Obtener usuario de la intent
-        val usuario = intent.getParcelableExtra<Usuario>("usuario")
+        //usuario = SessionManager.usuario
 
-        if (usuario != null) {
+        /*if (usuario != null) {
             // Mostrar datos del usuario
-            profileName.text = "${usuario.nombre} ${usuario.apellido}"
-            profileEmail.text = usuario.email
-            profileId.text = "ID: ${usuario.idUsuario}"
-            profileDate.text = "Miembro desde: ${usuario.fechaCreacion}"
+            profileName.text = "${usuario!!.nombre} ${usuario!!.apellido}"
+            profileEmail.text = usuario!!.email
+            profileId.text = "ID: ${usuario!!.idUsuario}"
+            profileDate.text = "Miembro desde: ${usuario!!.fechaCreacion}"
 
             val requestOptions = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(false)
 
             // Cargar foto de perfil si existe
-            if (usuario.foto.isNotEmpty() && usuario.foto != "null") {
-                val fotoUrl = NetworkUtils.construirUrlCompleta(usuario.foto)
+            if (usuario!!.foto.isNotEmpty() && usuario!!.foto != "null") {
+                val fotoUrl = NetworkUtils.construirUrlCompleta(usuario!!.foto)
                 Log.d("OnCreate", "URL completa de la foto: $fotoUrl")
 
                 try {
@@ -76,7 +76,8 @@ class ProfileActivity : AppCompatActivity() {
                 // Usar un placeholder más visible
                 profileAvatar.setImageResource(android.R.drawable.ic_menu_gallery)
             }
-        }
+        }*/
+        cargarDatosUsuario()
 
         backButton.setOnClickListener {
             finish()
@@ -88,17 +89,13 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         editButton.setOnClickListener {
-            usuario?.let { user ->
-                EditProfileActivity.start(this, user, 1)
-            }
+            EditProfileActivity.start(this, 1)
         }
     }
 
     companion object {
-        fun start(context: Context, usuario: Usuario) {
-            val intent = Intent(context, ProfileActivity::class.java).apply {
-                putExtra("usuario", usuario)
-            }
+        fun start(context: Context) {
+            val intent = Intent(context, ProfileActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -107,6 +104,12 @@ class ProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            // Actualizar datos desde SessionManager (que ya fue actualizado por EditProfileActivity)
+            cargarDatosUsuario()
+            Toast.makeText(this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+        }
+
+        /*if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             val usuarioActualizado = data?.getParcelableExtra<Usuario>("usuarioActualizado")
             usuarioActualizado?.let { user ->
                 // Actualizar la vista con los nuevos datos
@@ -127,6 +130,55 @@ class ProfileActivity : AppCompatActivity() {
                 // Actualizar el objeto usuario
                 usuario = user
             }
+        }*/
+    }
+
+    private fun cargarDatosUsuario() {
+        // Obtener usuario de SessionManager cada vez
+        val usuario = SessionManager.usuario
+
+        if (usuario != null) {
+            // Mostrar datos del usuario
+            profileName.text = "${usuario.nombre} ${usuario.apellido}"
+            profileEmail.text = usuario.email
+            profileId.text = "ID: ${usuario.idUsuario}"
+            profileDate.text = "Miembro desde: ${usuario.fechaCreacion}"
+
+            val requestOptions = RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(false)
+
+            // Cargar foto de perfil si existe
+            if (usuario.foto.isNotEmpty() && usuario.foto != "null") {
+                val fotoUrl = NetworkUtils.construirUrlCompleta(usuario.foto)
+                Log.d("ProfileActivity", "URL completa de la foto: $fotoUrl")
+
+                try {
+                    Glide.with(this)
+                        .load(fotoUrl)
+                        .apply(requestOptions)
+                        .placeholder(android.R.color.darker_gray)
+                        .error(android.R.drawable.ic_menu_gallery)
+                        .into(profileAvatar)
+                } catch (e: Exception) {
+                    Log.e("ProfileActivity", "Error cargando imagen con Glide: ${e.message}")
+                    profileAvatar.setImageResource(android.R.drawable.ic_menu_gallery)
+                }
+            } else {
+                Log.d("ProfileActivity", "No hay foto de perfil o está vacía")
+                profileAvatar.setImageResource(android.R.drawable.ic_menu_gallery)
+            }
+        } else {
+            Log.w("ProfileActivity", "No hay usuario en SessionManager")
+            // Redirigir al login si no hay usuario
+            redirigirAlLogin()
         }
+    }
+
+    private fun redirigirAlLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

@@ -9,7 +9,7 @@ data class Usuario(
     @SerializedName("nombre") val nombre: String,
     @SerializedName("apellido") val apellido: String,
     @SerializedName("email") val email: String,
-    @SerializedName("password") val password: String,
+    @SerializedName("password") val password: String? = null,
     @SerializedName("fecha_creacion") val fechaCreacion: String,
     @SerializedName("foto") val foto: String
 ) : Parcelable {

@@ -10,12 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 open class BaseActivity : AppCompatActivity() {
 
     // Variable protegida para almacenar el usuario
-    protected var usuario: Usuario? = null
+    protected var usuario: Usuario? = SessionManager.usuario
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Obtener el usuario del intent si está disponible
-        usuario = intent.getParcelableExtra(WelcomeActivity.EXTRA_USUARIO)
     }
 
     protected fun setupBottomMenu() {
@@ -24,17 +22,6 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuHome)
             if (this !is WelcomeActivity) {
                 val intent = Intent(this, WelcomeActivity::class.java)
-                // Pasar el usuario si está disponible
-                usuario?.let { user ->
-                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
-                }
-                // Pasar el nombre de usuario si está disponible
-                if (this is CurrencyActivity) {
-                    val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
-                    userName?.let {
-                        intent.putExtra(WelcomeActivity.EXTRA_USER_NAME, it)
-                    }
-                }
                 startActivity(intent)
                 finish()
             }
@@ -45,17 +32,6 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCalculator)
             if (this !is CalculatorActivity) {
                 val intent = Intent(this, CalculatorActivity::class.java)
-                // Pasar el usuario si está disponible
-                usuario?.let { user ->
-                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
-                }
-                // Pasar el nombre de usuario si está disponible
-                if (this is CurrencyActivity) {
-                    val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
-                    userName?.let {
-                        intent.putExtra("user_name", it)
-                    }
-                }
                 startActivity(intent)
                 finish()
             }
@@ -66,17 +42,6 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCollection)
             if (this !is CollectionActivity) {
                 val intent = Intent(this, CollectionActivity::class.java)
-                // Pasar el usuario si está disponible - ESTA ES LA PARTE CLAVE
-                usuario?.let { user ->
-                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
-                }
-                // Pasar el nombre de usuario si está disponible
-                if (this is CurrencyActivity) {
-                    val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
-                    userName?.let {
-                        intent.putExtra("user_name", it)
-                    }
-                }
                 startActivity(intent)
                 finish()
             }
@@ -87,18 +52,6 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuCurrency)
             if (this !is CurrencyActivity) {
                 val intent = Intent(this, CurrencyActivity::class.java)
-                // Pasar el usuario si está disponible
-                usuario?.let { user ->
-                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
-                }
-                // Pasar el nombre de usuario si está disponible
-                val userName = when (this) {
-                    is WelcomeActivity -> intent.getStringExtra(WelcomeActivity.EXTRA_USER_NAME)
-                    else -> null
-                }
-                userName?.let {
-                    intent.putExtra(CurrencyActivity.EXTRA_USER_NAME, it)
-                }
                 startActivity(intent)
                 finish()
             }
@@ -109,17 +62,6 @@ open class BaseActivity : AppCompatActivity() {
             highlightMenuItem(R.id.menuMarketplace)
             if (this !is MarketplaceActivity) {
                 val intent = Intent(this, MarketplaceActivity::class.java)
-                // Pasar el usuario si está disponible
-                usuario?.let { user ->
-                    intent.putExtra(WelcomeActivity.EXTRA_USUARIO, user)
-                }
-                // Pasar el nombre de usuario si está disponible
-                if (this is CurrencyActivity) {
-                    val userName = intent.getStringExtra(CurrencyActivity.EXTRA_USER_NAME)
-                    userName?.let {
-                        intent.putExtra("user_name", it)
-                    }
-                }
                 startActivity(intent)
                 finish()
             }
@@ -143,6 +85,21 @@ open class BaseActivity : AppCompatActivity() {
                     menuText.setTextColor(0xFF888888.toInt()) // Gris para no seleccionado
                 }
             }
+        }
+    }
+
+    // Función auxiliar para verificar si hay usuario logueado
+    protected fun checkUserLoggedIn(): Boolean {
+        return SessionManager.isLoggedIn && SessionManager.usuario != null
+    }
+
+    // Función para redirigir al login si no hay usuario
+    protected fun redirectToLoginIfNotLogged() {
+        if (!checkUserLoggedIn()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 }

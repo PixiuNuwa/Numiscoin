@@ -67,9 +67,9 @@ class LoginActivity : AppCompatActivity() {
             runOnUiThread {
                 showLoading(false)
                 if (success && usuario != null) {
-                    // Login exitoso con objeto usuario
-                    val nombreCompleto = "${usuario.nombre} ${usuario.apellido}"
-                    WelcomeActivity.start(this@LoginActivity, nombreCompleto, usuario)
+                    SessionManager.login(usuario)
+                    //val nombreCompleto = "${usuario.nombre} ${usuario.apellido}"
+                    WelcomeActivity.start(this@LoginActivity)
                     finish()
                 } else {
                     // Error en el login

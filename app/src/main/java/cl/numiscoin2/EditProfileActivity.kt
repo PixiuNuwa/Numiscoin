@@ -23,8 +23,11 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        // Obtener usuario de la intent
-        usuario = intent.getParcelableExtra("usuario")!!
+        usuario = SessionManager.usuario ?: run {
+            Toast.makeText(this, "Error: No se pudo cargar la información del usuario", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
         // Inicializar vistas
         val profileAvatar = findViewById<ImageView>(R.id.editProfileAvatar)
@@ -174,7 +177,17 @@ class EditProfileActivity : AppCompatActivity() {
             runOnUiThread {
                 if (success && usuarioActualizado != null) {
                     // Mantener la foto actualizada si se cambió
-                    val usuarioFinal = usuarioActualizado.copy(foto = usuario.foto)
+                    val usuarioFinal = if (usuarioActualizado.password == null) {
+                        // Si el servidor no devuelve password, mantener el actual
+                        usuarioActualizado.copy(
+                            foto = usuario.foto,
+                            password = usuario.password // ← Mantener el password actual
+                        )
+                    } else {
+                        // Si el servidor devuelve password, usarlo
+                        usuarioActualizado.copy(foto = usuario.foto)
+                    }
+                    SessionManager.usuario = usuarioFinal
                     finalizarActualizacion(usuarioFinal, "Perfil actualizado correctamente")
                 } else {
                     Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
@@ -210,10 +223,8 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun start(activity: Activity, usuario: Usuario, requestCode: Int) {
-            val intent = Intent(activity, EditProfileActivity::class.java).apply {
-                putExtra("usuario", usuario)
-            }
+        fun start(activity: Activity, requestCode: Int) {
+            val intent = Intent(activity, EditProfileActivity::class.java)
             activity.startActivityForResult(intent, requestCode)
         }
     }

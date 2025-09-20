@@ -13,7 +13,7 @@ import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
     private val gson = Gson()
-    private const val BASE_URL = "https://bb41cd88bd94.ngrok-free.app" //"https://7be5289e8882.ngrok-free.app"
+    private const val BASE_URL = "https://7be5289e8882.ngrok-free.app"
     public const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     // Función existente

@@ -105,7 +105,7 @@ class AddCoinActivity : AppCompatActivity() {
 
     private fun obtenerDatosUsuario() {
         // Obtener el objeto Usuario del Intent
-        val usuario = intent.getParcelableExtra<Usuario>(WelcomeActivity.EXTRA_USUARIO)
+        val usuario = SessionManager.usuario
 
         if (usuario != null) {
             idUsuario = usuario.idUsuario.toInt() // Obtener idUsuario del objeto Usuario
@@ -120,6 +120,11 @@ class AddCoinActivity : AppCompatActivity() {
         } else {
             Log.w(TAG, "Advertencia: No se recibió objeto usuario")
             Toast.makeText(this, "Error: No se pudo identificar el usuario", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -219,29 +224,6 @@ class AddCoinActivity : AppCompatActivity() {
         startActivityForResult(intent, requestCode)
     }
 
-    /*private fun tomarFoto(requestCode: Int) {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    Toast.makeText(this, "Error creando archivo", Toast.LENGTH_SHORT).show()
-                    null
-                }
-
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this,
-                        "${packageName}.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    currentPhotoRequestCode = requestCode
-                    startActivityForResult(takePictureIntent, requestCode)
-                }
-            }
-        }
-    }*/
     private fun tomarFoto(requestCode: Int) {
         val intent = Intent(this, CameraWithOverlayActivity::class.java)
         currentPhotoRequestCode = requestCode
@@ -388,8 +370,6 @@ class AddCoinActivity : AppCompatActivity() {
             }
         }.start()
     }
-
-    // ... (código anterior sin cambios)
 
     private fun enviarDatosAlServidor(monedaRequest: MonedaRequest) {
         NetworkUtils.createMoneda(monedaRequest) { idObjeto, error ->
