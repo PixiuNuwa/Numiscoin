@@ -47,3 +47,25 @@ data class Usuario(
         }
     }
 }
+
+data class Divisa(
+    val id: Int,
+    val codigo: String,
+    val nombre: String,
+    val simbolo: String,
+    val valorEnCLP: Double,
+    val ultimaActualizacion: String,
+    val esMonedaBase: Boolean
+)
+
+data class Metal(
+    val id: Int,
+    val tipoMetal: Int,
+    val quilates: Int,
+    val pureza: Double,
+    val unidad: String,
+    val precioClp: Double,
+    val fuente: String,
+    val creadoEn: String,
+    val actualizadoEn: String
+)

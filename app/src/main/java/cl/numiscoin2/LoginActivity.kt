@@ -2,6 +2,7 @@ package cl.numiscoin2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        SessionManager.init(this)
 
         initializeViews()
         setupListeners()
@@ -68,12 +71,50 @@ class LoginActivity : AppCompatActivity() {
                 showLoading(false)
                 if (success && usuario != null) {
                     SessionManager.login(usuario)
-                    //val nombreCompleto = "${usuario.nombre} ${usuario.apellido}"
+                    loadInitialData()
                     WelcomeActivity.start(this@LoginActivity)
                     finish()
                 } else {
                     // Error en el login
                     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun loadInitialData() {
+        // Cargar paises si no están en caché o son inválidos
+        if (!SessionManager.isPaisesCacheValid()) {
+            NetworkUtils.getPaises { paises, error ->
+                if (paises != null) {
+                    SessionManager.savePaises(paises)
+                    Log.d("LoginActivity", "Países cargados y guardados en caché")
+                } else {
+                    Log.e("LoginActivity", "Error cargando países: $error")
+                }
+            }
+        }
+
+        // Cargar divisas si no están en caché o son inválidas
+        if (!SessionManager.isDivisasCacheValid()) {
+            NetworkUtils.getDivisas { divisas, error ->
+                if (divisas != null) {
+                    SessionManager.saveDivisas(divisas)
+                    Log.d("LoginActivity", "Divisas cargadas y guardadas en caché")
+                } else {
+                    Log.e("LoginActivity", "Error cargando divisas: $error")
+                }
+            }
+        }
+
+        // Cargar metales si no están en caché o son inválidos
+        if (!SessionManager.isMetalesCacheValid()) {
+            NetworkUtils.getMetales { metales, error ->
+                if (metales != null) {
+                    SessionManager.saveMetales(metales)
+                    Log.d("LoginActivity", "Metales cargados y guardados en caché")
+                } else {
+                    Log.e("LoginActivity", "Error cargando metales: $error")
                 }
             }
         }

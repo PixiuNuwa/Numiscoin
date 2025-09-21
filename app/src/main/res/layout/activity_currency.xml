@@ -161,7 +161,7 @@
 
             </LinearLayout>
 
-            <!-- Sección de valor del oro -->
+            <!-- Conversor de Oro -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,7 +174,98 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Valor del Oro"
+                    android:text="Conversor de Oro"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center" />
+
+                <EditText
+                    android:id="@+id/goldAmountInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Cantidad de oro"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#AAAAAA"
+                    android:inputType="numberDecimal"
+                    android:background="#2A2A2A"
+                    android:padding="12dp"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quilates:"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp" />
+
+                    <Spinner
+                        android:id="@+id/goldCaratSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="#2A2A2A" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unidad:"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp" />
+
+                    <Spinner
+                        android:id="@+id/goldUnitSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="#2A2A2A" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/convertGoldButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Calcular Valor"
+                    android:textColor="@android:color/white"
+                    android:background="#FFD700" />
+
+                <TextView
+                    android:id="@+id/goldResultText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp" />
+
+            </LinearLayout>
+
+            <!-- Sección de precios de referencia del oro -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#1E1E1E"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Precios de Referencia del Oro"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -191,12 +282,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Oro (USD/oz):"
+                        android:text="Oro 24k (CLP/g):"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/goldUsdPerOz"
+                        android:id="@+id/gold24kPerGram"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -217,16 +308,16 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Oro (EUR/oz):"
+                        android:text="Oro 22k (CLP/g):"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/goldEurPerOz"
+                        android:id="@+id/gold22kPerGram"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="€0.00"
+                        android:text="$0.00"
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:textAlignment="textEnd" />
@@ -243,12 +334,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Oro (USD/g):"
+                        android:text="Oro 24k (CLP/oz):"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/goldUsdPerGram"
+                        android:id="@+id/gold24kPerOz"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -268,16 +359,16 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Oro (EUR/g):"
+                        android:text="Oro 22k (CLP/oz):"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/goldEurPerGram"
+                        android:id="@+id/gold22kPerOz"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="€0.00"
+                        android:text="$0.00"
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:textAlignment="textEnd" />
