@@ -116,7 +116,6 @@ object SessionManager {
         return System.currentTimeMillis() - lastUpdate < CACHE_VALIDITY_MS
     }
 
-    // En SessionManager.kt, agregar estos métodos:
 
     fun getUsdRate(): Double {
         return getDivisas()?.find { it.codigo == "USD" }?.valorEnCLP ?: 950.0

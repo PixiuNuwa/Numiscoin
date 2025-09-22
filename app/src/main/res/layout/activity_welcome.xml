@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true">
 
     <!-- Botón de avatar en esquina superior derecha -->
     <ImageButton
@@ -66,6 +67,7 @@
         android:orientation="horizontal"
         android:background="#2D3330"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
         android:weightSum="5">
 
         <!-- Botón 1: Home -->

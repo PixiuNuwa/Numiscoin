@@ -9,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity : AppCompatActivity() {
 
-    // Variable protegida para almacenar el usuario
     protected var usuario: Usuario? = SessionManager.usuario
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // ELIMINAR toda configuración de system windows
+        // El sistema por defecto ya maneja correctamente la posición del contenido
     }
 
     protected fun setupBottomMenu() {
@@ -80,20 +81,18 @@ open class BaseActivity : AppCompatActivity() {
                 val menuText = menuItem.getChildAt(1) as TextView
 
                 if (menuId == selectedMenuId) {
-                    menuText.setTextColor(0xFF0000FF.toInt()) // Azul para seleccionado
+                    menuText.setTextColor(0xFF0000FF.toInt())
                 } else {
-                    menuText.setTextColor(0xFF888888.toInt()) // Gris para no seleccionado
+                    menuText.setTextColor(0xFF888888.toInt())
                 }
             }
         }
     }
 
-    // Función auxiliar para verificar si hay usuario logueado
     protected fun checkUserLoggedIn(): Boolean {
         return SessionManager.isLoggedIn && SessionManager.usuario != null
     }
 
-    // Función para redirigir al login si no hay usuario
     protected fun redirectToLoginIfNotLogged() {
         if (!checkUserLoggedIn()) {
             val intent = Intent(this, LoginActivity::class.java)

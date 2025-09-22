@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 
 class WelcomeActivity : BaseActivity() {
@@ -17,9 +16,8 @@ class WelcomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-        Log.d(TAG, "onCreate: WelcomeActivity creada")
 
-        //Log.d(TAG, "onCreate: Usuario recibido - ID: ${usuario?.idUsuario}, Nombre: ${usuario?.nombre} ${usuario?.apellido}")
+        Log.d(TAG, "onCreate: WelcomeActivity creada")
         usuario = SessionManager.usuario
 
         Log.d(TAG, "onCreate: Usuario obtenido - ID: ${usuario?.idUsuario}")
@@ -34,12 +32,10 @@ class WelcomeActivity : BaseActivity() {
                 "Email: ${usuario?.email ?: "N/A"}\n" +
                 "ID: ${usuario?.idUsuario ?: "N/A"}"
 
-        // Configurar botón de perfil
         profileButton.setOnClickListener {
             ProfileActivity.start(this)
         }
 
-        // Cargar avatar si existe
         usuario?.let { user ->
             if (user.foto.isNotEmpty()) {
                 val fotoUrl = NetworkUtils.construirUrlCompleta(user.foto)
@@ -56,9 +52,8 @@ class WelcomeActivity : BaseActivity() {
             finish()
         }
 
-        // Configurar menú inferior
         setupBottomMenu()
-        highlightMenuItem(R.id.menuHome) // Marcar Home como seleccionado
+        highlightMenuItem(R.id.menuHome)
 
         Log.d(TAG, "onCreate: UI configurada correctamente")
     }
