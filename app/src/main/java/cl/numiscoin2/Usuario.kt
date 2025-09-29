@@ -11,7 +11,8 @@ data class Usuario(
     @SerializedName("email") val email: String,
     @SerializedName("password") val password: String? = null,
     @SerializedName("fecha_creacion") val fechaCreacion: String,
-    @SerializedName("foto") val foto: String
+    @SerializedName("foto") val foto: String,
+    @SerializedName("cantidadMonedas") val cantidadMonedas: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
@@ -20,7 +21,8 @@ data class Usuario(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?:""
+        parcel.readString() ?:"",
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -31,6 +33,7 @@ data class Usuario(
         parcel.writeString(password)
         parcel.writeString(fechaCreacion)
         parcel.writeString(foto)
+        parcel.writeInt(cantidadMonedas)
     }
 
     override fun describeContents(): Int {

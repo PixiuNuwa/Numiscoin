@@ -3,14 +3,8 @@ package cl.numiscoin2
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -19,14 +13,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import com.google.gson.Gson
-import java.io.*
-import java.net.HttpURLConnection
-import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class AddCoinActivity : AppCompatActivity() {
 
@@ -220,17 +207,14 @@ class AddCoinActivity : AppCompatActivity() {
     }
 
     private fun seleccionarFoto(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(ImageUtils.crearIntentGaleria(), requestCode)
     }
 
     private fun tomarFoto(requestCode: Int) {
-        val intent = Intent(this, CameraWithOverlayActivity::class.java)
-        currentPhotoRequestCode = requestCode
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(ImageUtils.crearIntentCamara(this), requestCode)
     }
 
-    @Throws(IOException::class)
+    /*@Throws(IOException::class)
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -241,56 +225,9 @@ class AddCoinActivity : AppCompatActivity() {
         ).apply {
             currentPhotoPath = absolutePath
         }
-    }
+    }*/
 
-    private fun procesarFotoCircular(imagePath: String): Uri? {
-        try {
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            BitmapFactory.decodeFile(imagePath, options)
 
-            // Calcular escala para evitar OutOfMemory
-            var scale = 1
-            while (options.outWidth / scale / 2 >= 1024 && options.outHeight / scale / 2 >= 1024) {
-                scale *= 2
-            }
-
-            options.inJustDecodeBounds = false
-            options.inSampleSize = scale
-            val originalBitmap = BitmapFactory.decodeFile(imagePath, options)
-
-            // Crear bitmap cuadrado del tamaño del círculo
-            val size = minOf(originalBitmap.width, originalBitmap.height)
-            val circularBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(circularBitmap)
-
-            // Calcular posición para centrar el círculo
-            val left = (originalBitmap.width - size) / 2
-            val top = (originalBitmap.height - size) / 2
-            val srcRect = Rect(left, top, left + size, top + size)
-            val dstRect = Rect(0, 0, size, size)
-
-            // Dibujar la parte circular
-            canvas.drawBitmap(originalBitmap, srcRect, dstRect, null)
-
-            // Guardar la imagen procesada
-            val file = File.createTempFile(
-                "circular_${System.currentTimeMillis()}",
-                ".jpg",
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            )
-
-            FileOutputStream(file).use { out ->
-                circularBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-            }
-
-            return Uri.fromFile(file)
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error procesando foto circular: ${e.message}")
-            return null
-        }
-    }
 
     private fun guardarMoneda() {
         // Verificar que tenemos los datos del usuario
@@ -372,7 +309,7 @@ class AddCoinActivity : AppCompatActivity() {
     }
 
     private fun enviarDatosAlServidor(monedaRequest: MonedaRequest) {
-        NetworkUtils.createMoneda(monedaRequest) { idObjeto, error ->
+        NetworkObjectUtils.createMoneda(monedaRequest) { idObjeto, error ->
             runOnUiThread {
                 if (error != null) {
                     hideLoading()
@@ -432,7 +369,7 @@ class AddCoinActivity : AppCompatActivity() {
             val fotoUri = fotoPair.first // Extraer el Uri del Pair
             val numeroFoto = fotoPair.second // Extraer el número de foto
 
-            NetworkUtils.uploadPhoto(idObjeto, fotoUri, this, numeroFoto) { success, error ->
+            NetworkObjectUtils.uploadPhoto(idObjeto, fotoUri, this, numeroFoto) { success, error ->
                 if (success) {
                     fotosSubidasExitosamente++
                     Log.d(TAG, "Foto $numeroFoto subida exitosamente")
@@ -470,122 +407,33 @@ class AddCoinActivity : AppCompatActivity() {
         }
     }
 
-    // MÉTODO MODIFICADO: Para enviar una foto individual
-    private fun enviarFotoIndividualAlServidor(idObjeto: Long, fotoUri: Uri, numeroFoto: Int) {
-        Log.d(TAG, "Subiendo foto $numeroFoto al servidor con id: $idObjeto")
-        val url = URL("https://5147bbbf57c8.ngrok-free.app/api/jdbc/upload/images")
-        val connection = url.openConnection() as HttpURLConnection
 
-        try {
-            connection.requestMethod = "POST"
-            connection.doOutput = true
-            connection.useCaches = false
-
-            val boundary = "---------------------------${System.currentTimeMillis()}"
-            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-
-            val outputStream = DataOutputStream(connection.outputStream)
-
-            // Agregar parámetro idObjeto
-            outputStream.writeBytes("--$boundary\r\n")
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"idObjeto\"\r\n\r\n")
-            outputStream.writeBytes("$idObjeto\r\n")
-            outputStream.flush()
-
-            // Agregar archivo de imagen con nombre único para cada foto
-            outputStream.writeBytes("--$boundary\r\n")
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"images\"; filename=\"foto_${idObjeto}_$numeroFoto.jpg\"\r\n")
-            outputStream.writeBytes("Content-Type: image/jpeg\r\n\r\n")
-            outputStream.flush()
-
-            // Escribir los bytes de la imagen
-            val inputStream = contentResolver.openInputStream(fotoUri)
-            inputStream?.use { input ->
-                val buffer = ByteArray(4096)
-                var bytesRead: Int
-                while (input.read(buffer).also { bytesRead = it } != -1) {
-                    outputStream.write(buffer, 0, bytesRead)
-                }
-            }
-
-            outputStream.writeBytes("\r\n")
-            outputStream.writeBytes("--$boundary--\r\n")
-            outputStream.flush()
-            outputStream.close()
-
-            val responseCode = connection.responseCode
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                val response = connection.inputStream.bufferedReader().use { it.readText() }
-                Log.d(TAG, "Foto $numeroFoto subida exitosamente: $response")
-            } else {
-                val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() } ?: "Sin detalles"
-                Log.e(TAG, "Error al subir foto $numeroFoto: $responseCode - $errorResponse")
-                throw IOException("Error $responseCode: $errorResponse")
-            }
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error al enviar foto $numeroFoto: ${e.message}")
-            throw e
-        } finally {
-            connection.disconnect()
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                PICK_IMAGE_REQUEST_1 -> {
-                    fotoUri = data?.data
-                    ivFoto.setImageURI(fotoUri)
-                    ivFoto.visibility = ImageView.VISIBLE
-                }
-                PICK_IMAGE_REQUEST_2 -> {
-                    fotoUri2 = data?.data
-                    ivFoto2.setImageURI(fotoUri2)
-                    ivFoto2.visibility = ImageView.VISIBLE
-                }
-                PICK_IMAGE_REQUEST_3 -> {
-                    fotoUri3 = data?.data
-                    ivFoto3.setImageURI(fotoUri3)
-                    ivFoto3.visibility = ImageView.VISIBLE
-                }
-                PICK_IMAGE_REQUEST_4 -> {
-                    fotoUri4 = data?.data
-                    ivFoto4.setImageURI(fotoUri4)
-                    ivFoto4.visibility = ImageView.VISIBLE
-                }
-                in arrayOf(TAKE_PHOTO_REQUEST_1, TAKE_PHOTO_REQUEST_2,
-                    TAKE_PHOTO_REQUEST_3, TAKE_PHOTO_REQUEST_4) -> {
-
-                    val photoPath = data?.getStringExtra(CameraWithOverlayActivity.EXTRA_OUTPUT_URI)
-                    photoPath?.let { path ->
-                        val processedUri = procesarFotoCircular(path)
-                        processedUri?.let { uri ->
-                            when (requestCode) {
-                                TAKE_PHOTO_REQUEST_1 -> {
-                                    fotoUri = uri
-                                    ivFoto.setImageURI(uri)
-                                    ivFoto.visibility = ImageView.VISIBLE
-                                }
-                                TAKE_PHOTO_REQUEST_2 -> {
-                                    fotoUri2 = uri
-                                    ivFoto2.setImageURI(uri)
-                                    ivFoto2.visibility = ImageView.VISIBLE
-                                }
-                                TAKE_PHOTO_REQUEST_3 -> {
-                                    fotoUri3 = uri
-                                    ivFoto3.setImageURI(uri)
-                                    ivFoto3.visibility = ImageView.VISIBLE
-                                }
-                                TAKE_PHOTO_REQUEST_4 -> {
-                                    fotoUri4 = uri
-                                    ivFoto4.setImageURI(uri)
-                                    ivFoto4.visibility = ImageView.VISIBLE
-                                }
-                            }
-                        }
+        ImageUtils.manejarResultadoFoto(this, requestCode, resultCode, data) { uri, fotoIndex ->
+            if (uri != null) {
+                when (fotoIndex) {
+                    1 -> {
+                        fotoUri = uri
+                        ivFoto.setImageURI(uri)
+                        ivFoto.visibility = ImageView.VISIBLE
+                    }
+                    2 -> {
+                        fotoUri2 = uri
+                        ivFoto2.setImageURI(uri)
+                        ivFoto2.visibility = ImageView.VISIBLE
+                    }
+                    3 -> {
+                        fotoUri3 = uri
+                        ivFoto3.setImageURI(uri)
+                        ivFoto3.visibility = ImageView.VISIBLE
+                    }
+                    4 -> {
+                        fotoUri4 = uri
+                        ivFoto4.setImageURI(uri)
+                        ivFoto4.visibility = ImageView.VISIBLE
                     }
                 }
             }
@@ -601,7 +449,7 @@ class AddCoinActivity : AppCompatActivity() {
     private fun cargarPaises() {
         showLoading()
 
-        NetworkUtils.getPaises { paises, error ->
+        NetworkDataUtils.getPaises { paises, error ->
             runOnUiThread {
                 if (error != null) {
                     hideLoading()
@@ -634,4 +482,5 @@ class AddCoinActivity : AppCompatActivity() {
             null
         }
     }
+
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Numiscoin2</string>
+    <string name="app_name">Numiscoin</string>
     <string name="title_entrar">ENTRAR</string>
     <string name="hint_email">Email o Nombre de Usuario</string>
     <string name="hint_password">Contraseña</string>
@@ -13,4 +13,56 @@
     <string name="error_title">Error de autenticación</string>
     <string name="button_accept">Aceptar</string>
     <string name="coin_image_desc">Imagen de la moneda</string>
+
+
+    <string name="choose_membership">ELIGE TU MEMBRESÍA</string>
+    <string name="continue_text">CONTINUAR</string>
+    <string name="renewable_info">Renovable automáticamente. Cancela en cualquier momento</string>
+    <string name="terms_of_service">Términos del servicio</string>
+    <string name="privacy_policy">Políticas de Privacidad</string>
+
+    <!-- Membership Titles -->
+    <string name="free">GRATIS</string>
+    <string name="silver">SILVER</string>
+    <string name="gold">GOLD</string>
+    <string name="platinum">PLATINUM</string>
+
+    <!-- Prices -->
+    <!--string name="free_price">$0 / 60 Días</string>
+    <string name="silver_price">$14.990 / Anual</string>
+    <string name="gold_price">$18.990 / Anual</string>
+    <string name="platinum_price">$24.990 / Anual</string-->
+    <string name="free_price"> </string>
+    <string name="silver_price"> </string>
+    <string name="gold_price"> </string>
+    <string name="platinum_price"> </string>
+
+    <!-- Descriptions -->
+    <string name="free_description">Disfruta de 60 días para cargar hasta 3 monedas y acceder a funcionalidades básicas. Una oportunidad perfecta para conocer la app sin compromiso.</string>
+    <string name="silver_description">Ideal para quien comienza a organizar su colección o tiene un número de piezas definido. Con la membresía Silver, puedes catalogar de manera ordenada y permanente hasta 800 monedas.</string>
+    <string name="gold_description">Para el coleccionista activo que está en constante crecimiento. Esta membresía duplica tu capacidad, permitiéndote registrar hasta 1.600 monedas.</string>
+    <string name="platinum_description">La solución definitiva para el coleccionista experto, investigador o comerciante. Con la membresía Platinum, no existen límites: cataloga cantidades ilimitadas de monedas.</string>
+
+    <!-- Benefits -->
+    <string name="free_benefit">Beneficio Clave: Ideal para comenzar a explorar.</string>
+    <string name="silver_benefit">Beneficio Clave: Control total y seguro sobre una colección de tamaño medio.</string>
+    <string name="gold_benefit">Beneficio Clave: Espacio amplio y herramientas mejoradas para coleccionistas serios.</string>
+    <string name="platinum_benefit">Beneficio Clave: Libertad total y el conjunto completo de herramientas para una gestión profesional.</string>
+
+    <!-- Nuevas cadenas para register -->
+    <string name="heading_registro">REGISTRO</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_apellido">Apellido</string>
+    <string name="hint_confirm_password">Confirmar Contraseña</string>
+    <string name="button_continuar">CONTINUAR</string>
+    <string name="disclaimer_text">Al crear una cuenta, aceptas nuestros\nTérminos de servicio y Política de privacidad.</string>
+
+    <!-- Strings específicos para login -->
+    <string name="login_title">ENTRAR</string>
+    <string name="username_hint">Email o Nombre de Usuario</string>
+    <string name="password_hint">Ingresa tu contraseña</string>
+    <!--string name="forgot_password">¿Olvidaste tu contraseña? Haz click Aquí</string>
+    <string name="create_account">¿No tienes una cuenta? Crear cuenta</string-->
+    <string name="continue_button">CONTINUAR</string>
+
 </resources>

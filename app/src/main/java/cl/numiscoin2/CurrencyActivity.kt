@@ -82,7 +82,7 @@ class CurrencyActivity : BaseActivity() {
             eurRateText.text = "1 EUR = ${String.format("%.2f", eurRate)} CLP"
         } else {
             // Si no hay datos en caché, cargar desde servidor
-            NetworkUtils.getDivisas { divisas, error ->
+            NetworkDataUtils.getDivisas { divisas, error ->
                 runOnUiThread {
                     if (divisas != null) {
                         SessionManager.saveDivisas(divisas)
@@ -115,7 +115,7 @@ class CurrencyActivity : BaseActivity() {
             processMetales(metales)
         } else {
             // Si no hay datos en caché, cargar desde servidor
-            NetworkUtils.getMetales { metales, error ->
+            NetworkDataUtils.getMetales { metales, error ->
                 runOnUiThread {
                     if (metales != null) {
                         SessionManager.saveMetales(metales)

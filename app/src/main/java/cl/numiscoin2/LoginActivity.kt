@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performRealLogin(email: String, password: String) {
-        NetworkUtils.performLogin(email, password) { success, message, usuario ->
+        NetworkUserUtils.performLogin(email, password) { success, message, usuario ->
             runOnUiThread {
                 showLoading(false)
                 if (success && usuario != null) {
@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loadInitialData() {
         // Cargar paises si no están en caché o son inválidos
         if (!SessionManager.isPaisesCacheValid()) {
-            NetworkUtils.getPaises { paises, error ->
+            NetworkDataUtils.getPaises { paises, error ->
                 if (paises != null) {
                     SessionManager.savePaises(paises)
                     Log.d("LoginActivity", "Países cargados y guardados en caché")
@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Cargar divisas si no están en caché o son inválidas
         if (!SessionManager.isDivisasCacheValid()) {
-            NetworkUtils.getDivisas { divisas, error ->
+            NetworkDataUtils.getDivisas { divisas, error ->
                 if (divisas != null) {
                     SessionManager.saveDivisas(divisas)
                     Log.d("LoginActivity", "Divisas cargadas y guardadas en caché")
@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Cargar metales si no están en caché o son inválidos
         if (!SessionManager.isMetalesCacheValid()) {
-            NetworkUtils.getMetales { metales, error ->
+            NetworkDataUtils.getMetales { metales, error ->
                 if (metales != null) {
                     SessionManager.saveMetales(metales)
                     Log.d("LoginActivity", "Metales cargados y guardados en caché")

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="navigation_bar_height">48dp</dimen>
+    <!-- Espaciado -->
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_xlarge">32dp</dimen>
+
+    <!-- Tamaños de texto -->
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_medium">12sp</dimen>
+    <dimen name="text_large">14sp</dimen>
+    <dimen name="text_xlarge">16sp</dimen>
+    <dimen name="text_title">18sp</dimen>
+
+    <!-- Tamaños de elementos -->
+    <dimen name="card_corner_radius">10dp</dimen>
+    <dimen name="button_corner_radius">20dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
+    <!-- Dimensiones específicas para login -->
+    <dimen name="social_button_size">56dp</dimen>
+    <dimen name="social_spacing">26dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
 </resources>

@@ -96,17 +96,18 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(nombre: String, apellido: String, email: String, password: String) {
-        NetworkUtils.performRegister(nombre, apellido, email, password) { success, message, usuario ->
+        NetworkUserUtils.performRegister(nombre, apellido, email, password) { success, message, usuario ->
             runOnUiThread {
                 if (success && usuario != null) {
+                    goToMembershipActivity(usuario.idUsuario)
                     // Si se creó el usuario exitosamente y hay foto seleccionada, subir la foto
-                    if (selectedImageUri != null && usuario.idUsuario > 0) {
+                    /*if (selectedImageUri != null && usuario.idUsuario > 0) {
                         uploadProfilePhoto(usuario.idUsuario)
                     } else {
                         showLoading(false)
                         Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
                         finish() // Regresar a la pantalla de login
-                    }
+                    }*/
                 } else {
                     showLoading(false)
                     Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_LONG).show()
@@ -115,9 +116,25 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private fun goToMembershipActivity(userId: Long) {
+        showLoading(false)
+        Toast.makeText(this@RegisterActivity, "Cuenta creada exitosamente", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, MembershipActivity::class.java).apply {
+            putExtra("USER_ID", userId)
+            // Puedes agregar más datos del usuario si es necesario
+            putExtra("USER_EMAIL", emailEditText.text.toString())
+        }
+
+        // Limpiar la pila de actividades y empezar nueva sesión
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
     private fun uploadProfilePhoto(idUsuario: Long) {
         selectedImageUri?.let { uri ->
-            NetworkUtils.uploadProfilePhoto(idUsuario, uri, this) { success, message ->
+            NetworkUserUtils.uploadProfilePhoto(idUsuario, uri, this) { success, message ->
                 runOnUiThread {
                     showLoading(false)
                     if (success) {

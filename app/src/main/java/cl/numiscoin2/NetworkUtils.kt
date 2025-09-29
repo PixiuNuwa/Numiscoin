@@ -12,7 +12,7 @@ import java.net.URLEncoder
 import javax.net.ssl.HttpsURLConnection
 
 object NetworkUtils {
-    private val gson = Gson()
+    /*private val gson = Gson()
     private const val BASE_URL = "https://7be5289e8882.ngrok-free.app"
     public const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
@@ -676,5 +676,5 @@ object NetworkUtils {
                 callback(null, "Error de conexión: ${e.message}")
             }
         }.start()
-    }
+    }*/
 }

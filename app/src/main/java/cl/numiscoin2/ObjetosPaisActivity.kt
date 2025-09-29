@@ -52,7 +52,7 @@ class ObjetosPaisActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = android.view.View.VISIBLE
 
-        NetworkUtils.getCollectionObjects(idColeccion) { objetos, error ->
+        NetworkCollectionUtils.getCollectionObjects(idColeccion) { objetos, error ->
             runOnUiThread {
                 progressBar.visibility = android.view.View.GONE
 

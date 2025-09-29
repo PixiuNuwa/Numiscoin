@@ -29,6 +29,9 @@ class CollectionActivity : BaseActivity() {
         highlightMenuItem(R.id.menuCollection)
         Log.d(TAG, "onCreate: Menú inferior configurado")
 
+        val cantidadMonedas = usuario?.cantidadMonedas ?: 0
+        Log.d(TAG, "Cantidad de monedas para este usuario es: $cantidadMonedas")
+
         // Configurar FAB para agregar objetos
         val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
         fabAddCoin.setOnClickListener {
@@ -151,7 +154,7 @@ class CollectionActivity : BaseActivity() {
         }
 
         // Obtener colecciones del usuario
-        NetworkUtils.getUserCollections(usuario!!.idUsuario) { colecciones, error ->
+        NetworkCollectionUtils.getUserCollections(usuario!!.idUsuario) { colecciones, error ->
             runOnUiThread {
                 if (error != null) {
                     showLoading(false)
@@ -165,7 +168,7 @@ class CollectionActivity : BaseActivity() {
                     Log.d("CollectionDebug", "Colección encontrada: ID ${primeraColeccion?.id}, Nombre: ${primeraColeccion?.nombre}")
 
                     // Obtener tipos de objetos de la colección
-                    NetworkUtils.getCollectionObjectTypes(primeraColeccion!!.id) { tipos, errorTipos ->
+                    NetworkCollectionUtils.getCollectionObjectTypes(primeraColeccion!!.id) { tipos, errorTipos ->
                         runOnUiThread {
                             showLoading(false)
 

@@ -1,0 +1,20 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="97dp"
+    android:height="93dp"
+    android:viewportWidth="97"
+    android:viewportHeight="93">
+
+    <!-- Logo simplificado basado en el diseño complejo de Figma -->
+    <path
+        android:fillColor="@color/logo_color"
+        android:pathData="M13.83,0 L89.83,0 C92.17,0 94.06,1.89 94.06,4.23 L94.06,71.86 C94.06,74.2 92.17,76.09 89.83,76.09 L13.83,76.09 C11.49,76.09 9.6,74.2 9.6,71.86 L9.6,4.23 C9.6,1.89 11.49,0 13.83,0Z" />
+
+    <path
+        android:fillColor="@color/logo_color"
+        android:pathData="M13.97,13.3 L69.17,13.3 C71.51,13.3 73.4,15.19 73.4,17.53 L73.4,71.73 C73.4,74.07 71.51,75.96 69.17,75.96 L13.97,75.96 C11.63,75.96 9.74,74.07 9.74,71.73 L9.74,17.53 C9.74,15.19 11.63,13.3 13.97,13.3Z" />
+
+    <path
+        android:fillColor="@color/logo_color"
+        android:pathData="M37.94,0 L74.13,0 C76.47,0 78.36,1.89 78.36,4.23 L78.36,24.68 C78.36,27.02 76.47,28.91 74.13,28.91 L37.94,28.91 C35.6,28.91 33.71,27.02 33.71,24.68 L33.71,4.23 C33.71,1.89 35.6,0 37.94,0Z" />
+
+</vector>

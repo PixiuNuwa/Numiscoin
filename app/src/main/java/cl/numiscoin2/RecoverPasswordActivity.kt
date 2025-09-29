@@ -51,7 +51,7 @@ class RecoverPasswordActivity : AppCompatActivity() {
     }
 
     private fun performPasswordRecovery(email: String) {
-        NetworkUtils.recoverPassword(email) { success, message ->
+        NetworkUserUtils.recoverPassword(email) { success, message ->
             runOnUiThread {
                 showLoading(false)
                 if (success) {

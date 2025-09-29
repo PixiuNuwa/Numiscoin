@@ -58,7 +58,7 @@ class ObjetosListActivity : BaseActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = android.view.View.VISIBLE
 
-        NetworkUtils.getPaisesPorColeccionYTipo(idColeccion, idTipoObjeto) { paises, error ->
+        NetworkCollectionUtils.getPaisesPorColeccionYTipo(idColeccion, idTipoObjeto) { paises, error ->
             runOnUiThread {
                 progressBar.visibility = android.view.View.GONE
 
@@ -117,7 +117,7 @@ class ObjetosListActivity : BaseActivity() {
                 val fotoUrl = if (pais.foto.startsWith("http")) {
                     pais.foto
                 } else {
-                    NetworkUtils.UPLOADS_BASE_URL + pais.foto
+                    NetworkConfig.UPLOADS_BASE_URL + pais.foto
                 }
 
                 Glide.with(this)

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/freeCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/card_stroke"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/plan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/free"
+                android:textColor="@color/text_light"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/selection_element"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_radio_selected"
+                app:tint="@color/card_stroke" />
+
+        </LinearLayout>
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free_price"
+            android:textColor="@color/text_light"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/free_description"
+            android:textColor="@color/text_light"
+            android:textSize="10sp"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="2dp" />
+
+        <!-- Benefit -->
+        <TextView
+            android:id="@+id/benefit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/free_benefit"
+            android:textColor="@color/text_light"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

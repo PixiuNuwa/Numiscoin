@@ -35,7 +35,7 @@ class CoinAdapter(
     }
 
     private fun construirUrlCompleta(urlRelativa: String): String {
-        return NetworkUtils.construirUrlCompleta(urlRelativa)
+        return NetworkConfig.construirUrlCompleta(urlRelativa)
 //        val baseUrl = "https://numiscoin.store/uploads/" // ← Cambiar a esta URL según tu JSON
 //        return if (urlRelativa.startsWith("http")) {
 //            urlRelativa

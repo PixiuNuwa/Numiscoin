@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="#000000"
     android:fitsSystemWindows="true">
 
     <!-- Botón de avatar en esquina superior derecha -->
@@ -19,47 +19,93 @@
         android:contentDescription="Perfil de usuario"
         android:elevation="8dp" />
 
-    <!-- Contenido principal -->
-    <LinearLayout
-        android:id="@+id/mainContent"
+    <!-- Contenido principal con ScrollView -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottomMenu"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/welcomeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="¡Bienvenido!"
-            android:textColor="@android:color/white"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:id="@+id/welcomeMessage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_marginBottom="32dp" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Cerrar Sesión"
-            android:textColor="@android:color/white"
-            android:background="#FF0000FF" />
+            <!-- Mensaje de bienvenida -->
+            <TextView
+                android:id="@+id/welcomeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¡Bienvenido!"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/welcomeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp" />
 
-    <!-- Menú inferior -->
+            <!-- Sección de Calendario -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calendario de Eventos - Mes Actual"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <!-- GridView para el calendario -->
+            <GridView
+                android:id="@+id/calendarGridView"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:numColumns="7"
+                android:verticalSpacing="1dp"
+                android:horizontalSpacing="1dp"
+                android:background="#FFFFFF"
+                android:layout_marginBottom="32dp" />
+
+            <!-- Sección de Galería de Eventos -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Próximos Eventos"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <!-- GridView para posters de eventos -->
+            <GridView
+                android:id="@+id/eventosGridView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"
+                android:verticalSpacing="12dp"
+                android:horizontalSpacing="12dp"
+                android:gravity="center" />
+
+            <!-- Botón de cerrar sesión -->
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Cerrar Sesión"
+                android:textColor="#FFFFFF"
+                android:background="#0000FF"
+                android:layout_marginTop="32dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Menú inferior (mantener igual) -->
     <LinearLayout
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
@@ -87,7 +133,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_home_selected"
                 android:tint="#FFF3D6" />
-                
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +161,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_calculator"
                 android:tint="#ABA693" />
-                
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +189,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_collection"
                 android:tint="#ABA693" />
-                
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,7 +217,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_currency"
                 android:tint="#ABA693" />
-                
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -199,7 +245,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/ic_marketplace"
                 android:tint="#ABA693" />
-                
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

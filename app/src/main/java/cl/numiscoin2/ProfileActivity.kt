@@ -150,7 +150,7 @@ class ProfileActivity : AppCompatActivity() {
 
             // Cargar foto de perfil si existe
             if (usuario.foto.isNotEmpty() && usuario.foto != "null") {
-                val fotoUrl = NetworkUtils.construirUrlCompleta(usuario.foto)
+                val fotoUrl = NetworkConfig.construirUrlCompleta(usuario.foto)
                 Log.d("ProfileActivity", "URL completa de la foto: $fotoUrl")
 
                 try {

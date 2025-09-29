@@ -102,7 +102,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun cargarFotoPerfil(profileAvatar: ImageView) {
         if (usuario.foto.isNotEmpty() && usuario.foto != "null") {
-            val fotoUrl = NetworkUtils.construirUrlCompleta(usuario.foto)
+            val fotoUrl = NetworkConfig.construirUrlCompleta(usuario.foto)
             Glide.with(this)
                 .load(fotoUrl)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -148,7 +148,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun subirFotoAlServidor(fotoUri: Uri) {
         Toast.makeText(this, "Subiendo foto...", Toast.LENGTH_SHORT).show()
 
-        NetworkUtils.uploadProfilePhoto(
+        NetworkUserUtils.uploadProfilePhoto(
             usuario.idUsuario,
             fotoUri,
             this
@@ -168,7 +168,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun actualizarUsuarioEnServidor(nombre: String, apellido: String, email: String) {
-        NetworkUtils.actualizarUsuario(
+        NetworkUserUtils.actualizarUsuario(
             usuario.idUsuario,
             nombre,
             apellido,
@@ -197,7 +197,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun cambiarPasswordEnServidor(password: String) {
-        NetworkUtils.cambiarPassword(
+        NetworkUserUtils.cambiarPassword(
             usuario.idUsuario,
             password
         ) { success, message ->

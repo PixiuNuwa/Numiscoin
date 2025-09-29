@@ -89,7 +89,7 @@ class CoinDetailActivity : AppCompatActivity() {
     }
 
     private fun deleteMoneda() {
-        NetworkUtils.deleteMoneda(objeto.id) { success, error ->
+        NetworkObjectUtils.deleteMoneda(objeto.id) { success, error ->
             runOnUiThread {
                 if (success) {
                     Toast.makeText(this@CoinDetailActivity, "Moneda eliminada exitosamente", Toast.LENGTH_SHORT).show()
@@ -153,7 +153,7 @@ class CoinDetailActivity : AppCompatActivity() {
         }
 
         // Llamar al servidor para obtener los datos actualizados
-        NetworkUtils.obtenerMonedaPorId(objeto.id) { monedaActualizada, error ->
+        NetworkObjectUtils.obtenerMonedaPorId(objeto.id) { monedaActualizada, error ->
             runOnUiThread {
                 Log.i("MONEDA","obteniendo moneda por ID")
                 progressDialog.dismiss()

@@ -13,6 +13,8 @@ import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
@@ -201,7 +203,7 @@ class EditCoinActivity : AppCompatActivity() {
         setupImageViews()
     }
 
-    private fun setupImageViews() {
+    /*private fun setupImageViews() {
         val imageViews = listOf(ivFoto1, ivFoto2, ivFoto3, ivFoto4)
         val eliminarButtons = listOf(btnEliminarFoto1, btnEliminarFoto2, btnEliminarFoto3, btnEliminarFoto4)
 
@@ -213,6 +215,28 @@ class EditCoinActivity : AppCompatActivity() {
                 eliminarButtons[i].isVisible = true
             } else {
                 imageViews[i].setImageResource(android.R.drawable.ic_menu_add)
+                eliminarButtons[i].isVisible = false
+            }
+        }
+    }*/
+    private fun setupImageViews() {
+        val imageViews = listOf(ivFoto1, ivFoto2, ivFoto3, ivFoto4)
+        val eliminarButtons = listOf(btnEliminarFoto1, btnEliminarFoto2, btnEliminarFoto3, btnEliminarFoto4)
+
+        for (i in 0 until 4) {
+            val uri = fotosSeleccionadas[i]
+            val imageView = imageViews[i]
+
+            if (uri != null) {
+                // Forzar recarga evitando cache
+                Glide.with(this)
+                    .load(uri)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imageView)
+                eliminarButtons[i].isVisible = true
+            } else {
+                imageView.setImageResource(android.R.drawable.ic_menu_add)
                 eliminarButtons[i].isVisible = false
             }
         }
@@ -243,14 +267,11 @@ class EditCoinActivity : AppCompatActivity() {
     }
 
     private fun seleccionarFoto(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(ImageUtils.crearIntentGaleria(), requestCode)
     }
 
     private fun tomarFoto(requestCode: Int) {
-        val intent = Intent(this, CameraWithOverlayActivity::class.java)
-        currentPhotoRequestCode = requestCode
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(ImageUtils.crearIntentCamara(this), requestCode)
     }
 
     private fun eliminarFoto(index: Int) {
@@ -281,128 +302,87 @@ class EditCoinActivity : AppCompatActivity() {
         btnEliminar?.isVisible = false
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                PICK_IMAGE_REQUEST_1 -> {
-                    fotoUri1 = data?.data
-                    fotoUri1?.let {
-                        fotosSeleccionadas[0] = it
-                        ivFoto1.setImageURI(it)
+        ImageUtils.manejarResultadoFoto(this, requestCode, resultCode, data) { uri, fotoIndex ->
+            if (uri != null) {
+                when (fotoIndex) {
+                    1 -> {
+                        fotoUri1 = uri
+                        fotosSeleccionadas[0] = uri
+                        ivFoto1.setImageURI(uri)
                         btnEliminarFoto1.isVisible = true
                     }
-                }
-                PICK_IMAGE_REQUEST_2 -> {
-                    fotoUri2 = data?.data
-                    fotoUri2?.let {
-                        fotosSeleccionadas[1] = it
-                        ivFoto2.setImageURI(it)
+                    2 -> {
+                        fotoUri2 = uri
+                        fotosSeleccionadas[1] = uri
+                        ivFoto2.setImageURI(uri)
                         btnEliminarFoto2.isVisible = true
                     }
-                }
-                PICK_IMAGE_REQUEST_3 -> {
-                    fotoUri3 = data?.data
-                    fotoUri3?.let {
-                        fotosSeleccionadas[2] = it
-                        ivFoto3.setImageURI(it)
+                    3 -> {
+                        fotoUri3 = uri
+                        fotosSeleccionadas[2] = uri
+                        ivFoto3.setImageURI(uri)
                         btnEliminarFoto3.isVisible = true
                     }
-                }
-                PICK_IMAGE_REQUEST_4 -> {
-                    fotoUri4 = data?.data
-                    fotoUri4?.let {
-                        fotosSeleccionadas[3] = it
-                        ivFoto4.setImageURI(it)
+                    4 -> {
+                        fotoUri4 = uri
+                        fotosSeleccionadas[3] = uri
+                        ivFoto4.setImageURI(uri)
                         btnEliminarFoto4.isVisible = true
                     }
                 }
-                in arrayOf(TAKE_PHOTO_REQUEST_1, TAKE_PHOTO_REQUEST_2,
-                    TAKE_PHOTO_REQUEST_3, TAKE_PHOTO_REQUEST_4) -> {
+            }
+        }
+    }*/
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-                    val photoPath = data?.getStringExtra(CameraWithOverlayActivity.EXTRA_OUTPUT_URI)
-                    photoPath?.let { path ->
-                        val processedUri = procesarFotoCircular(path)
-                        processedUri?.let { uri ->
-                            when (requestCode) {
-                                TAKE_PHOTO_REQUEST_1 -> {
-                                    fotoUri1 = uri
-                                    fotosSeleccionadas[0] = uri
-                                    ivFoto1.setImageURI(uri)
-                                    btnEliminarFoto1.isVisible = true
-                                }
-                                TAKE_PHOTO_REQUEST_2 -> {
-                                    fotoUri2 = uri
-                                    fotosSeleccionadas[1] = uri
-                                    ivFoto2.setImageURI(uri)
-                                    btnEliminarFoto2.isVisible = true
-                                }
-                                TAKE_PHOTO_REQUEST_3 -> {
-                                    fotoUri3 = uri
-                                    fotosSeleccionadas[2] = uri
-                                    ivFoto3.setImageURI(uri)
-                                    btnEliminarFoto3.isVisible = true
-                                }
-                                TAKE_PHOTO_REQUEST_4 -> {
-                                    fotoUri4 = uri
-                                    fotosSeleccionadas[3] = uri
-                                    ivFoto4.setImageURI(uri)
-                                    btnEliminarFoto4.isVisible = true
-                                }
-                            }
-                        }
+        ImageUtils.manejarResultadoFoto(this, requestCode, resultCode, data) { uri, fotoIndex ->
+            if (uri != null) {
+                val imageView = when (fotoIndex) {
+                    1 -> ivFoto1
+                    2 -> ivFoto2
+                    3 -> ivFoto3
+                    4 -> ivFoto4
+                    else -> null
+                }
+
+                imageView?.let {
+                    Glide.with(this)
+                        .load(uri)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .into(it)
+                }
+
+                when (fotoIndex) {
+                    1 -> {
+                        fotoUri1 = uri
+                        fotosSeleccionadas[0] = uri
+                        btnEliminarFoto1.isVisible = true
+                    }
+                    2 -> {
+                        fotoUri2 = uri
+                        fotosSeleccionadas[1] = uri
+                        btnEliminarFoto2.isVisible = true
+                    }
+                    3 -> {
+                        fotoUri3 = uri
+                        fotosSeleccionadas[2] = uri
+                        btnEliminarFoto3.isVisible = true
+                    }
+                    4 -> {
+                        fotoUri4 = uri
+                        fotosSeleccionadas[3] = uri
+                        btnEliminarFoto4.isVisible = true
                     }
                 }
             }
         }
     }
 
-    private fun procesarFotoCircular(imagePath: String): Uri? {
-        try {
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            BitmapFactory.decodeFile(imagePath, options)
-
-            var scale = 1
-            while (options.outWidth / scale / 2 >= 1024 && options.outHeight / scale / 2 >= 1024) {
-                scale *= 2
-            }
-
-            options.inJustDecodeBounds = false
-            options.inSampleSize = scale
-            val originalBitmap = BitmapFactory.decodeFile(imagePath, options)
-
-            val size = minOf(originalBitmap.width, originalBitmap.height)
-            val circularBitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(circularBitmap)
-
-            val left = (originalBitmap.width - size) / 2
-            val top = (originalBitmap.height - size) / 2
-            val srcRect = Rect(left, top, left + size, top + size)
-            val dstRect = Rect(0, 0, size, size)
-
-            canvas.drawBitmap(originalBitmap, srcRect, dstRect, null)
-
-            val file = File.createTempFile(
-                "circular_${System.currentTimeMillis()}",
-                ".jpg",
-                getExternalFilesDir(android.os.Environment.DIRECTORY_PICTURES)
-            )
-
-            FileOutputStream(file).use { out ->
-                circularBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-            }
-
-            originalBitmap.recycle()
-            circularBitmap.recycle()
-
-            return Uri.fromFile(file)
-
-        } catch (e: Exception) {
-            return null
-        }
-    }
 
     private fun guardarCambios() {
         val progressDialog = ProgressDialog(this).apply {
@@ -437,7 +417,7 @@ class EditCoinActivity : AppCompatActivity() {
         )
 
         // Primero actualizar la moneda
-        NetworkUtils.actualizarMoneda(objeto.id.toLong(), monedaRequest) { success, error ->
+        NetworkObjectUtils.actualizarMoneda(objeto.id.toLong(), monedaRequest) { success, error ->
             if (success) {
                 // Luego subir las fotos nuevas
                 subirFotos(progressDialog)
@@ -474,7 +454,7 @@ class EditCoinActivity : AppCompatActivity() {
             val fotoUri = fotoPair.first
             val numeroFoto = fotoPair.second
 
-            NetworkUtils.uploadPhoto(objeto.id.toLong(), fotoUri, this, numeroFoto) { success, error ->
+            NetworkObjectUtils.uploadPhoto(objeto.id.toLong(), fotoUri, this, numeroFoto) { success, error ->
                 if (success) {
                     fotosSubidasExitosamente++
                 }
@@ -501,311 +481,13 @@ class EditCoinActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }
+
+    private fun clearGlideCache(uri: Uri?) {
+        uri?.let {
+            Glide.with(this).clear(ivFoto1)
+            Glide.with(this).clear(ivFoto2)
+            Glide.with(this).clear(ivFoto3)
+            Glide.with(this).clear(ivFoto4)
+        }
+    }
 }
-
-/*package cl.numiscoin2
-
-import android.app.Activity
-import android.app.ProgressDialog
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import com.google.gson.Gson
-import java.io.File
-
-class EditCoinActivity : AppCompatActivity() {
-
-    private lateinit var objeto: ObjetoColeccion
-    private val fotosSeleccionadas = mutableListOf<Uri?>()
-    private val gson = Gson()
-
-    companion object {
-        private const val PICK_IMAGE_REQUEST_1 = 101
-        private const val PICK_IMAGE_REQUEST_2 = 102
-        private const val PICK_IMAGE_REQUEST_3 = 103
-        private const val PICK_IMAGE_REQUEST_4 = 104
-
-        const val EXTRA_MONEDA_ACTUALIZADA = "moneda_actualizada"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_coin)
-
-        // Obtener el objeto de la moneda
-        objeto = intent.getParcelableExtra("moneda") ?: run {
-            Toast.makeText(this, "Error: No se recibió la moneda", Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
-
-        // Inicializar lista de fotos seleccionadas con las existentes (null para slots vacíos)
-        initFotosSeleccionadas()
-
-        // Configurar la UI con los datos actuales
-        setupUI()
-
-        // Configurar botones
-        setupButtons()
-    }
-
-    private fun initFotosSeleccionadas() {
-        fotosSeleccionadas.clear()
-        // Inicializar con 4 slots (pueden ser null)
-        for (i in 0 until 4) {
-            if (i < (objeto.fotos?.size ?: 0)) {
-                // Para fotos existentes, usamos un URI placeholder
-                val fotoUrl = objeto.fotos?.get(i)?.url
-                if (fotoUrl != null) {
-                    fotosSeleccionadas.add(Uri.parse(fotoUrl))
-                } else {
-                    fotosSeleccionadas.add(null)
-                }
-            } else {
-                fotosSeleccionadas.add(null)
-            }
-        }
-    }
-
-    private fun setupUI() {
-        // Información básica
-        findViewById<EditText>(R.id.etNombre).setText(objeto.nombre)
-        findViewById<EditText>(R.id.etDescripcion).setText(objeto.descripcion)
-        findViewById<EditText>(R.id.etAnio).setText(objeto.anio.toString())
-
-        // Información de moneda
-        objeto.monedaInfo?.let { info ->
-            findViewById<EditText>(R.id.etFamilia).setText(info.familia ?: "")
-            findViewById<EditText>(R.id.etVariante).setText(info.variante ?: "")
-            findViewById<EditText>(R.id.etCeca).setText(info.ceca ?: "")
-            findViewById<EditText>(R.id.etTipo).setText(info.tipo ?: "")
-            findViewById<EditText>(R.id.etDisenador).setText(info.disenador ?: "")
-            findViewById<EditText>(R.id.etTotalProducido).setText(info.totalProducido ?: "")
-            findViewById<EditText>(R.id.etValorSinCircular).setText(info.valorSinCircular ?: "")
-            findViewById<EditText>(R.id.etValorComercial).setText(info.valorComercial ?: "")
-            findViewById<EditText>(R.id.etValorAdquirido).setText(info.valorAdquirido ?: "")
-            findViewById<EditText>(R.id.etEstado).setText(info.estado ?: "")
-            findViewById<EditText>(R.id.etObservaciones).setText(info.observaciones ?: "")
-            findViewById<EditText>(R.id.etAcunada).setText(info.acunada ?: "")
-        }
-
-        // Configurar vistas de imágenes
-        setupImageViews()
-    }
-
-    private fun setupImageViews() {
-        for (i in 0 until 4) {
-            val imageView = when (i) {
-                0 -> findViewById<ImageView>(R.id.ivFoto1)
-                1 -> findViewById<ImageView>(R.id.ivFoto2)
-                2 -> findViewById<ImageView>(R.id.ivFoto3)
-                3 -> findViewById<ImageView>(R.id.ivFoto4)
-                else -> null
-            }
-
-            val btnEliminar = when (i) {
-                0 -> findViewById<Button>(R.id.btnEliminarFoto1)
-                1 -> findViewById<Button>(R.id.btnEliminarFoto2)
-                2 -> findViewById<Button>(R.id.btnEliminarFoto3)
-                3 -> findViewById<Button>(R.id.btnEliminarFoto4)
-                else -> null
-            }
-
-            if (i < (objeto.fotos?.size ?: 0)) {
-                // Cargar imagen existente (usar una librería como Glide o Picasso en producción)
-                // Por ahora solo mostramos un placeholder
-                imageView?.setImageResource(android.R.drawable.ic_menu_gallery)
-                btnEliminar?.isVisible = true
-            } else {
-                imageView?.setImageResource(android.R.drawable.ic_menu_add)
-                btnEliminar?.isVisible = false
-            }
-
-            // Configurar click listener para seleccionar imagen
-            imageView?.setOnClickListener {
-                seleccionarImagen(i + 1)
-            }
-
-            // Configurar click listener para eliminar imagen
-            btnEliminar?.setOnClickListener {
-                eliminarFoto(i)
-            }
-        }
-    }
-
-    private fun setupButtons() {
-        findViewById<Button>(R.id.btnGuardar).setOnClickListener {
-            guardarCambios()
-        }
-
-        findViewById<Button>(R.id.btnCancelar).setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun seleccionarImagen(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        startActivityForResult(intent, requestCode)
-    }
-
-    private fun eliminarFoto(index: Int) {
-        fotosSeleccionadas[index] = null
-        val imageView = when (index) {
-            0 -> findViewById<ImageView>(R.id.ivFoto1)
-            1 -> findViewById<ImageView>(R.id.ivFoto2)
-            2 -> findViewById<ImageView>(R.id.ivFoto3)
-            3 -> findViewById<ImageView>(R.id.ivFoto4)
-            else -> null
-        }
-        imageView?.setImageResource(android.R.drawable.ic_menu_add)
-
-        val btnEliminar = when (index) {
-            0 -> findViewById<Button>(R.id.btnEliminarFoto1)
-            1 -> findViewById<Button>(R.id.btnEliminarFoto2)
-            2 -> findViewById<Button>(R.id.btnEliminarFoto3)
-            3 -> findViewById<Button>(R.id.btnEliminarFoto4)
-            else -> null
-        }
-        btnEliminar?.isVisible = false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            val imageUri = data.data
-            val index = when (requestCode) {
-                PICK_IMAGE_REQUEST_1 -> 0
-                PICK_IMAGE_REQUEST_2 -> 1
-                PICK_IMAGE_REQUEST_3 -> 2
-                PICK_IMAGE_REQUEST_4 -> 3
-                else -> -1
-            }
-
-            if (index != -1 && imageUri != null) {
-                fotosSeleccionadas[index] = imageUri
-
-                val imageView = when (index) {
-                    0 -> findViewById<ImageView>(R.id.ivFoto1)
-                    1 -> findViewById<ImageView>(R.id.ivFoto2)
-                    2 -> findViewById<ImageView>(R.id.ivFoto3)
-                    3 -> findViewById<ImageView>(R.id.ivFoto4)
-                    else -> null
-                }
-
-                imageView?.setImageURI(imageUri)
-
-                val btnEliminar = when (index) {
-                    0 -> findViewById<Button>(R.id.btnEliminarFoto1)
-                    1 -> findViewById<Button>(R.id.btnEliminarFoto2)
-                    2 -> findViewById<Button>(R.id.btnEliminarFoto3)
-                    3 -> findViewById<Button>(R.id.btnEliminarFoto4)
-                    else -> null
-                }
-                btnEliminar?.isVisible = true
-            }
-        }
-    }
-
-    private fun guardarCambios() {
-        val progressDialog = ProgressDialog(this).apply {
-            setMessage("Actualizando moneda...")
-            setCancelable(false)
-            show()
-        }
-
-        // Crear MonedaRequest con los datos del formulario
-        val monedaRequest = MonedaRequest(
-            nombre = findViewById<EditText>(R.id.etNombre).text.toString(),
-            descripcion = findViewById<EditText>(R.id.etDescripcion).text.toString(),
-            idPais = objeto.idPais,
-            anio = findViewById<EditText>(R.id.etAnio).text.toString().toIntOrNull() ?: 0,
-            idTipoObjeto = objeto.idTipoObjeto,
-            idUsuario = objeto.idUsuario,
-            idColeccion = -1,
-            // Campos opcionales
-            familia = findViewById<EditText>(R.id.etFamilia).text.toString(),
-            idFamilia = -1,
-            variante = findViewById<EditText>(R.id.etVariante).text.toString(),
-            ceca = findViewById<EditText>(R.id.etCeca).text.toString(),
-            tipo = findViewById<EditText>(R.id.etTipo).text.toString(),
-            disenador = findViewById<EditText>(R.id.etDisenador).text.toString(),
-            totalProducido = findViewById<EditText>(R.id.etTotalProducido).text.toString(),
-            valorSinCircular = findViewById<EditText>(R.id.etValorSinCircular).text.toString(),
-            valorComercial = findViewById<EditText>(R.id.etValorComercial).text.toString(),
-            valorAdquirido = findViewById<EditText>(R.id.etValorAdquirido).text.toString(),
-            estado = findViewById<EditText>(R.id.etEstado).text.toString(),
-            observaciones = findViewById<EditText>(R.id.etObservaciones).text.toString(),
-            orden = -1,
-            acunada = findViewById<EditText>(R.id.etAcunada).text.toString()
-        )
-
-        // Primero actualizar la moneda
-        NetworkUtils.actualizarMoneda(objeto.id.toLong(), monedaRequest) { success, error ->
-            if (success) {
-                // Luego subir las fotos nuevas
-                subirFotos(progressDialog)
-            } else {
-                runOnUiThread {
-                    progressDialog.dismiss()
-                    Toast.makeText(this@EditCoinActivity, "Error al actualizar: $error", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun subirFotos(progressDialog: ProgressDialog) {
-        var fotosSubidas = 0
-        val totalFotos = fotosSeleccionadas.count { it != null }
-
-        if (totalFotos == 0) {
-            runOnUiThread {
-                progressDialog.dismiss()
-                finalizarConExito()
-            }
-            return
-        }
-
-        fotosSeleccionadas.forEachIndexed { index, uri ->
-            if (uri != null && uri.scheme != null && uri.scheme == "content") {
-                // Es una foto nueva seleccionada
-                NetworkUtils.uploadPhoto(objeto.id.toLong(), uri, this, index + 1) { success, error ->
-                    fotosSubidas++
-                    if (fotosSubidas >= totalFotos) {
-                        runOnUiThread {
-                            progressDialog.dismiss()
-                            if (success) {
-                                finalizarConExito()
-                            } else {
-                                Toast.makeText(this@EditCoinActivity, "Error al subir fotos: $error", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
-            } else {
-                // Es una foto existente o null, contar como subida
-                fotosSubidas++
-                if (fotosSubidas >= totalFotos) {
-                    runOnUiThread {
-                        progressDialog.dismiss()
-                        finalizarConExito()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun finalizarConExito() {
-        Toast.makeText(this, "Moneda actualizada exitosamente", Toast.LENGTH_SHORT).show()
-        val resultIntent = Intent()
-        resultIntent.putExtra(EXTRA_MONEDA_ACTUALIZADA, true)
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
-    }
-
-
-}*/
