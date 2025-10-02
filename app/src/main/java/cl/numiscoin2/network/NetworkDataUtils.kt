@@ -1,7 +1,10 @@
-package cl.numiscoin2
+package cl.numiscoin2.network
 
+import cl.numiscoin2.Divisa
+import cl.numiscoin2.Evento
+import cl.numiscoin2.Metal
+import cl.numiscoin2.Pais
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 

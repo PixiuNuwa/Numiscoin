@@ -3,22 +3,15 @@ package cl.numiscoin2
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import cl.numiscoin2.network.NetworkObjectUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 class EditCoinActivity : AppCompatActivity() {
 

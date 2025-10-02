@@ -1,4 +1,4 @@
-package cl.numiscoin2
+package cl.numiscoin2.network
 
 object NetworkConfig {
     const val BASE_URL = "https://f70ba7db6da1.ngrok-free.app"

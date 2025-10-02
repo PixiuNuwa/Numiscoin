@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cl.numiscoin2.HelpActivity
 import cl.numiscoin2.LoginActivity
-import cl.numiscoin2.NetworkConfig
+import cl.numiscoin2.network.NetworkConfig
 import cl.numiscoin2.R
 import cl.numiscoin2.SessionManager
 import com.bumptech.glide.Glide

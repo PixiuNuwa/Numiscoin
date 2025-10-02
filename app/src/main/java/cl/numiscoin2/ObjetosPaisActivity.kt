@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cl.numiscoin2.network.NetworkCollectionUtils
 
 class ObjetosPaisActivity : BaseActivity(), CoinAdapter.OnItemClickListener {
 

@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import cl.numiscoin2.network.NetworkDataUtils
+import cl.numiscoin2.network.NetworkUserUtils
 
 class LoginActivity : AppCompatActivity() {
 

@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cl.numiscoin2.network.NetworkDataUtils
+import cl.numiscoin2.network.NetworkObjectUtils
 import com.google.gson.Gson
 
 class AddCoinActivity : AppCompatActivity() {

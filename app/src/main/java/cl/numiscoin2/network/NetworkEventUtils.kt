@@ -1,5 +1,6 @@
-package cl.numiscoin2
+package cl.numiscoin2.network
 
+import cl.numiscoin2.Evento
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.net.URL

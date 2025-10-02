@@ -10,8 +10,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cl.numiscoin2.NetworkConfig
-import cl.numiscoin2.NetworkUserUtils
+import cl.numiscoin2.network.NetworkConfig
+import cl.numiscoin2.network.NetworkUserUtils
 import cl.numiscoin2.R
 import cl.numiscoin2.SessionManager
 import cl.numiscoin2.Usuario

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import cl.numiscoin2.databinding.ActivityMembershipBinding
+import cl.numiscoin2.network.NetworkUserUtils
 
 class MembershipActivity : AppCompatActivity() {
 

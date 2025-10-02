@@ -1,8 +1,10 @@
-package cl.numiscoin2
+package cl.numiscoin2.network
 
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import cl.numiscoin2.MonedaRequest
+import cl.numiscoin2.ObjetoColeccion
 import com.google.gson.Gson
 import java.io.*
 import java.net.URL

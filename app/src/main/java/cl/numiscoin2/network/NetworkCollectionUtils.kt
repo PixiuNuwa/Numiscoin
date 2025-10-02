@@ -1,11 +1,12 @@
-package cl.numiscoin2
+package cl.numiscoin2.network
 
-import android.content.Context
-import android.net.Uri
 import android.util.Log
+import cl.numiscoin2.Coleccion
+import cl.numiscoin2.ObjetoColeccion
+import cl.numiscoin2.Pais
+import cl.numiscoin2.TipoObjeto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.*
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 

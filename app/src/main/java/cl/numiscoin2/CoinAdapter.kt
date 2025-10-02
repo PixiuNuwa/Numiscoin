@@ -1,12 +1,12 @@
 package cl.numiscoin2
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import cl.numiscoin2.network.NetworkConfig
 import com.bumptech.glide.Glide
 
 class CoinAdapter(

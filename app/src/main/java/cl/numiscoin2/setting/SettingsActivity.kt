@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import cl.numiscoin2.BaseActivity
 import cl.numiscoin2.MembershipActivity
-import cl.numiscoin2.NetworkConfig
+import cl.numiscoin2.network.NetworkConfig
 import cl.numiscoin2.R
 import cl.numiscoin2.WelcomeActivity
 import com.bumptech.glide.Glide

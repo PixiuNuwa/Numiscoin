@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import cl.numiscoin2.network.NetworkDataUtils
 
 class CurrencyActivity : BaseActivity() {
 

@@ -2,21 +2,23 @@ package cl.numiscoin2
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.setMargins
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import cl.numiscoin2.network.NetworkCollectionUtils
 
 class CollectionActivity : BaseActivity() {
 
     private val TAG = "CollectionActivity"
     private var isLoading = false
     private var colecciones: List<Coleccion> = emptyList()
+    private var coleccionesFiltradas: List<Coleccion> = emptyList()
     private val REQUEST_CREATE_COLLECTION = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,9 @@ class CollectionActivity : BaseActivity() {
         setupBottomMenu()
         highlightMenuItem(R.id.menuCollection)
         Log.d(TAG, "onCreate: Menú inferior configurado")
+
+        // Configurar barra de búsqueda
+        configurarBusqueda()
 
         // Configurar botón de agregar colección
         val btnAddCollection = findViewById<Button>(R.id.btnAddCollection)
@@ -47,6 +52,36 @@ class CollectionActivity : BaseActivity() {
 
         // Cargar colecciones del usuario
         cargarColeccionesDesdeServidor()
+    }
+
+    private fun configurarBusqueda() {
+        val etSearch = findViewById<EditText>(R.id.etSearch)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No necesario
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No necesario
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                filtrarColecciones(s.toString())
+            }
+        })
+    }
+
+    private fun filtrarColecciones(textoBusqueda: String) {
+        if (textoBusqueda.isBlank()) {
+            // Si no hay texto de búsqueda, mostrar todas las colecciones
+            coleccionesFiltradas = colecciones
+        } else {
+            // Filtrar colecciones por nombre (ignorando mayúsculas/minúsculas)
+            coleccionesFiltradas = colecciones.filter { coleccion ->
+                coleccion.nombre.contains(textoBusqueda, ignoreCase = true)
+            }
+        }
+        mostrarColeccionesFiltradas()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,13 +123,22 @@ class CollectionActivity : BaseActivity() {
 
     private fun mostrarColecciones() {
         Log.d(TAG, "mostrarColecciones: Mostrando ${colecciones.size} colecciones")
+
+        // Inicializar la lista filtrada con todas las colecciones
+        coleccionesFiltradas = colecciones
+        mostrarColeccionesFiltradas()
+    }
+
+    private fun mostrarColeccionesFiltradas() {
+        Log.d(TAG, "mostrarColeccionesFiltradas: Mostrando ${coleccionesFiltradas.size} colecciones filtradas")
+
         val headerWithCollections = findViewById<LinearLayout>(R.id.headerWithCollections)
         val collectionsContainer = findViewById<LinearLayout>(R.id.collectionsContainer)
         val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
 
         collectionsContainer.removeAllViews()
 
-        if (colecciones.isEmpty()) {
+        if (coleccionesFiltradas.isEmpty()) {
             // Mostrar estado vacío - OCULTAR header
             headerWithCollections.visibility = android.view.View.GONE
             collectionsContainer.visibility = android.view.View.GONE
@@ -107,7 +151,7 @@ class CollectionActivity : BaseActivity() {
         collectionsContainer.visibility = android.view.View.VISIBLE
         emptyStateContainer.visibility = android.view.View.GONE
 
-        colecciones.forEach { coleccion ->
+        coleccionesFiltradas.forEach { coleccion ->
             val collectionItem = Button(this).apply {
                 text = "${coleccion.nombre}\n${coleccion.descripcion}"
                 setTextColor(resources.getColor(android.R.color.white))
@@ -159,6 +203,4 @@ class CollectionActivity : BaseActivity() {
             }
         }
     }
-
-
 }

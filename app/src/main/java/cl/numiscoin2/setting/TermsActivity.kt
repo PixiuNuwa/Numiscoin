@@ -3,17 +3,15 @@ package cl.numiscoin2.setting
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import cl.numiscoin2.BaseActivity
-import cl.numiscoin2.NetworkUserUtils
 import cl.numiscoin2.R
 import cl.numiscoin2.Usuario
-import com.google.gson.Gson
+import cl.numiscoin2.network.NetworkConfig
 import org.json.JSONObject
 
 class TermsActivity : BaseActivity() {
@@ -87,8 +85,8 @@ class TermsActivity : BaseActivity() {
         // Llamar al endpoint para obtener el estado de términos
         Thread {
             try {
-                //val url = java.net.URL("${cl.numiscoin2.NetworkConfig.BASE_URL}/api/jdbc/usuarios/terminos?idUsuario=$usuarioId")
-                val url = java.net.URL("${cl.numiscoin2.NetworkConfig.BASE_URL}/api/jdbc/usuarios/estado-terminos?idUsuario=$usuarioId")
+                //val url = java.net.URL("${cl.numiscoin2.network.NetworkConfig.BASE_URL}/api/jdbc/usuarios/terminos?idUsuario=$usuarioId")
+                val url = java.net.URL("${NetworkConfig.BASE_URL}/api/jdbc/usuarios/estado-terminos?idUsuario=$usuarioId")
                 val connection = url.openConnection() as java.net.HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
@@ -164,8 +162,8 @@ class TermsActivity : BaseActivity() {
         // Llamar al endpoint para aceptar términos
         Thread {
             try {
-                //val url = java.net.URL("${cl.numiscoin2.NetworkConfig.BASE_URL}/api/jdbc/usuarios/terminos")
-                val url = java.net.URL("${cl.numiscoin2.NetworkConfig.BASE_URL}/api/jdbc/usuarios/aceptar-terminos")
+                //val url = java.net.URL("${cl.numiscoin2.network.NetworkConfig.BASE_URL}/api/jdbc/usuarios/terminos")
+                val url = java.net.URL("${NetworkConfig.BASE_URL}/api/jdbc/usuarios/aceptar-terminos")
                 val connection = url.openConnection() as java.net.HttpURLConnection
                 connection.requestMethod = "POST"
                 connection.doOutput = true

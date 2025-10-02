@@ -2,10 +2,11 @@ package cl.numiscoin2
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,8 +15,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cl.numiscoin2.network.NetworkCollectionUtils
+import cl.numiscoin2.network.NetworkConfig
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -28,6 +30,7 @@ class ObjetosListActivity : BaseActivity() {
     private var objetos: List<ObjetoColeccion> = emptyList()
     private var objetosFiltrados: List<ObjetoColeccion> = emptyList()
     private var paisSeleccionado: Pais? = null
+    private var textoBusqueda: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,9 @@ class ObjetosListActivity : BaseActivity() {
             finish()
         }
 
+        // Configurar barra de búsqueda
+        configurarBusqueda()
+
         // Configurar FAB para agregar monedas
         val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
         fabAddCoin.setOnClickListener {
@@ -72,6 +78,47 @@ class ObjetosListActivity : BaseActivity() {
 
         // Cargar objetos de la colección para determinar si hay monedas
         cargarObjetosDeColeccion()
+    }
+
+    private fun configurarBusqueda() {
+        val etSearch = findViewById<EditText>(R.id.etSearch)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No necesario
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // No necesario
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                textoBusqueda = s.toString()
+                aplicarFiltros()
+            }
+        })
+    }
+
+    private fun aplicarFiltros() {
+        // Aplicar filtro de país primero
+        val objetosFiltradosPorPais = if (paisSeleccionado != null) {
+            objetos.filter { objeto ->
+                objeto.idPais == paisSeleccionado!!.idPais
+            }
+        } else {
+            objetos
+        }
+
+        // Luego aplicar filtro de búsqueda por nombre
+        objetosFiltrados = if (textoBusqueda.isBlank()) {
+            objetosFiltradosPorPais
+        } else {
+            objetosFiltradosPorPais.filter { objeto ->
+                objeto.nombre.contains(textoBusqueda, ignoreCase = true)
+            }
+        }
+
+        Log.d(TAG, "aplicarFiltros: ${objetosFiltrados.size} monedas después de aplicar filtros")
+        mostrarObjetos()
     }
 
     private fun ocultarTodasLasSecciones() {
@@ -243,7 +290,7 @@ class ObjetosListActivity : BaseActivity() {
         // Hacer clickable para limpiar filtro
         clearFilterContainer.isClickable = true
         clearFilterContainer.setOnClickListener {
-            limpiarFiltro()
+            limpiarFiltroPais()
             actualizarEstiloFiltros()
         }
 
@@ -326,18 +373,14 @@ class ObjetosListActivity : BaseActivity() {
 
     private fun filtrarPorPais(pais: Pais) {
         paisSeleccionado = pais
-        objetosFiltrados = objetos.filter { objeto ->
-            objeto.idPais == pais.idPais
-        }
-        Log.d(TAG, "filtrarPorPais: ${objetosFiltrados.size} monedas del país ${pais.nombre}")
-        mostrarObjetos()
+        aplicarFiltros()
+        Log.d(TAG, "filtrarPorPais: Filtrado por país ${pais.nombre}")
     }
 
-    private fun limpiarFiltro() {
+    private fun limpiarFiltroPais() {
         paisSeleccionado = null
-        objetosFiltrados = objetos
-        Log.d(TAG, "limpiarFiltro: Mostrando todas las ${objetosFiltrados.size} monedas")
-        mostrarObjetos()
+        aplicarFiltros()
+        Log.d(TAG, "limpiarFiltroPais: Filtro de país limpiado")
     }
 
     private fun actualizarEstiloFiltros() {
@@ -394,14 +437,20 @@ class ObjetosListActivity : BaseActivity() {
 
         if (objetosFiltrados.isEmpty()) {
             val emptyText = TextView(this).apply {
-                text = if (paisSeleccionado != null) {
-                    "No hay monedas de ${paisSeleccionado?.nombre} en esta colección"
-                } else {
-                    "No se encontraron objetos"
+                text = when {
+                    paisSeleccionado != null && textoBusqueda.isNotBlank() ->
+                        "No hay monedas de ${paisSeleccionado?.nombre} que coincidan con '$textoBusqueda'"
+                    paisSeleccionado != null ->
+                        "No hay monedas de ${paisSeleccionado?.nombre} en esta colección"
+                    textoBusqueda.isNotBlank() ->
+                        "No hay monedas que coincidan con '$textoBusqueda'"
+                    else ->
+                        "No se encontraron objetos"
                 }
                 setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
                 gravity = Gravity.CENTER
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                setPadding(0, 32, 0, 32)
             }
             objetosContainer.addView(emptyText)
             return

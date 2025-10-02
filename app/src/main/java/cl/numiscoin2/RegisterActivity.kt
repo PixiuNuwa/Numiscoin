@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import cl.numiscoin2.network.NetworkUserUtils
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -99,7 +100,10 @@ class RegisterActivity : AppCompatActivity() {
         NetworkUserUtils.performRegister(nombre, apellido, email, password) { success, message, usuario ->
             runOnUiThread {
                 if (success && usuario != null) {
-                    goToMembershipActivity(usuario.idUsuario)
+                    //goToMembershipActivity(usuario.idUsuario)
+                    showLoading(false)
+                    Toast.makeText(this@RegisterActivity, "Cuenta creada exitosamente", Toast.LENGTH_SHORT).show()
+                    finish() // Esto regresará a la LoginActivity
                     // Si se creó el usuario exitosamente y hay foto seleccionada, subir la foto
                     /*if (selectedImageUri != null && usuario.idUsuario > 0) {
                         uploadProfilePhoto(usuario.idUsuario)

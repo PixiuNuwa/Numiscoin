@@ -9,6 +9,8 @@ import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import cl.numiscoin2.network.NetworkConfig
+import cl.numiscoin2.network.NetworkEventUtils
 import cl.numiscoin2.setting.ProfileActivity
 import cl.numiscoin2.setting.SettingsActivity
 import com.bumptech.glide.Glide

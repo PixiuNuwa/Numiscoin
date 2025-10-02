@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import cl.numiscoin2.network.NetworkConfig
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
