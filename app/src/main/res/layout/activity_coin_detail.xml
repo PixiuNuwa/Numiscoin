@@ -26,7 +26,7 @@
         <!-- Imagen principal (80% del ancho) -->
         <ImageView
             android:id="@+id/ivImagenPrincipal"
-            android:layout_width="0dp"
+            android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:scaleType="centerInside"

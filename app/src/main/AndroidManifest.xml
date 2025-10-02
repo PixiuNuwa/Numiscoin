@@ -91,5 +91,7 @@
         <activity android:name=".setting.TermsActivity" />
         <activity android:name=".setting.BackupActivity" />
 
+        <activity android:name=".EventoDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 </manifest>

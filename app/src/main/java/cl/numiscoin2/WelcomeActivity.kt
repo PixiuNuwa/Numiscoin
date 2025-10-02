@@ -123,7 +123,8 @@ class WelcomeActivity : BaseActivity() {
 
                     eventosGridView.setOnItemClickListener { _, _, position, _ ->
                         val evento = eventos[position]
-                        mostrarDetalleEvento(evento)
+                        //mostrarDetalleEvento(evento)
+                        EventoDetailActivity.start(this, evento.idEvento)
                     }
 
                     Log.d(TAG, "Cargados ${eventos.size} eventos futuros")

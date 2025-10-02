@@ -98,4 +98,31 @@ object NetworkEventUtils {
             }
         }.start()
     }
+
+    fun getEventoPorId(idEvento: Int, callback: (Evento?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/util/eventos/$idEvento")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val evento = gson.fromJson<Evento>(response, Evento::class.java)
+                    callback(evento, null)
+                } else if (responseCode == HttpsURLConnection.HTTP_NOT_FOUND) {
+                    callback(null, "Evento no encontrado")
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
 }
