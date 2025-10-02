@@ -118,4 +118,45 @@ object NetworkCollectionUtils {
             }
         }.start()
     }
+
+    fun createCollection(usuarioId: Long, nombre: String, descripcion: String, callback: (Coleccion?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/colecciones")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.setRequestProperty("Accept", "application/json")
+                connection.doOutput = true
+
+                // Crear JSON con los datos de la colección
+                val jsonInputString = """
+                {
+                    "nombre": "$nombre",
+                    "descripcion": "$descripcion",
+                    "id_usuario": $usuarioId
+                }
+            """.trimIndent()
+
+                connection.outputStream.use { os ->
+                    val input = jsonInputString.toByteArray(Charsets.UTF_8)
+                    os.write(input, 0, input.size)
+                }
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK || responseCode == HttpsURLConnection.HTTP_CREATED) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val coleccion = gson.fromJson<Coleccion>(response, Coleccion::class.java)
+                    callback(coleccion, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
 }

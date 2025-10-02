@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Producido:"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvTotalProducido"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:text="No especificado"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Valor Sin Circular:"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvValorSinCircular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:text="No especificado"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Valor Comercial:"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvValorComercial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:text="No especificado"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Valor Adquirido:"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvValorAdquirido"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:text="No especificado"/>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

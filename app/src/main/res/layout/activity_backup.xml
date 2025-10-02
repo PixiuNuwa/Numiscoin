@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomMenu"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Título -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Copia de Seguridad"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Información -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descarga una copia de seguridad de tu colección en formato XML. Esta copia incluirá toda la información de tus monedas, categorías y configuraciones."
+                android:textColor="#CCCCCC"
+                android:textSize="16sp"
+                android:layout_marginBottom="32dp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Información del último backup -->
+            <TextView
+                android:id="@+id/lastBackupTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Última copia: No disponible"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="32dp"
+                android:padding="16dp"
+                android:background="#1A1A1A" />
+
+            <!-- Estado del proceso -->
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Listo para generar copia de seguridad"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center" />
+
+            <!-- Progress Bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:visibility="invisible" />
+
+            <!-- Botón descargar -->
+            <Button
+                android:id="@+id/downloadButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Descargar Copia de Seguridad (XML)"
+                android:textColor="#FFFFFF"
+                android:background="#0000FF"
+                android:textAllCaps="false" />
+
+            <!-- Información adicional -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#1A1A1A"
+                android:padding="16dp"
+                android:layout_marginTop="32dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Información importante:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• La copia se genera en formato XML estándar\n• Incluye todos los datos de tu colección\n• Puedes usar este archivo para migrar tus datos\n• Recomendamos realizar copias regularmente"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Menú inferior -->
+    <include layout="@layout/bottom_menu" />
+
+</RelativeLayout>

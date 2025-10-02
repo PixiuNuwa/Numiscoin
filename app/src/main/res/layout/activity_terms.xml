@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomMenu"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Términos del Servicio"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Mensaje de agradecimiento (oculto inicialmente) -->
+        <TextView
+            android:id="@+id/thanksTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¡Gracias por aceptar nuestros términos y condiciones!"
+            android:textColor="#4CAF50"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="gone" />
+
+        <!-- ScrollView para los términos -->
+        <ScrollView
+            android:id="@+id/termsScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#1A1A1A"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/termsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/terms_of_service_content"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+        </ScrollView>
+
+        <!-- Checkbox de aceptación -->
+        <CheckBox
+            android:id="@+id/acceptCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="He leído y acepto los términos del servicio"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botón aceptar -->
+        <Button
+            android:id="@+id/acceptButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Aceptar Términos"
+            android:textColor="#FFFFFF"
+            android:background="#0000FF"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <!-- Menú inferior -->
+    <include layout="@layout/bottom_menu" />
+
+</RelativeLayout>

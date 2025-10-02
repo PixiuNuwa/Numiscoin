@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomMenu"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Título -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contacto"
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Descripción -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estamos aquí para ayudarte. Contáctanos a través de los siguientes medios:"
+                android:textColor="#CCCCCC"
+                android:textSize="16sp"
+                android:layout_marginBottom="32dp" />
+
+            <!-- Información de contacto -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#1A1A1A"
+                android:padding="24dp">
+
+                <!-- Email -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/emailTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="soporte@numiscoin.com"
+                    android:textColor="#CCCCCC"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="24dp" />
+
+                <Button
+                    android:id="@+id/emailButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Enviar Email"
+                    android:textColor="#FFFFFF"
+                    android:background="#0000FF"
+                    android:layout_marginBottom="32dp"
+                    android:textAllCaps="false" />
+
+                <!-- Teléfono -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono:"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/phoneTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+56 2 1234 5678"
+                    android:textColor="#CCCCCC"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="24dp" />
+
+                <Button
+                    android:id="@+id/callButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Llamar"
+                    android:textColor="#FFFFFF"
+                    android:background="#00AA00"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+            <!-- Horario de atención -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#1A1A1A"
+                android:padding="24dp"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Horario de Atención"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lunes a Viernes: 9:00 - 18:00 hrs\nSábados: 10:00 - 14:00 hrs\nDomingos: Cerrado"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Menú inferior -->
+    <include layout="@layout/bottom_menu" />
+
+</RelativeLayout>

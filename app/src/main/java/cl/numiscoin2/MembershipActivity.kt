@@ -254,7 +254,7 @@ class MembershipActivity : AppCompatActivity() {
         val idMembresia = MembershipTypes.getMembershipId(selectedMembership)
 
         // Construir la URL directamente con los parámetros requeridos
-        val paymentUrl = "https://ad407004253a.ngrok-free.app/payment.html?idusuario=$userId&idmembresia=$idMembresia"
+        val paymentUrl = "https://f70ba7db6da1.ngrok-free.app/payment.html?idusuario=$userId&idmembresia=$idMembresia"
 
         runOnUiThread {
             showLoading(false)
@@ -334,7 +334,7 @@ class MembershipActivity : AppCompatActivity() {
     }
 
     private fun abrirPaginaInformacion() {
-        val url = "https://7b558e32c2cd.ngrok-free.app/payment.html"
+        val url = "https://f70ba7db6da1.ngrok-free.app/payment.html"
         abrirEnNavegadorExterno(url)
     }
 

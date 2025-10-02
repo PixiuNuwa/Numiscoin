@@ -63,9 +63,9 @@
 
         <activity android:name=".RecoverPasswordActivity" />
 
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".setting.ProfileActivity" />
 
-        <activity android:name=".EditProfileActivity" android:exported="false" />
+        <activity android:name=".setting.EditProfileActivity" android:exported="false" />
 
         <activity android:name=".HelpActivity" />
 
@@ -82,6 +82,14 @@
             android:name=".MembershipActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name=".CreateCollectionActivity" />
+        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".setting.LanguageActivity" />
+        <activity android:name=".setting.FAQActivity" />
+        <activity android:name=".setting.ContactActivity" />
+        <activity android:name=".setting.TermsActivity" />
+        <activity android:name=".setting.BackupActivity" />
 
     </application>
 </manifest>

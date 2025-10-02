@@ -9,6 +9,8 @@ import android.widget.GridView
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import cl.numiscoin2.setting.ProfileActivity
+import cl.numiscoin2.setting.SettingsActivity
 import com.bumptech.glide.Glide
 import java.util.*
 import java.text.SimpleDateFormat
@@ -18,6 +20,7 @@ class WelcomeActivity : BaseActivity() {
     private val TAG = "WelcomeActivity"
     private lateinit var eventosGridView: GridView
     private lateinit var calendarGridView: GridView
+    private lateinit var settingsButton: ImageButton
     private var eventosList: List<Evento> = emptyList()
     private var eventosDelMes: List<Evento> = emptyList()
 
@@ -35,14 +38,48 @@ class WelcomeActivity : BaseActivity() {
         val welcomeMessage = findViewById<TextView>(R.id.welcomeMessage)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         val profileButton = findViewById<ImageButton>(R.id.profileButton)
+
+        // AGREGAR LOGS PARA DIAGNOSTICAR EL BOTÓN DE CONFIGURACIÓN
+        try {
+            settingsButton = findViewById(R.id.settingsButton)
+            Log.d(TAG, "onCreate: settingsButton encontrado - $settingsButton")
+        } catch (e: Exception) {
+            Log.e(TAG, "onCreate: ERROR - No se pudo encontrar settingsButton", e)
+            Toast.makeText(this, "Error: No se encontró el botón de configuración", Toast.LENGTH_LONG).show()
+            return
+        }
+
         eventosGridView = findViewById(R.id.eventosGridView)
         calendarGridView = findViewById(R.id.calendarGridView)
 
         welcomeMessage.text = "Hola $userName, bienvenido a NumisCoin.\n" +
                 "Aquí podrás ver los próximos eventos numismáticos."
 
+        // AGREGAR LOGS PARA PROFILE BUTTON
         profileButton.setOnClickListener {
-            ProfileActivity.start(this)
+            Log.d(TAG, "profileButton: Clic detectado, iniciando ProfileActivity")
+            try {
+                ProfileActivity.start(this)
+                Log.d(TAG, "profileButton: ProfileActivity iniciada exitosamente")
+            } catch (e: Exception) {
+                Log.e(TAG, "profileButton: ERROR al iniciar ProfileActivity", e)
+                Toast.makeText(this, "Error al abrir perfil", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // AGREGAR LOGS DETALLADOS PARA SETTINGS BUTTON
+        settingsButton.setOnClickListener {
+            Log.d(TAG, "settingsButton: Clic detectado en botón configuración")
+            Log.d(TAG, "settingsButton: Context actual - $this")
+
+            try {
+                Log.d(TAG, "settingsButton: Intent creado, iniciando SettingsActivity...")
+                SettingsActivity.start(this)
+                Log.d(TAG, "settingsButton: SettingsActivity iniciada exitosamente")
+            } catch (e: Exception) {
+                Log.e(TAG, "settingsButton: ERROR crítico al iniciar SettingsActivity", e)
+                Toast.makeText(this, "Error al abrir configuración: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
 
         usuario?.let { user ->
@@ -58,6 +95,7 @@ class WelcomeActivity : BaseActivity() {
         }
 
         logoutButton.setOnClickListener {
+            Log.d(TAG, "logoutButton: Clic detectado, finalizando actividad")
             finish()
         }
 

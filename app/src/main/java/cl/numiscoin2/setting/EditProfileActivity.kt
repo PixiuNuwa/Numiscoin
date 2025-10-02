@@ -1,4 +1,4 @@
-package cl.numiscoin2
+package cl.numiscoin2.setting
 
 import android.app.Activity
 import android.content.Intent
@@ -10,6 +10,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cl.numiscoin2.NetworkConfig
+import cl.numiscoin2.NetworkUserUtils
+import cl.numiscoin2.R
+import cl.numiscoin2.SessionManager
+import cl.numiscoin2.Usuario
+import cl.numiscoin2.Utils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -155,7 +161,11 @@ class EditProfileActivity : AppCompatActivity() {
         ) { success, message ->
             runOnUiThread {
                 if (success) {
-                    Toast.makeText(this, "Foto de perfil actualizada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Foto de perfil actualizada correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     // Actualizar la foto en el objeto usuario localmente
                     usuario = usuario.copy(foto = "profile_${usuario.idUsuario}.jpg")
                 } else {
@@ -206,9 +216,14 @@ class EditProfileActivity : AppCompatActivity() {
                     // Limpiar campos de contraseña
                     findViewById<EditText>(R.id.editProfilePassword).text.clear()
                     findViewById<EditText>(R.id.editProfileConfirmPassword).text.clear()
-                    Toast.makeText(this, "Contraseña actualizada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Contraseña actualizada correctamente", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
-                    Toast.makeText(this, "Error al cambiar contraseña: $message", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Error al cambiar contraseña: $message",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

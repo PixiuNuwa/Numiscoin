@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Objetos"
+                android:text="Colección"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -54,6 +54,80 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp" />
 
+        <!-- Estado vacío - Solo visible cuando NO hay objetos -->
+        <LinearLayout
+            android:id="@+id/emptyStateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="40dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No hay monedas en esta colección"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Comienza agregando tu primera moneda a la colección"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
+
+        </LinearLayout>
+
+        <!-- Header con búsqueda - Solo visible cuando SÍ hay objetos -->
+        <LinearLayout
+            android:id="@+id/headerWithObjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Barra de búsqueda -->
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Buscar monedas..."
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp" />
+
+        </LinearLayout>
+
+        <!-- Filtros de banderas - Solo visible cuando SÍ hay objetos -->
+        <LinearLayout
+            android:id="@+id/filtrosContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filtrar por país:"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Las banderas se agregarán dinámicamente aquí -->
+
+        </LinearLayout>
+
+        <!-- Lista de objetos - Solo visible cuando SÍ hay objetos -->
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -62,7 +136,7 @@
             android:fillViewport="true">
 
             <LinearLayout
-                android:id="@+id/paisesContainer"
+                android:id="@+id/objetosContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -70,14 +144,28 @@
 
         </ScrollView>
 
-        <!-- Lista de objetos -->
+        <!-- Lista de objetos (alternativa con RecyclerView) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/objetosRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </LinearLayout>
+
+    <!-- Botón flotante para agregar moneda -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddCoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:layout_above="@+id/bottomMenu"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Agregar moneda"
+        app:backgroundTint="#FF0000FF"
+        app:tint="@android:color/white" />
 
     <!-- Menú inferior (igual que antes) -->
     <LinearLayout

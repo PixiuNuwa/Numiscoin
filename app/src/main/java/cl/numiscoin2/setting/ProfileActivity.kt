@@ -1,4 +1,4 @@
-package cl.numiscoin2
+package cl.numiscoin2.setting
 
 import android.app.Activity
 import android.content.Context
@@ -11,9 +11,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cl.numiscoin2.HelpActivity
+import cl.numiscoin2.LoginActivity
+import cl.numiscoin2.NetworkConfig
+import cl.numiscoin2.R
+import cl.numiscoin2.SessionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 
 class ProfileActivity : AppCompatActivity() {
@@ -41,42 +45,7 @@ class ProfileActivity : AppCompatActivity() {
         profileId = findViewById(R.id.profileId)
         profileDate = findViewById(R.id.profileDate)
 
-        //usuario = SessionManager.usuario
 
-        /*if (usuario != null) {
-            // Mostrar datos del usuario
-            profileName.text = "${usuario!!.nombre} ${usuario!!.apellido}"
-            profileEmail.text = usuario!!.email
-            profileId.text = "ID: ${usuario!!.idUsuario}"
-            profileDate.text = "Miembro desde: ${usuario!!.fechaCreacion}"
-
-            val requestOptions = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(false)
-
-            // Cargar foto de perfil si existe
-            if (usuario!!.foto.isNotEmpty() && usuario!!.foto != "null") {
-                val fotoUrl = NetworkUtils.construirUrlCompleta(usuario!!.foto)
-                Log.d("OnCreate", "URL completa de la foto: $fotoUrl")
-
-                try {
-                    Glide.with(this)
-                        .load(fotoUrl)
-                        .apply(requestOptions)
-                        .placeholder(android.R.color.darker_gray)
-                        .error(android.R.drawable.ic_menu_gallery)
-                        .into(profileAvatar)
-                } catch (e: Exception) {
-                    Log.e("OnCreate", "Error cargando imagen con Glide: ${e.message}")
-                    // Fallback a imagen por defecto
-                    profileAvatar.setImageResource(android.R.drawable.ic_menu_gallery)
-                }
-            } else {
-                Log.d("OnCreate", "No hay foto de perfil o está vacía")
-                // Usar un placeholder más visible
-                profileAvatar.setImageResource(android.R.drawable.ic_menu_gallery)
-            }
-        }*/
         cargarDatosUsuario()
 
         backButton.setOnClickListener {
@@ -109,28 +78,6 @@ class ProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
         }
 
-        /*if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            val usuarioActualizado = data?.getParcelableExtra<Usuario>("usuarioActualizado")
-            usuarioActualizado?.let { user ->
-                // Actualizar la vista con los nuevos datos
-                profileName.text = "${user.nombre} ${user.apellido}"
-                profileEmail.text = user.email
-
-                // Si hay una nueva foto, cargarla
-                if (user.foto.isNotEmpty() && user.foto != "null") {
-                    val fotoUrl = NetworkUtils.construirUrlCompleta(user.foto)
-                    Glide.with(this)
-                        .load(fotoUrl)
-                        .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .placeholder(android.R.color.darker_gray)
-                        .error(android.R.drawable.ic_menu_gallery)
-                        .into(profileAvatar)
-                }
-
-                // Actualizar el objeto usuario
-                usuario = user
-            }
-        }*/
     }
 
     private fun cargarDatosUsuario() {

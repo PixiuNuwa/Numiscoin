@@ -45,6 +45,14 @@
         <item name="cornerRadius">@dimen/button_corner_radius</item>
     </style>
 
+    <style name="SettingButtonStyle">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
     <!-- Style for primary button nuevo -->
     <!--style name="PrimaryButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/button_primary</item>

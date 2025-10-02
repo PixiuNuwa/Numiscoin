@@ -14,6 +14,8 @@
     <color name="menu_selected">#FF0000FF</color>
     <color name="menu_unselected">#FF888888</color>
 
+    <color name="colorPrimary">#FF0000FF</color>
+
     <color name="background_dark">#00272c</color>
     <color name="text_light">#fff3d6</color>
     <color name="primary_green">#01b76a</color>

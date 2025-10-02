@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.litert)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 
+
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material)
 

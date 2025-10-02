@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -14,10 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class CollectionActivity : BaseActivity() {
 
     private val TAG = "CollectionActivity"
-    private var primeraColeccion: Coleccion? = null
-    private val REQUEST_ADD_COIN = 1
     private var isLoading = false
-    private var tiposObjetos: List<TipoObjeto> = emptyList()
+    private var colecciones: List<Coleccion> = emptyList()
+    private val REQUEST_CREATE_COLLECTION = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,54 +29,44 @@ class CollectionActivity : BaseActivity() {
         highlightMenuItem(R.id.menuCollection)
         Log.d(TAG, "onCreate: Menú inferior configurado")
 
-        val cantidadMonedas = usuario?.cantidadMonedas ?: 0
-        Log.d(TAG, "Cantidad de monedas para este usuario es: $cantidadMonedas")
-
-        // Configurar FAB para agregar objetos
-        val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
-        fabAddCoin.setOnClickListener {
-            val usuarioActual = usuario
-            val coleccionActual = primeraColeccion
-
-            if (usuarioActual == null) {
-                Log.w(TAG, "Usuario nulo, no se puede abrir AddCoinActivity")
-                Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (coleccionActual == null) {
-                Log.w(TAG, "No hay colección disponible")
-                Toast.makeText(this, "Error: No hay colección seleccionada", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val intent = Intent(this@CollectionActivity, AddCoinActivity::class.java)
-            intent.putExtra("idColeccion", coleccionActual.id.toInt())
-            Log.d(TAG, "Enviando idColeccion: ${coleccionActual.id} a AddCoinActivity")
-
-            startActivityForResult(intent, REQUEST_ADD_COIN)
+        // Configurar botón de agregar colección
+        val btnAddCollection = findViewById<Button>(R.id.btnAddCollection)
+        btnAddCollection.setOnClickListener {
+            Log.d(TAG, "btnAddCollection: Abriendo vista para crear colección")
+            val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
+            startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
         }
 
-        // Configurar botón de retroceso
-        val backButton = findViewById<Button>(R.id.backButton)
-        backButton.setOnClickListener {
-            Log.d(TAG, "backButton: Click en botón volver")
-            finish()
+        // Configurar botón de agregar colección en estado vacío
+        val btnAddCollectionEmpty = findViewById<Button>(R.id.btnAddCollectionEmpty)
+        btnAddCollectionEmpty.setOnClickListener {
+            Log.d(TAG, "btnAddCollectionEmpty: Abriendo vista para crear colección")
+            val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
+            startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
         }
 
-        // Cargar colección y tipos de objetos
-        cargarColeccionDesdeServidor()
+        // Cargar colecciones del usuario
+        cargarColeccionesDesdeServidor()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_ADD_COIN && resultCode == RESULT_OK) {
-            Log.d(TAG, "Objeto agregado exitosamente, recargando colección...")
-            cargarColeccionDesdeServidor()
-        } else if (resultCode == RESULT_OK && data?.getBooleanExtra("deleted", false) == true) {
-            Log.d(TAG, "Objeto eliminado, recargando colección...")
-            cargarColeccionDesdeServidor()
+        if (requestCode == REQUEST_CREATE_COLLECTION) {
+            when (resultCode) {
+                RESULT_OK -> {
+                    val idColeccion = data?.getLongExtra("id_coleccion", -1L) ?: -1L
+                    val nombreColeccion = data?.getStringExtra("nombre_coleccion") ?: ""
+
+                    Log.d(TAG, "Colección creada exitosamente - ID: $idColeccion, Nombre: $nombreColeccion")
+                    Toast.makeText(this, "Colección '$nombreColeccion' creada exitosamente", Toast.LENGTH_SHORT).show()
+                    cargarColeccionesDesdeServidor()
+                }
+                RESULT_CANCELED -> {
+                    // El usuario canceló la creación
+                    Log.d(TAG, "Creación de colección cancelada por el usuario")
+                }
+            }
         }
     }
 
@@ -84,37 +74,42 @@ class CollectionActivity : BaseActivity() {
         isLoading = show
         Log.d(TAG, "showLoading: ${if (show) "Mostrando" else "Ocultando"} loading")
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val tiposContainer = findViewById<LinearLayout>(R.id.tiposContainer)
+        val headerWithCollections = findViewById<LinearLayout>(R.id.headerWithCollections)
+        val collectionsContainer = findViewById<LinearLayout>(R.id.collectionsContainer)
+        val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
 
         progressBar.visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
         if (show) {
-            tiposContainer.visibility = android.view.View.GONE
+            headerWithCollections.visibility = android.view.View.GONE
+            collectionsContainer.visibility = android.view.View.GONE
+            emptyStateContainer.visibility = android.view.View.GONE
         }
     }
 
-    private fun mostrarTiposObjetos() {
-        Log.d(TAG, "mostrarTiposObjetos: Mostrando ${tiposObjetos.size} tipos de objetos")
-        val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
-        val tiposContainer = findViewById<LinearLayout>(R.id.tiposContainer)
+    private fun mostrarColecciones() {
+        Log.d(TAG, "mostrarColecciones: Mostrando ${colecciones.size} colecciones")
+        val headerWithCollections = findViewById<LinearLayout>(R.id.headerWithCollections)
+        val collectionsContainer = findViewById<LinearLayout>(R.id.collectionsContainer)
+        val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
 
-        collectionInfo.text = "'${primeraColeccion?.nombre}'"
-        tiposContainer.visibility = android.view.View.VISIBLE
-        tiposContainer.removeAllViews()
+        collectionsContainer.removeAllViews()
 
-        if (tiposObjetos.isEmpty()) {
-            val emptyText = TextView(this)
-            emptyText.text = "No hay tipos de objetos disponibles"
-            emptyText.setTextColor(resources.getColor(android.R.color.white))
-            emptyText.textSize = 16f
-            emptyText.gravity = android.view.Gravity.CENTER
-            tiposContainer.addView(emptyText)
+        if (colecciones.isEmpty()) {
+            // Mostrar estado vacío - OCULTAR header
+            headerWithCollections.visibility = android.view.View.GONE
+            collectionsContainer.visibility = android.view.View.GONE
+            emptyStateContainer.visibility = android.view.View.VISIBLE
             return
         }
 
-        // Cambiar MaterialButton por Button normal
-        tiposObjetos.forEach { tipo ->
-            val button = Button(this).apply {
-                text = tipo.nombre
+        // Mostrar listado de colecciones - MOSTRAR header
+        headerWithCollections.visibility = android.view.View.VISIBLE
+        collectionsContainer.visibility = android.view.View.VISIBLE
+        emptyStateContainer.visibility = android.view.View.GONE
+
+        colecciones.forEach { coleccion ->
+            val collectionItem = Button(this).apply {
+                text = "${coleccion.nombre}\n${coleccion.descripcion}"
                 setTextColor(resources.getColor(android.R.color.white))
                 setBackgroundColor(resources.getColor(R.color.menu_unselected))
                 layoutParams = LinearLayout.LayoutParams(
@@ -124,31 +119,27 @@ class CollectionActivity : BaseActivity() {
                     setMargins(16)
                 }
 
-                // Al hacer clic en un botón, abrir la actividad que muestra los objetos de ese tipo
+                // Al hacer clic en una colección, abrir la actividad de objetos
                 setOnClickListener {
                     val intent = Intent(this@CollectionActivity, ObjetosListActivity::class.java)
-                    intent.putExtra("idColeccion", primeraColeccion?.id)
-                    intent.putExtra("idTipoObjeto", tipo.id)
-                    intent.putExtra("nombreTipo", tipo.nombre)
+                    intent.putExtra("idColeccion", coleccion.id)
+                    intent.putExtra("nombreColeccion", coleccion.nombre)
                     startActivity(intent)
                 }
             }
-            tiposContainer.addView(button)
+            collectionsContainer.addView(collectionItem)
         }
     }
 
-    private fun cargarColeccionDesdeServidor() {
+    private fun cargarColeccionesDesdeServidor() {
         showLoading(true)
-        val collectionInfo = findViewById<TextView>(R.id.collectionInfo)
-        collectionInfo.text = "Cargando tu colección..."
-        Log.d(TAG, "cargarColeccionDesdeServidor: Iniciando carga de colección")
+        Log.d(TAG, "cargarColeccionesDesdeServidor: Iniciando carga de colecciones")
 
         val usuarioId = usuario?.idUsuario ?: 0L
 
         if (usuarioId == 0L) {
-            Log.e(TAG, "cargarColeccionDesdeServidor: Usuario no válido")
+            Log.e(TAG, "cargarColeccionesDesdeServidor: Usuario no válido")
             showLoading(false)
-            collectionInfo.text = "Error: Usuario no identificado"
             Toast.makeText(this, "Error al identificar el usuario", Toast.LENGTH_SHORT).show()
             return
         }
@@ -156,38 +147,18 @@ class CollectionActivity : BaseActivity() {
         // Obtener colecciones del usuario
         NetworkCollectionUtils.getUserCollections(usuario!!.idUsuario) { colecciones, error ->
             runOnUiThread {
+                showLoading(false)
+
                 if (error != null) {
-                    showLoading(false)
-                    collectionInfo.text = "Error al cargar colecciones"
                     Toast.makeText(this@CollectionActivity, error, Toast.LENGTH_SHORT).show()
                     return@runOnUiThread
                 }
 
-                if (colecciones != null && colecciones.isNotEmpty()) {
-                    primeraColeccion = colecciones[0]
-                    Log.d("CollectionDebug", "Colección encontrada: ID ${primeraColeccion?.id}, Nombre: ${primeraColeccion?.nombre}")
-
-                    // Obtener tipos de objetos de la colección
-                    NetworkCollectionUtils.getCollectionObjectTypes(primeraColeccion!!.id) { tipos, errorTipos ->
-                        runOnUiThread {
-                            showLoading(false)
-
-                            if (errorTipos != null) {
-                                collectionInfo.text = "Error al cargar tipos de objetos"
-                                Toast.makeText(this@CollectionActivity, errorTipos, Toast.LENGTH_SHORT).show()
-                                return@runOnUiThread
-                            }
-
-                            tiposObjetos = tipos ?: emptyList()
-                            mostrarTiposObjetos()
-                        }
-                    }
-                } else {
-                    showLoading(false)
-                    collectionInfo.text = "No tienes colecciones creadas"
-                    Toast.makeText(this@CollectionActivity, "No se encontraron colecciones", Toast.LENGTH_SHORT).show()
-                }
+                this.colecciones = colecciones ?: emptyList()
+                mostrarColecciones()
             }
         }
     }
+
+
 }

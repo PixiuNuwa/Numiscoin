@@ -5,21 +5,7 @@
     android:background="#000000"
     android:fitsSystemWindows="true">
 
-    <!-- Botón de avatar en esquina superior derecha -->
-    <ImageButton
-        android:id="@+id/profileButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/circle_white_background"
-        android:scaleType="centerCrop"
-        android:contentDescription="Perfil de usuario"
-        android:elevation="8dp" />
-
-    <!-- Contenido principal con ScrollView -->
+    <!-- PRIMERO: ScrollView (fondo) -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,157 +91,42 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Menú inferior (mantener igual) -->
+    <!-- SEGUNDO: Botones flotantes (encima del ScrollView) -->
     <LinearLayout
-        android:id="@+id/bottomMenu"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        android:background="#2D3330"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:weightSum="5">
+        android:gravity="center_vertical">
 
-        <!-- Botón 1: Home -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuHome"
-            android:focusable="true">
+        <!-- Botón de ajustes -->
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/circle_white_background"
+            android:src="@drawable/ic_settings"
+            android:scaleType="centerInside"
+            android:contentDescription="Ajustes"
+            android:elevation="8dp" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home_selected"
-                android:tint="#FFF3D6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Home"
-                android:textColor="#FFF3D6"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 2: Calculadora -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCalculator"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_calculator"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Calculadora"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 3: Mi Coleccion -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCollection"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_collection"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Colección"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 4: Divisas -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCurrency"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_currency"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Divisas"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 5: Market Place -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuMarketplace"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_marketplace"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="MarketPlace"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
+        <!-- Botón de perfil existente -->
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_white_background"
+            android:scaleType="centerCrop"
+            android:contentDescription="Perfil de usuario"
+            android:elevation="8dp" />
 
     </LinearLayout>
+
+    <!-- TERCERO: Bottom menu -->
+    <include layout="@layout/bottom_menu" />
 
 </RelativeLayout>

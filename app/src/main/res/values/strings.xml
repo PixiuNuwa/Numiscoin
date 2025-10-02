@@ -65,4 +65,57 @@
     <string name="create_account">¿No tienes una cuenta? Crear cuenta</string-->
     <string name="continue_button">CONTINUAR</string>
 
+
+
+    <string name="terms_of_service_content"><![CDATA[
+TÉRMINOS DEL SERVICIO DE NUMISCOIN
+
+Última actualización: [Fecha]
+
+1. ACEPTACIÓN DE LOS TÉRMINOS
+Al acceder y utilizar NumisCoin, usted acepta estar sujeto a estos Términos de Servicio.
+
+2. DESCRIPCIÓN DEL SERVICIO
+NumisCoin es una aplicación móvil diseñada para coleccionistas de monedas que permite:
+- Gestionar colecciones numismáticas
+- Calcular valores de monedas
+- Conectarse con otros coleccionistas
+- Acceder a información sobre eventos numismáticos
+
+3. REGISTRO Y CUENTA
+Para utilizar ciertas funciones de la aplicación, debe registrarse y crear una cuenta. Usted se compromete a:
+- Proporcionar información veraz y actualizada
+- Mantener la confidencialidad de su contraseña
+- Notificar inmediatamente cualquier uso no autorizado de su cuenta
+
+4. PROPIEDAD INTELECTUAL
+Todo el contenido de la aplicación, incluyendo pero no limitado a texto, gráficos, logotipos y software, es propiedad de NumisCoin y está protegido por leyes de propiedad intelectual.
+
+5. COLECCIONES DE USUARIOS
+Usted es responsable del contenido que ingresa en su colección. NumisCoin no garantiza la autenticidad o valor de las monedas registradas.
+
+6. PRIVACIDAD
+Su privacidad es importante para nosotros. Consulte nuestra Política de Privacidad para entender cómo recopilamos y utilizamos su información.
+
+7. LIMITACIÓN DE RESPONSABILIDAD
+NumisCoin no será responsable por:
+- Daños indirectos, incidentales o consecuentes
+- Pérdida de datos o información
+- Decisiones de inversión basadas en la información proporcionada
+
+8. MODIFICACIONES DEL SERVICIO
+Nos reservamos el derecho de modificar o discontinuar el servicio en cualquier momento, con o sin previo aviso.
+
+9. TERMINACIÓN
+Podemos terminar o suspender su acceso al servicio inmediatamente, sin previo aviso, por cualquier violación de estos Términos.
+
+10. LEY APLICABLE
+Estos Términos se regirán por las leyes de Chile.
+
+11. CONTACTO
+Para preguntas sobre estos Términos, contáctenos en: soporte@numiscoin.com
+
+Al aceptar estos términos, usted reconoce haber leído y comprendido este acuerdo.
+]]></string>
+
 </resources>

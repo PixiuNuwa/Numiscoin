@@ -4,6 +4,10 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -11,16 +15,24 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import android.util.Log
 
 class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var objeto: ObjetoColeccion
     private lateinit var deleteButton: Button
     private lateinit var editButton: Button
+    private lateinit var ivImagenPrincipal: ImageView
+    private lateinit var llMiniaturas: LinearLayout
+    private var fotos: List<FotoObjeto> = emptyList()
+    private var fotoSeleccionadaIndex: Int = 0
 
     companion object {
         private const val EDIT_COIN_REQUEST = 1001
@@ -34,44 +46,221 @@ class CoinDetailActivity : AppCompatActivity() {
         // Obtener el objeto de la moneda
         objeto = intent.getParcelableExtra("moneda") ?: return
 
+        // Inicializar vistas
+        initViews()
+
         // Configurar la UI
         setupUI()
-        // Configurar botón de eliminar
-        setupDeleteButton()
 
+        // Configurar botones
+        setupDeleteButton()
         setupEditButton()
     }
 
-    private fun setupUI() {
-        // Información básica
-        findViewById<TextView>(R.id.tvNombre).text = objeto.nombre
-        findViewById<TextView>(R.id.tvDescripcion).text = objeto.descripcion
-        findViewById<TextView>(R.id.tvAnio).text = objeto.anio.toString()
-        findViewById<TextView>(R.id.tvPais).text = objeto.nombrePais
-
-        // Información de moneda
-        objeto.monedaInfo?.let { info ->
-            findViewById<TextView>(R.id.tvFamilia).text = info.familia ?: "No especificado"
-            findViewById<TextView>(R.id.tvVariante).text = info.variante ?: "No especificado"
-            findViewById<TextView>(R.id.tvCeca).text = info.ceca ?: "No especificado"
-            findViewById<TextView>(R.id.tvTipo).text = info.tipo ?: "No especificado"
-            findViewById<TextView>(R.id.tvDisenador).text = info.disenador ?: "No especificado"
-            findViewById<TextView>(R.id.tvTotalProducido).text = info.totalProducido ?: "No especificado"
-            findViewById<TextView>(R.id.tvValorSinCircular).text = info.valorSinCircular ?: "No especificado"
-            findViewById<TextView>(R.id.tvValorComercial).text = info.valorComercial ?: "No especificado"
-            findViewById<TextView>(R.id.tvValorAdquirido).text = info.valorAdquirido ?: "No especificado"
-            findViewById<TextView>(R.id.tvEstado).text = info.estado ?: "No especificado"
-            findViewById<TextView>(R.id.tvObservaciones).text = info.observaciones ?: "Sin observaciones"
-            findViewById<TextView>(R.id.tvAcunada).text = info.acunada ?: "No especificado"
-        }
-
-        // Configurar carrusel de imágenes si hay fotos
-        setupImageCarousel()
+    private fun initViews() {
+        ivImagenPrincipal = findViewById(R.id.ivImagenPrincipal)
+        llMiniaturas = findViewById(R.id.llMiniaturas)
+        deleteButton = findViewById(R.id.btnDelete)
+        editButton = findViewById(R.id.btnEdit)
     }
 
-    private fun setupDeleteButton() {
-        deleteButton = findViewById(R.id.btnDelete)
+    private fun setupUI() {
+        // Configurar nombre
+        findViewById<TextView>(R.id.tvNombre).text = objeto.nombre
 
+        // Configurar imágenes
+        setupImagenes()
+
+        // Configurar tabs de información
+        setupTabsInfo()
+    }
+
+    private fun setupImagenes() {
+        fotos = objeto.fotos ?: emptyList()
+
+        if (fotos.isEmpty()) {
+            // Si no hay fotos, ocultar las miniaturas
+            llMiniaturas.visibility = android.view.View.GONE
+            // Mostrar imagen placeholder en la principal
+            ivImagenPrincipal.setImageResource(R.drawable.ic_placeholder)
+            return
+        }
+
+        // Mostrar primera imagen como principal
+        mostrarImagenPrincipal(0)
+
+        // Configurar miniaturas
+        setupMiniaturas()
+    }
+
+    private fun mostrarImagenPrincipal(index: Int) {
+        if (fotos.isNotEmpty() && index < fotos.size) {
+            val foto = fotos[index]
+            val fotoUrl = if (foto.url.startsWith("http")) {
+                foto.url
+            } else {
+                NetworkConfig.UPLOADS_BASE_URL + foto.url
+            }
+
+            Glide.with(this)
+                .load(fotoUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(ivImagenPrincipal)
+
+            fotoSeleccionadaIndex = index
+
+            // Configurar click para zoom (puedes implementar un dialog con zoom)
+            ivImagenPrincipal.setOnClickListener {
+                mostrarImagenZoom(fotoUrl)
+            }
+        }
+    }
+
+    private fun mostrarImagenZoom(imageUrl: String) {
+        // Crear un diálogo personalizado
+        val dialog = android.app.AlertDialog.Builder(this).create()
+
+        // Crear un ImageView configurado correctamente
+        val imageView = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            adjustViewBounds = true
+
+            // Hacer la imagen clickeable para cerrar el diálogo
+            setOnClickListener {
+                dialog.dismiss()
+            }
+        }
+
+        // Cargar la imagen con Glide
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_placeholder)
+            .error(R.drawable.ic_error)
+            .into(imageView)
+
+        // Configurar el diálogo
+        dialog.setView(imageView)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Mostrar el diálogo
+        dialog.show()
+
+        // Configurar el tamaño del diálogo para que ocupe casi toda la pantalla
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+    }
+
+    private fun setupMiniaturas() {
+        llMiniaturas.removeAllViews()
+
+        val screenWidth = resources.displayMetrics.widthPixels
+        val imageSize = (screenWidth * 0.24).toInt() // 24% del ancho
+        val margin = (screenWidth * 0.01).toInt() // 1% de separación
+
+        fotos.forEachIndexed { index, foto ->
+            val miniaturaContainer = LinearLayout(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    imageSize,
+                    imageSize
+                ).apply {
+                    setMargins(margin, 0, margin, 0)
+                }
+                orientation = LinearLayout.VERTICAL
+                gravity = android.view.Gravity.CENTER
+                setBackgroundColor(
+                    if (index == fotoSeleccionadaIndex) {
+                        ContextCompat.getColor(this@CoinDetailActivity, R.color.colorPrimary)
+                    } else {
+                        ContextCompat.getColor(this@CoinDetailActivity, R.color.menu_unselected)
+                    }
+                )
+            }
+
+            val imageView = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    (imageSize * 0.8).toInt(),
+                    (imageSize * 0.8).toInt()
+                )
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+
+            val fotoUrl = if (foto.url.startsWith("http")) {
+                foto.url
+            } else {
+                NetworkConfig.UPLOADS_BASE_URL + foto.url
+            }
+
+            Glide.with(this)
+                .load(fotoUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(imageView)
+
+            // Configurar click para cambiar imagen principal
+            miniaturaContainer.setOnClickListener {
+                mostrarImagenPrincipal(index)
+                actualizarMiniaturasSeleccionadas(index)
+            }
+
+            miniaturaContainer.addView(imageView)
+            llMiniaturas.addView(miniaturaContainer)
+        }
+    }
+
+    private fun actualizarMiniaturasSeleccionadas(selectedIndex: Int) {
+        for (i in 0 until llMiniaturas.childCount) {
+            val miniatura = llMiniaturas.getChildAt(i) as LinearLayout
+            miniatura.setBackgroundColor(
+                if (i == selectedIndex) {
+                    ContextCompat.getColor(this, R.color.colorPrimary)
+                } else {
+                    ContextCompat.getColor(this, R.color.menu_unselected)
+                }
+            )
+        }
+    }
+
+    private fun setupTabsInfo() {
+        val viewPager = findViewById<ViewPager2>(R.id.viewPagerInfo)
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+
+        val adapter = InfoPagerAdapter(this) // Pasar 'this' como FragmentActivity
+        viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Información"
+                1 -> "Características"
+                2 -> "Valores"
+                else -> "Tab"
+            }
+        }.attach()
+    }
+
+    private inner class InfoPagerAdapter(fragmentActivity: FragmentActivity) :
+        FragmentStateAdapter(fragmentActivity) {
+
+        override fun getItemCount(): Int = 3
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> InfoTabFragment.newInstance(objeto)
+                1 -> CaracteristicasTabFragment.newInstance(objeto)
+                2 -> ValoresTabFragment.newInstance(objeto)
+                else -> InfoTabFragment.newInstance(objeto)
+            }
+        }
+    }
+
+    // Configuración de botones (sin cambios)
+    private fun setupDeleteButton() {
         deleteButton.setOnClickListener {
             showDeleteConfirmationDialog()
         }
@@ -104,27 +293,7 @@ class CoinDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupImageCarousel() {
-        val fotos = objeto.fotos
-        if (fotos.isNullOrEmpty()) {
-            findViewById<ViewPager2>(R.id.viewPager).visibility = android.view.View.GONE
-            findViewById<TabLayout>(R.id.tabLayout).visibility = android.view.View.GONE
-            return
-        }
-
-        val viewPager = findViewById<ViewPager2>(R.id.viewPager)
-        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-
-        val adapter = ImagePagerAdapter(fotos)
-        viewPager.adapter = adapter
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            // Opcional: puedes agregar indicadores o números
-        }.attach()
-    }
-
     private fun setupEditButton() {
-        editButton = findViewById<Button>(R.id.btnEdit)
         editButton.setOnClickListener {
             val intent = Intent(this, EditCoinActivity::class.java)
             intent.putExtra("moneda", objeto)
@@ -136,33 +305,25 @@ class CoinDetailActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == EDIT_COIN_REQUEST && resultCode == Activity.RESULT_OK) {
-
             Toast.makeText(this, "Moneda actualizada exitosamente", Toast.LENGTH_SHORT).show()
             recargarMoneda()
         }
     }
 
     private fun recargarMoneda() {
-        Log.i("MONEDA","IN")
-        // Mostrar progress bar o indicador de carga
         val progressDialog = ProgressDialog(this).apply {
             setMessage("Cargando datos actualizados...")
-            Log.i("MONEDA","Cargando datos actualizados...")
             setCancelable(false)
             show()
         }
 
-        // Llamar al servidor para obtener los datos actualizados
         NetworkObjectUtils.obtenerMonedaPorId(objeto.id) { monedaActualizada, error ->
             runOnUiThread {
-                Log.i("MONEDA","obteniendo moneda por ID")
                 progressDialog.dismiss()
 
                 if (monedaActualizada != null) {
-                    // Actualizar el objeto y la UI
-                    Log.i("MONEDA","actualizar objeto y UI")
                     objeto = monedaActualizada
-                    setupUI() // Volver a configurar la UI con los nuevos datos
+                    setupUI()
                     Toast.makeText(this, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Error al cargar datos actualizados: $error", Toast.LENGTH_SHORT).show()

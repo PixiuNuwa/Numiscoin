@@ -16,26 +16,63 @@
         android:layout_above="@+id/bottomMenu"
         android:layout_alignParentTop="true">
 
-        <!-- Header -->
-        <TextView
+        <!-- Header - Solo visible cuando hay colecciones -->
+        <LinearLayout
+            android:id="@+id/headerWithCollections"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="Mi Colección"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/collectionInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cargando tu colección..."
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Mis Colecciones"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Barra de búsqueda -->
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Buscar colecciones..."
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray"
+                android:background="@drawable/edit_text_background"
+                android:padding="12dp" />
+
+            <!-- Sección de Mis Colecciones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mis Colecciones"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAddCollection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Agregar"
+                    android:background="#FF0000FF"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!-- Progress Bar -->
         <ProgressBar
@@ -45,193 +82,55 @@
             android:layout_gravity="center"
             android:layout_marginBottom="16dp" />
 
-        <!-- Contenedor para los botones de tipos de objetos -->
+        <!-- Contenedor para las colecciones - Solo visible cuando hay colecciones -->
         <LinearLayout
-            android:id="@+id/tiposContainer"
+            android:id="@+id/collectionsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" />
 
-        <!-- Botón de retroceso -->
-        <Button
-            android:id="@+id/backButton"
+        <!-- Estado vacío - Solo visible cuando NO hay colecciones -->
+        <LinearLayout
+            android:id="@+id/emptyStateContainer"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="#FF0000FF"
-            android:text="Volver"
-            android:textColor="@android:color/white"
-            android:visibility="invisible" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="40dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No tienes colecciones creadas"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Comienza creando tu primera colección para organizar tus objetos"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btnAddCollectionEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crear Primera Colección"
+                android:background="#FF0000FF"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <!-- Botón flotante para agregar moneda -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddCoin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="24dp"
-        android:layout_above="@+id/bottomMenu"
-        android:src="@drawable/ic_add"
-        android:contentDescription="Agregar objeto"
-        app:backgroundTint="#FF0000FF"
-        app:tint="@android:color/white" />
 
     <!-- Menú inferior (sin cambios) -->
-    <!-- Menú inferior -->
-    <LinearLayout
-        android:id="@+id/bottomMenu"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#2D3330"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:weightSum="5">
-
-        <!-- Botón 1: Home -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuHome"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_home_selected"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Home"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 2: Calculadora -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCalculator"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_calculator"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Calculadora"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 3: Mi Coleccion -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCollection"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_collection"
-                android:tint="#FFF3D6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Colección"
-                android:textColor="#FFF3D6"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 4: Divisas -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuCurrency"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_currency"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Divisas"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <!-- Botón 5: Market Place -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:clickable="true"
-            android:id="@+id/menuMarketplace"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_marketplace"
-                android:tint="#ABA693" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="MarketPlace"
-                android:textColor="#ABA693"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <include layout="@layout/bottom_menu" />
 
 </RelativeLayout>

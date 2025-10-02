@@ -2,10 +2,12 @@ package cl.numiscoin2
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -15,14 +17,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ObjetosListActivity : BaseActivity() {
 
     private val TAG = "ObjetosListActivity"
     private var idColeccion: Int = 0
-    private var idTipoObjeto: Int = 0
-    private var nombreTipo: String = ""
+    private var nombreColeccion: String = ""
     private var paises: List<Pais> = emptyList()
+    private var objetos: List<ObjetoColeccion> = emptyList()
+    private var objetosFiltrados: List<ObjetoColeccion> = emptyList()
+    private var paisSeleccionado: Pais? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,31 +39,54 @@ class ObjetosListActivity : BaseActivity() {
 
         // Obtener parámetros del intent
         idColeccion = intent.getIntExtra("idColeccion", 0)
-        idTipoObjeto = intent.getIntExtra("idTipoObjeto", 0)
-        nombreTipo = intent.getStringExtra("nombreTipo") ?: ""
+        nombreColeccion = intent.getStringExtra("nombreColeccion") ?: ""
+
+        Log.d(TAG, "onCreate: idColeccion=$idColeccion, nombreColeccion=$nombreColeccion")
 
         // Configurar UI
         val title = findViewById<TextView>(R.id.title)
-        title.text = "Países: $nombreTipo"
+        title.text = nombreColeccion
 
         val backButton = findViewById<Button>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
         }
 
-        // Ocultar RecyclerView y mostrar contenedor de países
-        val recyclerView = findViewById<RecyclerView>(R.id.objetosRecyclerView)
-        recyclerView.visibility = android.view.View.GONE
+        // Configurar FAB para agregar monedas
+        val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
+        fabAddCoin.setOnClickListener {
+            val usuarioActual = usuario
+            if (usuarioActual == null) {
+                Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-        // Cargar países de la colección y tipo
-        cargarPaisesPorColeccionYTipo()
+            val intent = Intent(this@ObjetosListActivity, AddCoinActivity::class.java)
+            intent.putExtra("idColeccion", idColeccion)
+            Log.d(TAG, "Enviando idColeccion: $idColeccion a AddCoinActivity")
+            startActivity(intent)
+        }
+
+        // Ocultar secciones inicialmente
+        ocultarTodasLasSecciones()
+
+        // Cargar objetos de la colección para determinar si hay monedas
+        cargarObjetosDeColeccion()
     }
 
-    private fun cargarPaisesPorColeccionYTipo() {
+    private fun ocultarTodasLasSecciones() {
+        findViewById<LinearLayout>(R.id.emptyStateContainer).visibility = android.view.View.GONE
+        findViewById<LinearLayout>(R.id.headerWithObjects).visibility = android.view.View.GONE
+        findViewById<LinearLayout>(R.id.filtrosContainer).visibility = android.view.View.GONE
+        findViewById<LinearLayout>(R.id.objetosContainer).visibility = android.view.View.GONE
+        findViewById<RecyclerView>(R.id.objetosRecyclerView).visibility = android.view.View.GONE
+    }
+
+    private fun cargarObjetosDeColeccion() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = android.view.View.VISIBLE
 
-        NetworkCollectionUtils.getPaisesPorColeccionYTipo(idColeccion, idTipoObjeto) { paises, error ->
+        NetworkCollectionUtils.getCollectionObjects(idColeccion) { objetos, error ->
             runOnUiThread {
                 progressBar.visibility = android.view.View.GONE
 
@@ -67,53 +95,185 @@ class ObjetosListActivity : BaseActivity() {
                     return@runOnUiThread
                 }
 
-                this.paises = paises ?: emptyList()
+                // Usar el operador safe call y elvis operator para manejar nulls
+                val objetosList = objetos ?: emptyList()
+                this.objetos = objetosList
+                this.objetosFiltrados = objetosList // Inicialmente mostrar todos
+                Log.d(TAG, "cargarObjetosDeColeccion: ${objetosList.size} objetos encontrados")
 
-                if (paises != null && paises.isNotEmpty()) {
-                    mostrarPaises(paises)
+                if (objetosList.isEmpty()) {
+                    mostrarEstadoVacio()
                 } else {
-                    Toast.makeText(this@ObjetosListActivity, "No hay países para este tipo", Toast.LENGTH_SHORT).show()
+                    // Hay objetos, cargar países para el filtro y mostrar la interfaz completa
+                    cargarPaisesParaFiltro()
                 }
             }
         }
     }
 
-    private fun mostrarPaises(paises: List<Pais>) {
-        val paisesContainer = findViewById<LinearLayout>(R.id.paisesContainer)
-        paisesContainer.visibility = android.view.View.VISIBLE
-        paisesContainer.removeAllViews()
+    private fun mostrarEstadoVacio() {
+        val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
+        val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
 
-        paises.forEach { pais ->
-            // Crear contenedor principal para cada país
-            val countryContainer = LinearLayout(this)
-            countryContainer.orientation = LinearLayout.VERTICAL
-            countryContainer.layoutParams = LinearLayout.LayoutParams(
+        emptyStateContainer.visibility = android.view.View.VISIBLE
+        fabAddCoin.visibility = android.view.View.VISIBLE
+
+        // Ocultar otras secciones
+        findViewById<LinearLayout>(R.id.headerWithObjects).visibility = android.view.View.GONE
+        findViewById<LinearLayout>(R.id.filtrosContainer).visibility = android.view.View.GONE
+        findViewById<LinearLayout>(R.id.objetosContainer).visibility = android.view.View.GONE
+    }
+
+    private fun cargarPaisesParaFiltro() {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = android.view.View.VISIBLE
+
+        // Usar idTipoObjeto = 1 para monedas
+        NetworkCollectionUtils.getPaisesPorColeccionYTipo(idColeccion, 1) { paises, error ->
+            runOnUiThread {
+                progressBar.visibility = android.view.View.GONE
+
+                if (error != null) {
+                    Toast.makeText(this@ObjetosListActivity, error, Toast.LENGTH_SHORT).show()
+                    return@runOnUiThread
+                }
+
+                // Usar el operador safe call y elvis operator para manejar nulls
+                val paisesList = paises ?: emptyList()
+                this.paises = paisesList
+                Log.d(TAG, "cargarPaisesParaFiltro: ${paisesList.size} países encontrados")
+
+                mostrarInterfazCompleta()
+            }
+        }
+    }
+
+    private fun mostrarInterfazCompleta() {
+        // Mostrar header con barra de búsqueda
+        val headerWithObjects = findViewById<LinearLayout>(R.id.headerWithObjects)
+        headerWithObjects.visibility = android.view.View.VISIBLE
+
+        // Mostrar filtros de banderas si hay países
+        if (paises.isNotEmpty()) {
+            val filtrosContainer = findViewById<LinearLayout>(R.id.filtrosContainer)
+            filtrosContainer.visibility = android.view.View.VISIBLE
+            mostrarFiltrosBanderas()
+        }
+
+        // Mostrar listado de objetos
+        val objetosContainer = findViewById<LinearLayout>(R.id.objetosContainer)
+        objetosContainer.visibility = android.view.View.VISIBLE
+        mostrarObjetos()
+
+        // Mostrar FAB
+        findViewById<FloatingActionButton>(R.id.fabAddCoin).visibility = android.view.View.VISIBLE
+
+        // Ocultar estado vacío
+        findViewById<LinearLayout>(R.id.emptyStateContainer).visibility = android.view.View.GONE
+    }
+
+    private fun mostrarFiltrosBanderas() {
+        val filtrosContainer = findViewById<LinearLayout>(R.id.filtrosContainer)
+        filtrosContainer.removeAllViews()
+
+        // Verificar si la actividad está destruida
+        if (isDestroyed || isFinishing) {
+            Log.d(TAG, "Actividad destruida, no se pueden cargar imágenes")
+            return
+        }
+
+        // Crear ScrollView horizontal para las banderas
+        val horizontalScrollView = android.widget.HorizontalScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(16, 12, 16, 12)
-            }
-            countryContainer.gravity = Gravity.CENTER
-            countryContainer.setBackgroundResource(R.drawable.bg_country_item)
-            countryContainer.elevation = 4f
-
-            // ImageView para la bandera (más grande - aprox. doble tamaño)
-            val imageView = ImageView(this)
-            val imageSize = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                160f,
-                resources.displayMetrics
-            ).toInt()
-
-            imageView.layoutParams = LinearLayout.LayoutParams(
-                imageSize,
-                (imageSize * 0.6).toInt() // Proporción 3:2
             )
-            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-            imageView.adjustViewBounds = true
+        }
 
-            // Cargar bandera con Glide
-            if (!pais.foto.isNullOrEmpty()) {
+        val linearLayoutHorizontal = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        // Botón para limpiar filtro (mostrar todas las monedas)
+        val clearFilterContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt(),
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(8, 0, 8, 0)
+            }
+            gravity = Gravity.CENTER
+            setBackgroundColor(ContextCompat.getColor(this@ObjetosListActivity, R.color.menu_unselected))
+        }
+
+        val clearFilterIcon = TextView(this).apply {
+            text = "❌"
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            gravity = Gravity.CENTER
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 8, 0, 0)
+            }
+        }
+
+        val clearFilterText = TextView(this).apply {
+            text = "Todos"
+            setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
+            gravity = Gravity.CENTER
+            maxLines = 1
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(0, 4, 0, 8)
+            }
+        }
+
+        clearFilterContainer.addView(clearFilterIcon)
+        clearFilterContainer.addView(clearFilterText)
+
+        // Hacer clickable para limpiar filtro
+        clearFilterContainer.isClickable = true
+        clearFilterContainer.setOnClickListener {
+            limpiarFiltro()
+            actualizarEstiloFiltros()
+        }
+
+        linearLayoutHorizontal.addView(clearFilterContainer)
+
+        // Agregar banderas de países
+        paises.forEach { pais ->
+            val flagContainer = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt(),
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(8, 0, 8, 0)
+                }
+                gravity = Gravity.CENTER
+                setBackgroundColor(ContextCompat.getColor(this@ObjetosListActivity, R.color.menu_unselected))
+            }
+
+            val imageView = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, resources.displayMetrics).toInt(),
+                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt()
+                )
+                scaleType = ImageView.ScaleType.FIT_CENTER
+                adjustViewBounds = true
+            }
+
+            // Cargar bandera solo si la actividad no está destruida
+            if (!isDestroyed && !isFinishing && !pais.foto.isNullOrEmpty()) {
                 val fotoUrl = if (pais.foto.startsWith("http")) {
                     pais.foto
                 } else {
@@ -125,209 +285,155 @@ class ObjetosListActivity : BaseActivity() {
                     .placeholder(R.drawable.ic_placeholder)
                     .error(R.drawable.ic_error)
                     .into(imageView)
+            } else {
+                // Cargar placeholder si no se puede cargar la imagen
+                imageView.setImageResource(R.drawable.ic_placeholder)
             }
 
-            // TextView para el nombre del país
-            val textView = TextView(this)
-            textView.text = pais.nombre
-            textView.setTextColor(ContextCompat.getColor(this, android.R.color.white))
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            textView.gravity = Gravity.CENTER
-            textView.setPadding(0, 16, 0, 16)
-            textView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            countryContainer.addView(imageView)
-            countryContainer.addView(textView)
-
-            // Hacer clickable todo el container
-            countryContainer.isClickable = true
-            countryContainer.setOnClickListener {
-                val intent = Intent(this@ObjetosListActivity, ObjetosPaisActivity::class.java)
-                intent.putExtra("idColeccion", idColeccion)
-                intent.putExtra("idTipoObjeto", idTipoObjeto)
-                intent.putExtra("idPais", pais.idPais)
-                intent.putExtra("nombreTipo", nombreTipo)
-                intent.putExtra("nombrePais", pais.nombre)
-                startActivity(intent)
-            }
-
-            paisesContainer.addView(countryContainer)
-        }
-    }
-}
-
-/*package cl.numiscoin2
-
-import android.content.Intent
-import android.os.Bundle
-import android.util.Log
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-
-class ObjetosListActivity : BaseActivity() {
-
-    private val TAG = "ObjetosListActivity"
-    private var idColeccion: Int = 0
-    private var idTipoObjeto: Int = 0
-    private var nombreTipo: String = ""
-    private var paises: List<Pais> = emptyList()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_objetos_list)
-
-        // Configurar menú inferior
-        setupBottomMenu()
-        highlightMenuItem(R.id.menuCollection)
-
-        // Obtener parámetros del intent
-        idColeccion = intent.getIntExtra("idColeccion", 0)
-        idTipoObjeto = intent.getIntExtra("idTipoObjeto", 0)
-        nombreTipo = intent.getStringExtra("nombreTipo") ?: ""
-
-        // Configurar UI
-        val title = findViewById<TextView>(R.id.title)
-        title.text = "Países: $nombreTipo"
-
-        val backButton = findViewById<Button>(R.id.backButton)
-        backButton.setOnClickListener {
-            finish()
-        }
-
-        // Ocultar RecyclerView y mostrar contenedor de países
-        val recyclerView = findViewById<RecyclerView>(R.id.objetosRecyclerView)
-        recyclerView.visibility = android.view.View.GONE
-
-        // Cargar países de la colección y tipo
-        cargarPaisesPorColeccionYTipo()
-    }
-
-    private fun cargarPaisesPorColeccionYTipo() {
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        progressBar.visibility = android.view.View.VISIBLE
-
-        NetworkUtils.getPaisesPorColeccionYTipo(idColeccion, idTipoObjeto) { paises, error ->
-            runOnUiThread {
-                progressBar.visibility = android.view.View.GONE
-
-                if (error != null) {
-                    Toast.makeText(this@ObjetosListActivity, error, Toast.LENGTH_SHORT).show()
-                    return@runOnUiThread
+            val textView = TextView(this).apply {
+                text = pais.nombre
+                setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
+                gravity = Gravity.CENTER
+                maxLines = 1
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 4, 0, 8)
                 }
+            }
 
-                this.paises = paises ?: emptyList()
+            flagContainer.addView(imageView)
+            flagContainer.addView(textView)
 
-                if (paises != null && paises.isNotEmpty()) {
-                    mostrarPaises(paises)
+            // Hacer clickable para filtro
+            flagContainer.isClickable = true
+            flagContainer.setOnClickListener {
+                // Verificar si la actividad sigue activa
+                if (!isDestroyed && !isFinishing) {
+                    filtrarPorPais(pais)
+                    actualizarEstiloFiltros()
+                }
+            }
+
+            linearLayoutHorizontal.addView(flagContainer)
+        }
+
+        horizontalScrollView.addView(linearLayoutHorizontal)
+        filtrosContainer.addView(horizontalScrollView)
+    }
+
+    private fun filtrarPorPais(pais: Pais) {
+        paisSeleccionado = pais
+        objetosFiltrados = objetos.filter { objeto ->
+            objeto.idPais == pais.idPais
+        }
+        Log.d(TAG, "filtrarPorPais: ${objetosFiltrados.size} monedas del país ${pais.nombre}")
+        mostrarObjetos()
+    }
+
+    private fun limpiarFiltro() {
+        paisSeleccionado = null
+        objetosFiltrados = objetos
+        Log.d(TAG, "limpiarFiltro: Mostrando todas las ${objetosFiltrados.size} monedas")
+        mostrarObjetos()
+    }
+
+    private fun actualizarEstiloFiltros() {
+        val filtrosContainer = findViewById<LinearLayout>(R.id.filtrosContainer)
+
+        // Obtener el HorizontalScrollView y luego el LinearLayout interno
+        val horizontalScrollView = filtrosContainer.getChildAt(0) as? android.widget.HorizontalScrollView
+        val linearLayoutHorizontal = horizontalScrollView?.getChildAt(0) as? LinearLayout
+
+        if (linearLayoutHorizontal == null) {
+            Log.e(TAG, "No se pudo encontrar el layout horizontal de filtros")
+            return
+        }
+
+        // Recorrer todos los hijos del layout horizontal
+        for (i in 0 until linearLayoutHorizontal.childCount) {
+            val child = linearLayoutHorizontal.getChildAt(i)
+
+            when (i) {
+                0 -> {
+                    // Primer hijo: botón "Limpiar filtro"
+                    val clearFilterContainer = child as? LinearLayout
+                    clearFilterContainer?.setBackgroundColor(
+                        if (paisSeleccionado == null) {
+                            ContextCompat.getColor(this, R.color.colorPrimary)
+                        } else {
+                            ContextCompat.getColor(this, R.color.menu_unselected)
+                        }
+                    )
+                }
+                else -> {
+                    // Hijos restantes: banderas de países
+                    val flagContainer = child as? LinearLayout
+                    val paisIndex = i - 1 // -1 porque el primer elemento es "Limpiar filtro"
+
+                    if (paisIndex < paises.size) {
+                        val pais = paises[paisIndex]
+                        flagContainer?.setBackgroundColor(
+                            if (paisSeleccionado?.idPais == pais.idPais) {
+                                ContextCompat.getColor(this, R.color.colorPrimary)
+                            } else {
+                                ContextCompat.getColor(this, R.color.menu_unselected)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun mostrarObjetos() {
+        val objetosContainer = findViewById<LinearLayout>(R.id.objetosContainer)
+        objetosContainer.removeAllViews()
+
+        if (objetosFiltrados.isEmpty()) {
+            val emptyText = TextView(this).apply {
+                text = if (paisSeleccionado != null) {
+                    "No hay monedas de ${paisSeleccionado?.nombre} en esta colección"
                 } else {
-                    Toast.makeText(this@ObjetosListActivity, "No hay países para este tipo", Toast.LENGTH_SHORT).show()
+                    "No se encontraron objetos"
                 }
+                setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
+                gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             }
+            objetosContainer.addView(emptyText)
+            return
         }
-    }
 
-    private fun mostrarPaises(paises: List<Pais>) {
-        val paisesContainer = findViewById<LinearLayout>(R.id.paisesContainer)
-        paisesContainer.visibility = android.view.View.VISIBLE
-        paisesContainer.removeAllViews()
-
-        // Crear layout para grid de banderas
-        val gridLayout = LinearLayout(this)
-        gridLayout.orientation = LinearLayout.VERTICAL
-        gridLayout.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        // Crear filas para el grid (3 columnas)
-        var currentRow: LinearLayout? = null
-
-        paises.forEachIndexed { index, pais ->
-            if (index % 3 == 0) {
-                currentRow = LinearLayout(this)
-                currentRow!!.orientation = LinearLayout.HORIZONTAL
-                currentRow!!.layoutParams = LinearLayout.LayoutParams(
+        objetosFiltrados.forEach { objeto ->
+            val objetoItem = Button(this).apply {
+                text = "${objeto.nombre}\n${objeto.descripcion ?: ""}"
+                setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
+                setBackgroundColor(ContextCompat.getColor(this@ObjetosListActivity, R.color.menu_unselected))
+                layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                gridLayout.addView(currentRow)
-            }
-
-            // Crear botón con bandera
-            val buttonLayout = LinearLayout(this)
-            buttonLayout.orientation = LinearLayout.VERTICAL
-            buttonLayout.layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f
-            ).apply {
-                setMargins(8, 8, 8, 8)
-            }
-            buttonLayout.gravity = android.view.Gravity.CENTER
-
-            // ImageView para la bandera
-            val imageView = ImageView(this)
-            imageView.layoutParams = LinearLayout.LayoutParams(
-                80,
-                60
-            )
-            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
-
-            // Cargar bandera con Glide
-            if (!pais.foto.isNullOrEmpty()) {
-                val fotoUrl = if (pais.foto.startsWith("http")) {
-                    pais.foto
-                } else {
-                    NetworkUtils.UPLOADS_BASE_URL + pais.foto
+                ).apply {
+                    setMargins(16, 8, 16, 8)
                 }
 
-                Glide.with(this)
-                    .load(fotoUrl)
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_report_image)
-                    .into(imageView)
+                // Agregar OnClickListener para navegar a CoinDetailActivity
+                setOnClickListener {
+                    val intent = Intent(this@ObjetosListActivity, CoinDetailActivity::class.java)
+                    intent.putExtra("moneda", objeto)
+                    startActivity(intent)
+                }
             }
 
-            // TextView para el nombre del país
-            val textView = TextView(this)
-            textView.text = pais.nombre
-            textView.setTextColor(resources.getColor(android.R.color.white))
-            textView.textSize = 12f
-            textView.gravity = android.view.Gravity.CENTER
-            textView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            buttonLayout.addView(imageView)
-            buttonLayout.addView(textView)
-
-            // Hacer clickable todo el layout
-            buttonLayout.isClickable = true
-            buttonLayout.setOnClickListener {
-                val intent = Intent(this@ObjetosListActivity, ObjetosPaisActivity::class.java)
-                intent.putExtra("idColeccion", idColeccion)
-                intent.putExtra("idTipoObjeto", idTipoObjeto)
-                intent.putExtra("idPais", pais.idPais)
-                intent.putExtra("nombreTipo", nombreTipo)
-                intent.putExtra("nombrePais", pais.nombre)
-                startActivity(intent)
-            }
-
-            currentRow!!.addView(buttonLayout)
+            objetosContainer.addView(objetoItem)
         }
-
-        paisesContainer.addView(gridLayout)
     }
-}*/
+
+    override fun onResume() {
+        super.onResume()
+        // Recargar datos cuando la actividad se reanude (por si se agregó una moneda)
+        cargarObjetosDeColeccion()
+    }
+}
