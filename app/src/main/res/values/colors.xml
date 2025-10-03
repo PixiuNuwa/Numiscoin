@@ -45,5 +45,6 @@
     <color name="social_icon_color">#fff3d6</color>
     <color name="divider_color">#fff3d6</color>
     <color name="link_color">#fff3d6</color>
+    <color name="gray">#fff3d6</color>
 
 </resources>

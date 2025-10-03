@@ -1,7 +1,8 @@
 package cl.numiscoin2.network
 
 object NetworkConfig {
-    const val BASE_URL = "https://f70ba7db6da1.ngrok-free.app"
+    //url en servidor ae77ded235a2
+    const val BASE_URL = "https://ae77ded235a2.ngrok-free.app"
     const val UPLOADS_BASE_URL = "https://numiscoin.store/uploads/"
 
     fun construirUrlCompleta(urlRelativa: String): String {

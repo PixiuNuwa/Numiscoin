@@ -3,7 +3,7 @@
     <string name="title_entrar">ENTRAR</string>
     <string name="hint_email">Email o Nombre de Usuario</string>
     <string name="hint_password">Contraseña</string>
-    <string name="forgot_password">¿Olvidaste tu contraseña? Haz click Aquí</string>
+
     <string name="button_continue">CONTINUAR</string>
     <string name="button_google">Continuar con Google</string>
     <string name="create_account">¿No tienes una cuenta? CREAR CUENTA</string>
@@ -64,6 +64,95 @@
     <!--string name="forgot_password">¿Olvidaste tu contraseña? Haz click Aquí</string>
     <string name="create_account">¿No tienes una cuenta? Crear cuenta</string-->
     <string name="continue_button">CONTINUAR</string>
+
+    <!-- Common -->
+    <string name="welcome">¡Bienvenido!</string>
+    <string name="loading">Cargando...</string>
+    <string name="error_occurred">Ha ocurrido un error</string>
+    <string name="try_again">Intentar nuevamente</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    <string name="add">Agregar</string>
+    <string name="search">Buscar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="back">Atrás</string>
+    <string name="next">Siguiente</string>
+    <string name="done">Listo</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Bienvenido a NumisCoin</string>
+    <string name="onboarding_description_1">La aplicación definitiva para coleccionistas numismáticos</string>
+    <string name="onboarding_title_2">Gestiona tu Colección</string>
+    <string name="onboarding_description_2">Organiza y cataloga todas tus monedas de forma fácil</string>
+    <string name="onboarding_title_3">Únete a la Comunidad</string>
+    <string name="onboarding_description_3">Conecta con otros coleccionistas y descubre eventos</string>
+    <string name="skip">Saltar</string>
+
+    <!-- Auth -->
+    <string name="login">Iniciar Sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="no_account">¿No tienes cuenta?</string>
+    <string name="have_account">¿Ya tienes cuenta?</string>
+    <string name="reset_password">Restablecer Contraseña</string>
+    <string name="reset_instructions">Ingresa tu correo para restablecer tu contraseña</string>
+
+    <!-- Home -->
+    <string name="home">Inicio</string>
+    <string name="collections">Colecciones</string>
+    <string name="items">Monedas</string>
+    <string name="profile">Perfil</string>
+    <string name="tools">Herramientas</string>
+    <string name="events">Eventos</string>
+
+    <!-- Collections -->
+    <string name="my_collections">Mis Colecciones</string>
+    <string name="add_collection">Agregar Colección</string>
+    <string name="collection_name">Nombre de la colección</string>
+    <string name="collection_description">Descripción</string>
+    <string name="collection_items">Monedas en la colección</string>
+    <string name="no_collections">No hay colecciones</string>
+    <string name="create_first_collection">Crea tu primera colección</string>
+
+    <!-- Items -->
+    <string name="my_items">Mis Monedas</string>
+    <string name="add_item">Agregar Moneda</string>
+    <string name="item_name">Nombre de la moneda</string>
+    <string name="item_country">País</string>
+    <string name="item_year">Año</string>
+    <string name="item_value">Valor</string>
+    <string name="item_condition">Condición</string>
+    <string name="item_description">Descripción</string>
+    <string name="no_items">No hay monedas</string>
+    <string name="add_first_item">Agrega tu primera moneda</string>
+
+    <!-- Profile -->
+    <string name="settings">Configuración</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="help">Ayuda</string>
+    <string name="about">Acerca de</string>
+    <string name="logout">Cerrar Sesión</string>
+
+    <!-- Tools -->
+    <string name="calculator">Calculadora</string>
+    <string name="currency_converter">Conversor de Divisas</string>
+    <string name="metal_calculator">Calculadora de Metales</string>
+
+    <!-- Events -->
+    <string name="upcoming_events">Próximos Eventos</string>
+    <string name="event_details">Detalles del Evento</string>
+    <string name="event_date">Fecha del evento</string>
+    <string name="event_location">Ubicación</string>
+    <string name="event_description">Descripción</string>
+    <string name="attend_event">Asistiré</string>
+    <string name="share_event">Compartir</string>
 
 
 

@@ -264,7 +264,7 @@ fun extractUserName(message: String): String {
 fun performLogin(username: String, password: String, callback: (Boolean, String) -> Unit) {
     Thread {
         try {
-            val url = URL("https://2f832ec5162a.ngrok-free.app/api/login?user=guido&pass=grl.1969")
+            val url = URL("https://f70ba7db6da1.ngrok-free.app/api/login?user=guido&pass=grl.1969")
             val connection = url.openConnection() as HttpsURLConnection
             connection.requestMethod = "POST"
             connection.doOutput = true

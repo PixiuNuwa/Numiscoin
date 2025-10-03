@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:pathData="M100,40L140,80L100,120L60,80z"
+        android:fillColor="#FF9800"/>
+    <path
+        android:pathData="M100,60L120,80L100,100L80,80z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.8"/>
+    <!-- Círculo sin namespace android: -->
+    <path
+        android:pathData="M100,120 a20,20 0 1,1 0,40 a20,20 0 1,1 0,-40z"
+        android:fillColor="#FF9800"/>
+</vector>
