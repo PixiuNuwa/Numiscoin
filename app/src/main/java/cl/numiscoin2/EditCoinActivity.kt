@@ -4,9 +4,12 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import cl.numiscoin2.network.NetworkObjectUtils
 import com.bumptech.glide.Glide
@@ -23,18 +26,18 @@ class EditCoinActivity : AppCompatActivity() {
     private lateinit var etNombre: EditText
     private lateinit var etDescripcion: EditText
     private lateinit var etAnio: EditText
-    private lateinit var etFamilia: EditText
+    //private lateinit var etFamilia: EditText
     private lateinit var etVariante: EditText
     private lateinit var etCeca: EditText
     private lateinit var etTipo: EditText
     private lateinit var etDisenador: EditText
     private lateinit var etTotalProducido: EditText
-    private lateinit var etValorSinCircular: EditText
+    //private lateinit var etValorSinCircular: EditText
     private lateinit var etValorComercial: EditText
     private lateinit var etValorAdquirido: EditText
     private lateinit var etEstado: EditText
     private lateinit var etObservaciones: EditText
-    private lateinit var etAcunada: EditText
+    //private lateinit var etAcunada: EditText
 
     private lateinit var ivFoto1: ImageView
     private lateinit var ivFoto2: ImageView
@@ -85,6 +88,15 @@ class EditCoinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_edit_coin)
 
         // Obtener el objeto de la moneda
@@ -105,18 +117,18 @@ class EditCoinActivity : AppCompatActivity() {
         etNombre = findViewById(R.id.etNombre)
         etDescripcion = findViewById(R.id.etDescripcion)
         etAnio = findViewById(R.id.etAnio)
-        etFamilia = findViewById(R.id.etFamilia)
+        //etFamilia = findViewById(R.id.etFamilia)
         etVariante = findViewById(R.id.etVariante)
         etCeca = findViewById(R.id.etCeca)
         etTipo = findViewById(R.id.etTipo)
         etDisenador = findViewById(R.id.etDisenador)
         etTotalProducido = findViewById(R.id.etTotalProducido)
-        etValorSinCircular = findViewById(R.id.etValorSinCircular)
+        //etValorSinCircular = findViewById(R.id.etValorSinCircular)
         etValorComercial = findViewById(R.id.etValorComercial)
         etValorAdquirido = findViewById(R.id.etValorAdquirido)
         etEstado = findViewById(R.id.etEstado)
         etObservaciones = findViewById(R.id.etObservaciones)
-        etAcunada = findViewById(R.id.etAcunada)
+        //etAcunada = findViewById(R.id.etAcunada)
 
         // ImageViews
         ivFoto1 = findViewById(R.id.ivFoto1)
@@ -178,18 +190,18 @@ class EditCoinActivity : AppCompatActivity() {
 
         // Información de moneda
         objeto.monedaInfo?.let { info ->
-            etFamilia.setText(info.familia ?: "")
+            //etFamilia.setText(info.familia ?: "")
             etVariante.setText(info.variante ?: "")
             etCeca.setText(info.ceca ?: "")
             etTipo.setText(info.tipo ?: "")
             etDisenador.setText(info.disenador ?: "")
             etTotalProducido.setText(info.totalProducido ?: "")
-            etValorSinCircular.setText(info.valorSinCircular ?: "")
+            //etValorSinCircular.setText(info.valorSinCircular ?: "")
             etValorComercial.setText(info.valorComercial ?: "")
             etValorAdquirido.setText(info.valorAdquirido ?: "")
             etEstado.setText(info.estado ?: "")
             etObservaciones.setText(info.observaciones ?: "")
-            etAcunada.setText(info.acunada ?: "")
+            //etAcunada.setText(info.acunada ?: "")
         }
 
         // Configurar vistas de imágenes
@@ -392,21 +404,21 @@ class EditCoinActivity : AppCompatActivity() {
             anio = etAnio.text.toString().toIntOrNull() ?: 0,
             idTipoObjeto = objeto.idTipoObjeto,
             idUsuario = objeto.idUsuario,
-            idColeccion = -1, //objeto.idColeccion,
-            familia = etFamilia.text.toString(),
+            idColeccion = -1,
+            familia = "NA",
             idFamilia = -1,
             variante = etVariante.text.toString(),
             ceca = etCeca.text.toString(),
             tipo = etTipo.text.toString(),
             disenador = etDisenador.text.toString(),
-            totalProducido = etTotalProducido.text.toString(),
-            valorSinCircular = etValorSinCircular.text.toString(),
-            valorComercial = etValorComercial.text.toString(),
-            valorAdquirido = etValorAdquirido.text.toString(),
+            totalProducido = etTotalProducido.text.toString().toIntOrNull() ?: 0,
+            valorSinCircular = 0,
+            valorComercial = etValorComercial.text.toString().toIntOrNull() ?: 0,
+            valorAdquirido = etValorAdquirido.text.toString().toIntOrNull() ?: 0,
             estado = etEstado.text.toString(),
             observaciones = etObservaciones.text.toString(),
             orden = -1,
-            acunada = etAcunada.text.toString()
+            acunada = "NA"
         )
 
         // Primero actualizar la moneda

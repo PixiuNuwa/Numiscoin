@@ -89,10 +89,10 @@ data class MonedaRequest(
     val ceca: String? = null,
     val tipo: String? = null,
     val disenador: String? = null,
-    val totalProducido: String? = null,
-    val valorSinCircular: String? = null,
-    val valorComercial: String? = null,
-    val valorAdquirido: String? = null,
+    val totalProducido: Int? = null,
+    val valorSinCircular: Int? = null,
+    val valorComercial: Int? = null,
+    val valorAdquirido: Int? = null,
     val estado: String? = null,
     val observaciones: String? = null,
     val orden: Int? = null,
@@ -110,4 +110,10 @@ data class Pais(
 data class TipoObjeto(
     val id: Int,
     val nombre: String
+)
+
+data class TotalesUsuarioResponse(
+    val totalColeccion: Int? = 0,
+    val totalGastado: Int? = 0,
+    val totalItems: Int? = 0
 )

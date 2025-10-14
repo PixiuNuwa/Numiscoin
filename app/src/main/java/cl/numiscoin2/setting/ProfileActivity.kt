@@ -3,14 +3,17 @@ package cl.numiscoin2.setting
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.HelpActivity
 import cl.numiscoin2.LoginActivity
 import cl.numiscoin2.network.NetworkConfig
@@ -23,27 +26,36 @@ import com.bumptech.glide.request.RequestOptions
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileAvatar: ImageView
-    private lateinit var profileName: TextView
+    private lateinit var profileFullName: TextView
     private lateinit var profileEmail: TextView
-    private lateinit var profileId: TextView
-    private lateinit var profileDate: TextView
+    private lateinit var profileName: TextView
+    private lateinit var profileLastName: TextView
 
     //private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_profile)
 
-        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val backButton = findViewById<Button>(R.id.backButton)
         val helpButton = findViewById<Button>(R.id.helpButton)
         val editButton = findViewById<Button>(R.id.editButton)
 
         // Inicializar las vistas usando las propiedades de la clase
         profileAvatar = findViewById(R.id.profileAvatar)
-        profileName = findViewById(R.id.profileName)
+        profileFullName = findViewById(R.id.profileName)
         profileEmail = findViewById(R.id.profileEmail)
-        profileId = findViewById(R.id.profileId)
-        profileDate = findViewById(R.id.profileDate)
+        profileName = findViewById(R.id.profileName)
+        profileLastName = findViewById(R.id.profileLastName)
 
 
         cargarDatosUsuario()
@@ -60,6 +72,8 @@ class ProfileActivity : AppCompatActivity() {
         editButton.setOnClickListener {
             EditProfileActivity.start(this, 1)
         }
+
+
     }
 
     companion object {
@@ -86,10 +100,10 @@ class ProfileActivity : AppCompatActivity() {
 
         if (usuario != null) {
             // Mostrar datos del usuario
-            profileName.text = "${usuario.nombre} ${usuario.apellido}"
-            profileEmail.text = usuario.email
-            profileId.text = "ID: ${usuario.idUsuario}"
-            profileDate.text = "Miembro desde: ${usuario.fechaCreacion}"
+            profileFullName.text = "${usuario.nombre} ${usuario.apellido}"
+            profileEmail.text = "Nombre: ${usuario.email}"
+            profileName.text = "Nombre: ${usuario.nombre}"
+            profileLastName.text = "Apellido: ${usuario.apellido}"
 
             val requestOptions = RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

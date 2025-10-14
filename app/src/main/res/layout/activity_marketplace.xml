@@ -1,43 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@color/background_dark"
     android:fitsSystemWindows="true">
 
-    <!-- Contenido principal -->
-    <LinearLayout
-        android:id="@+id/mainContent"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center"
-        android:layout_above="@+id/bottomMenu"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomMenuContainer"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/welcomeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="¡Bienvenido a MarketPlace"
-            android:textColor="@android:color/white"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/welcomeMessage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_marginBottom="32dp" />
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Tarjeta de Calendario -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@color/background_green">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Calendario de Eventos"
+                        android:textColor="@color/text_light"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- GridView del calendario -->
+                    <GridView
+                        android:id="@+id/calendarGridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:numColumns="7"
+                        android:verticalSpacing="1dp"
+                        android:horizontalSpacing="1dp"
+                        android:background="@color/primary_green"
+                        android:padding="4dp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Sección de Próximos Eventos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Próximos Eventos"
+                    android:textColor="@color/text_light"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- GridView de eventos -->
+                <GridView
+                    android:id="@+id/eventosGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2"
+                    android:verticalSpacing="16dp"
+                    android:horizontalSpacing="16dp"
+                    android:gravity="center"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
 
     </LinearLayout>
-
-    <!-- Menú inferior -->
-    <include layout="@layout/bottom_menu" />
 
 </RelativeLayout>

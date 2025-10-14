@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import cl.numiscoin2.MonedaRequest
 import cl.numiscoin2.ObjetoColeccion
+import cl.numiscoin2.TotalesUsuarioResponse
 import com.google.gson.Gson
 import java.io.*
 import java.net.URL
@@ -202,6 +203,77 @@ object NetworkObjectUtils {
                 connection.disconnect()
             } catch (e: Exception) {
                 callback(false, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    /**
+     * Obtiene los totales de colección, gasto e items para un usuario
+     */
+    fun obtenerTotalesPorUsuario(idUsuario: Long, callback: (TotalesUsuarioResponse?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/objetos/totalesporusuario/$idUsuario")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    val totales = gson.fromJson<TotalesUsuarioResponse>(response, TotalesUsuarioResponse::class.java)
+                    callback(totales, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun obtenerUltimosObjetosPorUsuario(idUsuario: Long, limite: Int = 10, callback: (List<ObjetoColeccion>?, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/objetos/ultimas/moneda/usuario/$idUsuario?limite=$limite")
+                Log.d("NetworkObjectUtils", "URL: $url")
+
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "GET"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                Log.d("NetworkObjectUtils", "Response Code: $responseCode")
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val response = connection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("NetworkObjectUtils", "Response: $response")
+
+                    val listType = object : com.google.gson.reflect.TypeToken<List<ObjetoColeccion>>() {}.type
+                    val objetos = gson.fromJson<List<ObjetoColeccion>>(response, listType)
+
+                    // Log para ver las fotos de cada objeto
+                    objetos?.forEachIndexed { index, objeto ->
+                        Log.d("NetworkObjectUtils", "Objeto $index: ${objeto.nombre}, Fotos: ${objeto.fotos?.size ?: 0}")
+                        objeto.fotos?.forEachIndexed { fotoIndex, foto ->
+                            Log.d("NetworkObjectUtils", "  Foto $fotoIndex: ${foto.url}")
+                        }
+                    }
+
+                    callback(objetos, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    Log.e("NetworkObjectUtils", "Error: $responseCode - $errorResponse")
+                    callback(null, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                Log.e("NetworkObjectUtils", "Error de conexión: ${e.message}")
+                callback(null, "Error de conexión: ${e.message}")
             }
         }.start()
     }

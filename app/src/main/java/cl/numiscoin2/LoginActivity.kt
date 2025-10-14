@@ -1,11 +1,14 @@
 package cl.numiscoin2
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkDataUtils
 import cl.numiscoin2.network.NetworkUserUtils
 
@@ -14,11 +17,20 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
-    private lateinit var createAccountButton: Button
+    private lateinit var createAccountButton: TextView // Cambiado a TextView
     private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_login)
 
         SessionManager.init(this)
@@ -31,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
         loginButton = findViewById(R.id.loginButton)
-        createAccountButton = findViewById(R.id.createAccountButton)
+        createAccountButton = findViewById(R.id.createAccountButton) // TextView
         progressBar = findViewById(R.id.progressBar)
     }
 
@@ -55,16 +67,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.forgotPasswordText).setOnClickListener {
-            //Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
             val intent = Intent(this@LoginActivity, RecoverPasswordActivity::class.java)
             startActivity(intent)
         }
 
-
-
-        findViewById<Button>(R.id.googleButton).setOnClickListener {
+        // CORREGIDO: Cambiado de ImageButton a Button
+        /*findViewById<Button>(R.id.googleButton).setOnClickListener {
             Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     private fun performRealLogin(email: String, password: String) {

@@ -1,18 +1,46 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="200dp"
-    android:height="200dp"
-    android:viewportWidth="200"
-    android:viewportHeight="200">
-    <path
-        android:pathData="M140,60L140,140L60,140L60,60z"
-        android:strokeColor="#4CAF50"
-        android:strokeWidth="8"
-        android:fillColor="#E8F5E8"/>
-    <path
-        android:pathData="M80,100a20,20 0,1 0,40 0a20,20 0,1 0,-40 0z"
-        android:fillColor="#4CAF50"/>
-    <path
-        android:pathData="M95,95L105,105M105,95L95,105"
-        android:strokeColor="#4CAF50"
-        android:strokeWidth="4"/>
+    android:width="296dp"
+    android:height="235dp"
+    android:viewportWidth="296"
+    android:viewportHeight="235">
+
+    <group>
+        <!-- Fondo -->
+        <path
+            android:pathData="M0,0h296v235h-296z"
+            android:fillColor="#01b76a"
+            android:fillAlpha="0.1"/>
+
+        <!-- Iconos de herramientas - Cuadrado -->
+        <path
+            android:pathData="M80,80 L120,80 L120,120 L80,120 Z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+
+        <!-- Círculo -->
+        <path
+            android:pathData="M180,100 a20,20 0 1,1 0.1,0z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"/>
+
+        <!-- Línea horizontal -->
+        <path
+            android:pathData="M100,150 L220,150"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="3"
+            android:strokeLineCap="round"/>
+
+        <!-- Icono calculadora -->
+        <path
+            android:pathData="M130,170 L170,170 L170,190 L130,190 Z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+    </group>
 </vector>

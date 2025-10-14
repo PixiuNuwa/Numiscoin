@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import cl.numiscoin2.network.NetworkCollectionUtils
 
@@ -21,7 +22,7 @@ class CreateCollectionActivity : BaseActivity() {
         val etNombre = findViewById<EditText>(R.id.etNombre)
         val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
         val btnCrear = findViewById<Button>(R.id.btnCrear)
-        val btnCancelar = findViewById<Button>(R.id.btnCancelar)
+        val btnCancelar = findViewById<TextView>(R.id.btnCancelar)
 
         btnCrear.setOnClickListener {
             val nombre = etNombre.text.toString().trim()

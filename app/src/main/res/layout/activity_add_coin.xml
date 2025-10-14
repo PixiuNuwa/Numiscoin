@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:padding="16dp">
-
+    android:background="@color/background_dark"
+    android:fitsSystemWindows="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomMenuContainer"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,15 +47,6 @@
 			android:textColorHint="#AAAAAA"
 			android:layout_marginBottom="8dp" />
 
-        <!--EditText
-            android:id="@+id/etPais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ID País *"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" /-->
         <Spinner
             android:id="@+id/spPais"
             android:layout_width="match_parent"
@@ -62,21 +60,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Año *"
+            android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
             android:layout_marginBottom="16dp" />
 
         <!-- Campos de información básica -->
-        <EditText
+        <!--EditText
             android:id="@+id/etFamilia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Familia"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" /-->
 
-        <EditText
+        <!--EditText
             android:id="@+id/etIdFamilia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +83,7 @@
             android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" /-->
 
         <EditText
             android:id="@+id/etVariante"
@@ -117,7 +116,7 @@
             android:id="@+id/etDisenador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Diseñador"
+            android:hint="Grabador"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
             android:layout_marginBottom="8dp" />
@@ -128,24 +127,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Total Producido"
+            android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
             android:layout_marginBottom="8dp" />
 
-        <EditText
+        <!--EditText
             android:id="@+id/etValorSinCircular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor Sin Circular"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" /-->
 
         <EditText
             android:id="@+id/etValorComercial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor Comercial"
+            android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
             android:layout_marginBottom="8dp" />
@@ -155,6 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor Adquirido"
+            android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
             android:layout_marginBottom="8dp" />
@@ -180,7 +182,7 @@
             android:layout_marginBottom="8dp" />
 
         <!-- Campos adicionales -->
-        <EditText
+        <!--EditText
             android:id="@+id/etOrden"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,16 +190,16 @@
             android:inputType="number"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" /-->
 
-        <EditText
+        <!--EditText
             android:id="@+id/etAcunada"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Acuñada"
             android:textColor="@android:color/white"
             android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp" /-->
 
         <!-- Sección de foto -->
         <TextView
@@ -408,4 +410,17 @@
 
     </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+    <!-- Bottom Navigation Menu -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
+</RelativeLayout>

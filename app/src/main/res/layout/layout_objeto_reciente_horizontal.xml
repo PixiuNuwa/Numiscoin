@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="160dp"
+    android:layout_marginHorizontal="6dp"
+    android:layout_marginVertical="8dp"
+    android:orientation="vertical"
+    android:background="@drawable/btn_white_square"
+    android:gravity="center">
+
+    <!-- Imagen del objeto -->
+    <ImageView
+        android:id="@+id/objetoImageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder_image"
+        android:contentDescription="Imagen del objeto" />
+
+    <!-- Nombre del objeto -->
+    <TextView
+        android:id="@+id/objetoNombreTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:text="Nombre del Objeto"
+        android:textColor="#1E293B"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:gravity="center" />
+
+</LinearLayout>

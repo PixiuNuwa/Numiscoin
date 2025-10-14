@@ -1,265 +1,508 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@color/background_dark"
     android:fitsSystemWindows="true">
 
-    <!-- ScrollView para el contenido principal -->
     <ScrollView
+        android:id="@+id/rzj9pjzrhkmo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomMenu"
-        android:layout_alignParentTop="true">
+        android:layout_above="@+id/bottomMenuContainer"
+        android:background="#00272C">
 
         <LinearLayout
-            android:id="@+id/mainContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center">
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Header -->
+            <LinearLayout
+                android:id="@+id/r9ls69xzu8xo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Divisas"
-                android:textColor="@android:color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:gravity="center"
+                android:layout_marginTop="38dp"
+                android:layout_marginBottom="63dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/r3726m6qab2q"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="19dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/rtsjvfgogqbf"
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="CONVERSOR DE DIVISAS" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/welcomeMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textColor="@color/text_light"
+                android:textSize="16sp"
                 android:gravity="center"
-                android:layout_marginBottom="32dp" />
+                android:layout_marginBottom="32dp"
+                android:text="Bienvenido Usuario" />
 
-            <!-- Sección de tasas de cambio -->
+            <!-- Tasas de Cambio -->
+            <!-- Tasas de Cambio CORREGIDAS -->
             <LinearLayout
+                android:id="@+id/r9osl9idztt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#1E1E1E"
-                android:padding="16dp"
-                android:layout_marginBottom="24dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tasas de Cambio"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
-                    android:id="@+id/usdRate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/eurRate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <!-- Conversor de divisas -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#1E1E1E"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Conversor de Divisas"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
-
-                <EditText
-                    android:id="@+id/amountInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Monto a convertir"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#AAAAAA"
-                    android:inputType="numberDecimal"
-                    android:background="#2A2A2A"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp" />
+                android:gravity="center"
+                android:layout_marginBottom="73dp"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/rhca82ymi4i"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+                    android:gravity="center"
+                    android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="De:"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp" />
-
-                    <Spinner
-                        android:id="@+id/fromSpinner"
+                    <!-- USD Rate -->
+                    <LinearLayout
+                        android:id="@+id/rwgzq0dkmqn"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="#2A2A2A" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="A:"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp" />
-
-                    <Spinner
-                        android:id="@+id/toSpinner"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:background="#2A2A2A" />
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
+                        <LinearLayout
+                            android:id="@+id/rp9btiv7x5b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/req2d04d9yow"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="5dp"
+                                android:src="@mipmap/ic_launcher"
+                                android:scaleType="fitXY" />
+
+                            <TextView
+                                android:id="@+id/rodjr5y7kp6i"
+                                android:textColor="@color/text_light"
+                                android:textSize="12sp"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="1 USD" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/usdRate"
+                            android:textColor="@color/text_light"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:ellipsize="none"
+                            android:text="952.87 CLP" />
+                    </LinearLayout>
+
+                    <!-- EUR Rate -->
+                    <LinearLayout
+                        android:id="@+id/rf0owin2bupc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <LinearLayout
+                            android:id="@+id/rkna17xa3vc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="4dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/r1yzaupq8zvl"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="5dp"
+                                android:src="@mipmap/ic_launcher"
+                                android:scaleType="fitXY" />
+
+                            <TextView
+                                android:id="@+id/r0v4g66afw95m"
+                                android:textColor="@color/text_light"
+                                android:textSize="12sp"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="1 EUR" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/eurRate"
+                            android:textColor="@color/text_light"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:ellipsize="none"
+                            android:text="1125.39 CLP" />
+                    </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
+
+            <!-- Conversor de Divisas - De -->
+            <LinearLayout
+                android:id="@+id/ra7n5nforbzs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="11dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rjx9lqzlngt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ryjaq48bhmq"
+                        android:textColor="@color/text_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="De:" />
+
+                    <!-- Input de monto y spinner FROM -->
+                    <LinearLayout
+                        android:id="@+id/rzhh92htdbf"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/btn_white_square"
+                        android:paddingVertical="4dp"
+                        android:paddingHorizontal="12dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/amountInput"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:hint="Monto"
+                            android:background="@null"
+                            android:inputType="numberDecimal"
+                            android:padding="8dp" />
+
+                        <View
+                            android:id="@+id/rpskagfz5x0l"
+                            android:layout_width="1dp"
+                            android:layout_height="34dp"
+                            android:background="@color/text_green"
+                            android:layout_marginEnd="19dp"
+                            android:layout_marginStart="8dp" />
+
+                        <Spinner
+                            android:id="@+id/fromSpinner"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_dark"
+                            android:textSize="16sp"
+                            android:background="@android:color/transparent"
+                            android:padding="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Flecha/Flecha hacia abajo -->
+            <LinearLayout
+                android:id="@+id/r3ymt3r6efkn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/rqjyieyp1jwi"
+                    android:layout_width="43dp"
+                    android:layout_height="21dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+            <!-- Conversor de Divisas - A -->
+            <LinearLayout
+                android:id="@+id/r2vuxgpdlped"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="29dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rgfttte7eoxa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/r0zqn6n9chdm"
+                        android:textColor="@color/text_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="A:" />
+
+                    <!-- Spinner TO -->
+                    <LinearLayout
+                        android:id="@+id/rs1hazobtbtf"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/btn_white_square"
+                        android:paddingVertical="3dp"
+                        android:paddingHorizontal="12dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/toSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_dark"
+                            android:textSize="16sp"
+                            android:background="@android:color/transparent"
+                            android:padding="8dp" />
+
+                        <View
+                            android:id="@+id/rgcdo6x81d8j"
+                            android:layout_width="1dp"
+                            android:layout_height="34dp"
+                            android:background="@color/text_green"
+                            android:layout_marginEnd="19dp"
+                            android:layout_marginStart="8dp" />
+
+                        <!-- Este TextView se puede usar para mostrar resultado temporalmente -->
+                        <TextView
+                            android:id="@+id/resultText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/text_dark"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:text="Resultado" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Botón Convertir Divisas -->
+            <LinearLayout
+                android:id="@+id/rbmepvc36s0b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="72dp"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/convertButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Convertir"
-                    android:textColor="@android:color/white"
-                    android:background="#FF0000FF" />
-
-                <TextView
-                    android:id="@+id/resultText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp" />
-
+                    android:background="@drawable/btn_green_square"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="100dp"
+                    android:text="CONVERTIR"
+                    android:textColor="@color/text_light"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@android:color/transparent" />
             </LinearLayout>
 
             <!-- Conversor de Oro -->
             <LinearLayout
+                android:id="@+id/regcs1k6ztfj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#1E1E1E"
-                android:padding="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Conversor de Oro"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp"
-                    android:gravity="center" />
-
-                <EditText
-                    android:id="@+id/goldAmountInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:hint="Cantidad de oro"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#AAAAAA"
-                    android:inputType="numberDecimal"
-                    android:background="#2A2A2A"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp" />
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="93dp"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/rekmztf652l8"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="16dp">
+                    android:orientation="vertical">
 
-                    <TextView
+                    <!-- Input cantidad oro -->
+                    <EditText
+                        android:id="@+id/goldAmountInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Quilates:"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp" />
+                        android:background="@drawable/btn_white_square"
+                        android:paddingVertical="11dp"
+                        android:paddingHorizontal="89dp"
+                        android:hint="CANTIDAD ORO"
+                        android:textColor="@color/text_dark"
+                        android:textSize="14sp"
+                        android:inputType="numberDecimal"
+                        android:layout_marginBottom="30dp" />
 
-                    <Spinner
-                        android:id="@+id/goldCaratSpinner"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="#2A2A2A" />
-
-                    <TextView
+                    <!-- Spinners de quilates y unidad -->
+                    <LinearLayout
+                        android:id="@+id/rohxnud2nju"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Unidad:"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp" />
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/goldUnitSpinner"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="#2A2A2A" />
+                        <!-- Spinner Quilates -->
+                        <LinearLayout
+                            android:id="@+id/r5tkf1iks9oc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="4dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="13dp"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="horizontal">
 
+                            <Spinner
+                                android:id="@+id/goldCaratSpinner"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_dark"
+                                android:textSize="16sp"
+                                android:background="@android:color/transparent"
+                                android:padding="8dp" />
+
+                            <View
+                                android:id="@+id/r5vl2ezsgo4c"
+                                android:layout_width="1dp"
+                                android:layout_height="34dp"
+                                android:background="@color/text_green"
+                                android:layout_marginEnd="9dp"
+                                android:layout_marginStart="8dp" />
+
+                            <!-- Texto fijo "kt" -->
+                            <TextView
+                                android:layout_width="47dp"
+                                android:layout_height="wrap_content"
+                                android:text="kt"
+                                android:textColor="@color/text_dark"
+                                android:textSize="16sp"
+                                android:paddingVertical="5dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+
+                        <!-- Spinner Unidad -->
+                        <LinearLayout
+                            android:id="@+id/ruy8trdpv26h"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="4dp"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="12dp"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/goldUnitSpinner"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_dark"
+                                android:textSize="16sp"
+                                android:background="@android:color/transparent"
+                                android:padding="8dp" />
+
+                            <View
+                                android:id="@+id/rfitfhdhk5f"
+                                android:layout_width="1dp"
+                                android:layout_height="34dp"
+                                android:background="@color/text_green"
+                                android:layout_marginEnd="9dp"
+                                android:layout_marginStart="8dp" />
+
+                            <!-- Texto fijo "g" -->
+                            <TextView
+                                android:layout_width="47dp"
+                                android:layout_height="wrap_content"
+                                android:text="g"
+                                android:textColor="@color/text_dark"
+                                android:textSize="16sp"
+                                android:paddingVertical="5dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Botón Calcular Oro -->
+                    <Button
+                        android:id="@+id/convertGoldButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="9dp"
+                        android:paddingHorizontal="113dp"
+                        android:text="CALCULAR"
+                        android:textColor="@color/text_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:backgroundTint="@android:color/transparent" />
+
+                    <!-- Resultado Oro -->
+                    <TextView
+                        android:id="@+id/goldResultText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:text="Resultado oro" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/convertGoldButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Calcular Valor"
-                    android:textColor="@android:color/white"
-                    android:background="#FFD700" />
-
-                <TextView
-                    android:id="@+id/goldResultText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp" />
-
             </LinearLayout>
 
-            <!-- Sección de precios de referencia del oro -->
+            <!-- Precios de Referencia del Oro -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="#1E1E1E"
+                android:background="@drawable/btn_green_square"
                 android:padding="16dp"
                 android:layout_marginBottom="24dp">
 
@@ -267,8 +510,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Precios de Referencia del Oro"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textColor="@color/text_light"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp"
                     android:gravity="center" />
@@ -284,8 +527,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Oro 24k (CLP/g):"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/gold24kPerGram"
@@ -293,10 +536,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$0.00"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp"
                         android:textAlignment="textEnd" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -310,8 +552,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Oro 22k (CLP/g):"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/gold22kPerGram"
@@ -319,10 +561,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$0.00"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp"
                         android:textAlignment="textEnd" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -336,8 +577,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Oro 24k (CLP/oz):"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/gold24kPerOz"
@@ -345,10 +586,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$0.00"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp"
                         android:textAlignment="textEnd" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -361,8 +601,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Oro 22k (CLP/oz):"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/gold22kPerOz"
@@ -370,18 +610,26 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$0.00"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
+                        android:textColor="@color/text_light"
+                        android:textSize="14sp"
                         android:textAlignment="textEnd" />
-
                 </LinearLayout>
-
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- Menú inferior -->
-    <include layout="@layout/bottom_menu" />
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 
 </RelativeLayout>

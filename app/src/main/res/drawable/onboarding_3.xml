@@ -1,17 +1,43 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="200dp"
-    android:height="200dp"
-    android:viewportWidth="200"
-    android:viewportHeight="200">
-    <path
-        android:pathData="M100,40L140,80L100,120L60,80z"
-        android:fillColor="#FF9800"/>
-    <path
-        android:pathData="M100,60L120,80L100,100L80,80z"
-        android:fillColor="#FFFFFF"
-        android:fillAlpha="0.8"/>
-    <!-- Círculo sin namespace android: -->
-    <path
-        android:pathData="M100,120 a20,20 0 1,1 0,40 a20,20 0 1,1 0,-40z"
-        android:fillColor="#FF9800"/>
+    android:width="245dp"
+    android:height="232dp"
+    android:viewportWidth="245"
+    android:viewportHeight="232">
+
+    <group>
+        <!-- Fondo -->
+        <path
+            android:pathData="M0,0h245v232h-245z"
+            android:fillColor="#01b76a"
+            android:fillAlpha="0.1"/>
+
+        <!-- Gráfico de tendencias -->
+        <path
+            android:pathData="M50,180 L80,150 L110,160 L140,120 L170,140 L200,100"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="4"
+            android:fillColor="#00000000"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+
+        <!-- Iconos de monedas -->
+        <path
+            android:pathData="M80,100 a15,15 0 1,1 0.1,0z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"/>
+
+        <path
+            android:pathData="M150,80 a12,12 0 1,1 0.1,0z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"/>
+
+        <!-- Indicador de tiempo real -->
+        <path
+            android:pathData="M180,60 L180,80 M175,70 L185,70"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:strokeLineCap="round"/>
+    </group>
 </vector>

@@ -1,163 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_dark"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:padding="24dp">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/rkwgl230m2kc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background_dark">
 
-        <!-- Foto de perfil con opción para cambiarla -->
-        <ImageView
-            android:id="@+id/editProfileAvatar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="24dp" />
-
-        <Button
-            android:id="@+id/changePhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambiar Foto"
-            android:layout_marginBottom="32dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/blue_500" />
-
-        <!-- Campos editables -->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
 
-        <EditText
-            android:id="@+id/editProfileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:backgroundTint="@color/blue_500"
-            android:layout_marginBottom="16dp" />
+            <!-- Header con título AJUSTES -->
+            <LinearLayout
+                android:id="@+id/r5at2ws48apt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:layout_marginBottom="81dp"
+                android:layout_marginStart="110dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/rmjs0n2m10a"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="19dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    android:id="@+id/r0e7do3kuqvj"
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="AJUSTES"
+                    />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Apellido"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp" />
+            <!-- Foto de perfil con ícono de edición superpuesto -->
+            <LinearLayout
+                android:id="@+id/r7ogu4ut1nxo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="151dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/rkhy3pvcxsxb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editProfileLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:backgroundTint="@color/blue_500"
-            android:layout_marginBottom="16dp" />
+                    <!-- Contenedor relativo para la foto y el ícono de edición -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="11dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp" />
+                        <!-- Foto de perfil -->
+                        <ImageView
+                            android:id="@+id/editProfileAvatar"
+                            android:layout_width="106dp"
+                            android:layout_height="106dp"
+                            android:src="@mipmap/ic_launcher"
+                            android:scaleType="centerCrop"
+                            android:background="@drawable/cr20" />
 
-        <EditText
-            android:id="@+id/editProfileEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:backgroundTint="@color/blue_500"
-            android:layout_marginBottom="32dp" />
+                        <!-- Ícono de edición superpuesto -->
+                        <ImageButton
+                            android:id="@+id/changePhotoButton"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@android:drawable/ic_menu_edit"
+                            android:background="@drawable/btn_green_square"
+                            android:scaleType="centerInside"
+                            android:padding="6dp"
+                            android:contentDescription="Cambiar foto"
+                            android:layout_alignBottom="@id/editProfileAvatar"
+                            android:layout_alignEnd="@id/editProfileAvatar"
+                            android:layout_marginEnd="-8dp"
+                            android:layout_marginBottom="-8dp"
+                            style="?android:attr/borderlessButtonStyle" />
+                    </RelativeLayout>
 
-        <!-- Botón para guardar cambios de perfil -->
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambiar Datos Personales"
-            android:layout_marginTop="32dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/blue_500" />
+                    <LinearLayout
+                        android:id="@+id/r7yx8d3y1vsr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/rvd6f01so06"
+                            android:textColor="@color/text_light"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:layout_width="92.765625dp"
+                            android:gravity="center"
+                            android:text="Guido Rojas"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
 
-        <!-- Separador -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginVertical="24dp" />
+            <!-- Campos de datos personales -->
+            <LinearLayout
+                android:id="@+id/ri9zvphb57s"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="84dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/rlyzir81kbjs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cr20"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/rqdwwb60ki7"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:orientation="vertical">
+                        <EditText
+                            android:id="@+id/editProfileName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:hint="Nombre"
+                            android:textColor="@color/text_gray"
+                            android:textSize="13sp"
+                            android:layout_marginBottom="7dp"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="11dp"
+                            android:paddingHorizontal="21dp"
+                            />
+                        <EditText
+                            android:id="@+id/editProfileLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:hint="Apellido"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="21dp"
+                            />
+                        <EditText
+                            android:id="@+id/editProfileEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:hint="Email"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="15dp"
+                            android:paddingHorizontal="21dp"
+                            />
+                    </LinearLayout>
 
-        <!-- Campos para cambiar contraseña (SIEMPRE VISIBLES) -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cambiar Contraseña"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+                    <LinearLayout
+                        android:id="@+id/buttonsContainer"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <!-- Botón para guardar datos personales -->
+                        <Button
+                            android:id="@+id/saveButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_green_square"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="8dp"
+                            android:elevation="6dp"
+                            android:text="CAMBIAR DATOS PERSONALES"
+                            android:textColor="@color/text_light"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            style="?android:attr/borderlessButtonStyle" />
+                    </LinearLayout>
+                    <!-- Campos para cambiar contraseña -->
+                    <LinearLayout
+                        android:id="@+id/rfigo3mbx6tt"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="13dp"
+                        android:layout_marginHorizontal="7dp"
+                        android:orientation="vertical">
+                        <EditText
+                            android:id="@+id/editProfilePassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:hint="Nueva Contraseña"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="22dp"
+                            />
+                        <EditText
+                            android:id="@+id/editProfileConfirmPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:hint="Confirmar Contraseña"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="14dp"
+                            android:paddingHorizontal="22dp"
+                            />
+                    </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nueva Contraseña"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp" />
+                    <LinearLayout
+                        android:id="@+id/buttonsContainer2"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <!-- Botón para cambiar contraseña -->
+                        <Button
+                            android:id="@+id/changePasswordButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_green_square"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="8dp"
+                            android:elevation="6dp"
+                            android:text="CAMBIAR CONTRASEÑA"
+                            android:textColor="@color/text_light"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            style="?android:attr/borderlessButtonStyle" />
+                    </LinearLayout>
 
-        <EditText
-            android:id="@+id/editProfilePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:backgroundTint="@color/blue_500"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirmar Contraseña"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/editProfileConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/darker_gray"
-            android:backgroundTint="@color/blue_500"
-            android:layout_marginBottom="16dp" />
-
-
-        <Button
-            android:id="@+id/changePasswordButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambiar Contraseña"
-            android:layout_marginBottom="32dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/blue_500" />
-
-        <!-- Botón para cancelar -->
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Volver"
-            android:layout_marginTop="16dp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@android:color/darker_gray" />
-
-    </LinearLayout>
-</ScrollView>
+                    <!-- Botón para cancelar/volver -->
+                    <Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Volver"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/text_light"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

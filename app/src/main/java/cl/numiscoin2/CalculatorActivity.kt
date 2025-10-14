@@ -1,9 +1,12 @@
 package cl.numiscoin2
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import kotlin.math.sin
 import kotlin.math.cos
 import kotlin.math.tan
@@ -18,6 +21,15 @@ class CalculatorActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_calculator)
 
         display = findViewById(R.id.display)
@@ -32,23 +44,23 @@ class CalculatorActivity : BaseActivity() {
 
     private fun setupCalculatorButtons() {
         // Botones numéricos
-        findViewById<Button>(R.id.button_0).setOnClickListener { appendNumber("0") }
-        findViewById<Button>(R.id.button_1).setOnClickListener { appendNumber("1") }
-        findViewById<Button>(R.id.button_2).setOnClickListener { appendNumber("2") }
-        findViewById<Button>(R.id.button_3).setOnClickListener { appendNumber("3") }
-        findViewById<Button>(R.id.button_4).setOnClickListener { appendNumber("4") }
-        findViewById<Button>(R.id.button_5).setOnClickListener { appendNumber("5") }
-        findViewById<Button>(R.id.button_6).setOnClickListener { appendNumber("6") }
-        findViewById<Button>(R.id.button_7).setOnClickListener { appendNumber("7") }
-        findViewById<Button>(R.id.button_8).setOnClickListener { appendNumber("8") }
-        findViewById<Button>(R.id.button_9).setOnClickListener { appendNumber("9") }
+        findViewById<TextView>(R.id.button_0).setOnClickListener { appendNumber("0") }
+        findViewById<TextView>(R.id.button_1).setOnClickListener { appendNumber("1") }
+        findViewById<TextView>(R.id.button_2).setOnClickListener { appendNumber("2") }
+        findViewById<TextView>(R.id.button_3).setOnClickListener { appendNumber("3") }
+        findViewById<TextView>(R.id.button_4).setOnClickListener { appendNumber("4") }
+        findViewById<TextView>(R.id.button_5).setOnClickListener { appendNumber("5") }
+        findViewById<TextView>(R.id.button_6).setOnClickListener { appendNumber("6") }
+        findViewById<TextView>(R.id.button_7).setOnClickListener { appendNumber("7") }
+        findViewById<TextView>(R.id.button_8).setOnClickListener { appendNumber("8") }
+        findViewById<TextView>(R.id.button_9).setOnClickListener { appendNumber("9") }
 
         // Operadores básicos
-        findViewById<Button>(R.id.addition).setOnClickListener { appendOperator("+") }
-        findViewById<Button>(R.id.subtraction).setOnClickListener { appendOperator("-") }
-        findViewById<Button>(R.id.multiplication).setOnClickListener { appendOperator("*") }
-        findViewById<Button>(R.id.division).setOnClickListener { appendOperator("/") }
-        findViewById<Button>(R.id.decimal).setOnClickListener { appendDecimal() }
+        findViewById<TextView>(R.id.addition).setOnClickListener { appendOperator("+") }
+        findViewById<TextView>(R.id.subtraction).setOnClickListener { appendOperator("-") }
+        findViewById<TextView>(R.id.multiplication).setOnClickListener { appendOperator("*") }
+        findViewById<TextView>(R.id.division).setOnClickListener { appendOperator("/") }
+        findViewById<TextView>(R.id.decimal).setOnClickListener { appendDecimal() }
 
         // Funciones especiales
         //findViewById<Button>(R.id.btnSin).setOnClickListener { calculateFunction("sin") }
@@ -56,9 +68,9 @@ class CalculatorActivity : BaseActivity() {
         //findViewById<Button>(R.id.btnCos).setOnClickListener { calculateFunction("tan") }
 
         // Botones de control
-        findViewById<Button>(R.id.C).setOnClickListener { clearAll() }
-        findViewById<Button>(R.id.erase).setOnClickListener { backspace() }
-        findViewById<Button>(R.id.equals).setOnClickListener { calculateResult() }
+        findViewById<TextView>(R.id.C).setOnClickListener { clearAll() }
+        findViewById<TextView>(R.id.erase).setOnClickListener { backspace() }
+        findViewById<TextView>(R.id.equals).setOnClickListener { calculateResult() }
         //findViewById<Button>(R.id.btnToggleMode).setOnClickListener { toggleAngleMode() }
     }
 

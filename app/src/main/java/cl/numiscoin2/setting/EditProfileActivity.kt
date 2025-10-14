@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
         val editName = findViewById<EditText>(R.id.editProfileName)
         val editLastName = findViewById<EditText>(R.id.editProfileLastName)
         val editEmail = findViewById<EditText>(R.id.editProfileEmail)
-        val changePhotoButton = findViewById<Button>(R.id.changePhotoButton)
+        val changePhotoButton = findViewById<ImageButton>(R.id.changePhotoButton)
         val changePasswordButton = findViewById<Button>(R.id.changePasswordButton)
         val editPassword = findViewById<EditText>(R.id.editProfilePassword)
         val editConfirmPassword = findViewById<EditText>(R.id.editProfileConfirmPassword)

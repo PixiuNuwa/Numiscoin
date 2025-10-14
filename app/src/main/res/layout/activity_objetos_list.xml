@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/background_dark"
+    android:fitsSystemWindows="true">
 
     <!-- Contenido principal -->
     <LinearLayout
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
-        android:layout_above="@+id/bottomMenu"
+        android:layout_above="@+id/bottomMenuContainer"
         android:layout_alignParentTop="true">
 
         <!-- Header con botón de volver -->
@@ -161,14 +162,23 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="24dp"
-        android:layout_above="@+id/bottomMenu"
+        android:layout_above="@+id/bottomMenuContainer"
         android:src="@drawable/ic_add"
         android:contentDescription="Agregar moneda"
         app:backgroundTint="#FF0000FF"
         app:tint="@android:color/white" />
 
-    <!-- Menú inferior (igual que antes) -->
-    <!-- Menú inferior (sin cambios) -->
-    <include layout="@layout/bottom_menu" />
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 
 </RelativeLayout>

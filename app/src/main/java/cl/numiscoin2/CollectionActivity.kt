@@ -1,17 +1,22 @@
 package cl.numiscoin2
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import cl.numiscoin2.network.NetworkCollectionUtils
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CollectionActivity : BaseActivity() {
 
@@ -23,6 +28,15 @@ class CollectionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_collection)
         Log.d(TAG, "onCreate: CollectionActivity creada")
 
@@ -35,23 +49,30 @@ class CollectionActivity : BaseActivity() {
         configurarBusqueda()
 
         // Configurar botón de agregar colección
-        val btnAddCollection = findViewById<Button>(R.id.btnAddCollection)
+        /*val btnAddCollection = findViewById<Button>(R.id.btnAddCollection)
         btnAddCollection.setOnClickListener {
             Log.d(TAG, "btnAddCollection: Abriendo vista para crear colección")
             val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
             startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
-        }
+        }*/
 
         // Configurar botón de agregar colección en estado vacío
-        val btnAddCollectionEmpty = findViewById<Button>(R.id.btnAddCollectionEmpty)
+        /*val btnAddCollectionEmpty = findViewById<Button>(R.id.btnAddCollectionEmpty)
         btnAddCollectionEmpty.setOnClickListener {
             Log.d(TAG, "btnAddCollectionEmpty: Abriendo vista para crear colección")
             val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
             startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
-        }
+        }*/
 
         // Cargar colecciones del usuario
         cargarColeccionesDesdeServidor()
+
+        val fabAddCollection = findViewById<TextView>(R.id.fabAddCollection)
+        fabAddCollection.setOnClickListener {
+            Log.d(TAG, "fabAddCollection: Abriendo vista para crear colección")
+            val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
+            startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
+        }
     }
 
     private fun configurarBusqueda() {
@@ -109,7 +130,7 @@ class CollectionActivity : BaseActivity() {
         isLoading = show
         Log.d(TAG, "showLoading: ${if (show) "Mostrando" else "Ocultando"} loading")
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val headerWithCollections = findViewById<LinearLayout>(R.id.headerWithCollections)
+        val headerWithCollections = findViewById<androidx.cardview.widget.CardView>(R.id.headerWithCollections)
         val collectionsContainer = findViewById<LinearLayout>(R.id.collectionsContainer)
         val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
 
@@ -132,46 +153,59 @@ class CollectionActivity : BaseActivity() {
     private fun mostrarColeccionesFiltradas() {
         Log.d(TAG, "mostrarColeccionesFiltradas: Mostrando ${coleccionesFiltradas.size} colecciones filtradas")
 
-        val headerWithCollections = findViewById<LinearLayout>(R.id.headerWithCollections)
+        val headerWithCollections = findViewById<androidx.cardview.widget.CardView>(R.id.headerWithCollections)
         val collectionsContainer = findViewById<LinearLayout>(R.id.collectionsContainer)
         val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
+        val searchEmptyStateContainer = findViewById<LinearLayout>(R.id.searchEmptyStateContainer)
+        val etSearch = findViewById<EditText>(R.id.etSearch)
 
         collectionsContainer.removeAllViews()
 
         if (coleccionesFiltradas.isEmpty()) {
-            // Mostrar estado vacío - OCULTAR header
-            headerWithCollections.visibility = android.view.View.GONE
-            collectionsContainer.visibility = android.view.View.GONE
-            emptyStateContainer.visibility = android.view.View.VISIBLE
-            return
-        }
+            val isSearching = etSearch.text.toString().isNotBlank()
 
-        // Mostrar listado de colecciones - MOSTRAR header
-        headerWithCollections.visibility = android.view.View.VISIBLE
-        collectionsContainer.visibility = android.view.View.VISIBLE
-        emptyStateContainer.visibility = android.view.View.GONE
-
-        coleccionesFiltradas.forEach { coleccion ->
-            val collectionItem = Button(this).apply {
-                text = "${coleccion.nombre}\n${coleccion.descripcion}"
-                setTextColor(resources.getColor(android.R.color.white))
-                setBackgroundColor(resources.getColor(R.color.menu_unselected))
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(16)
-                }
-
-                // Al hacer clic en una colección, abrir la actividad de objetos
-                setOnClickListener {
-                    val intent = Intent(this@CollectionActivity, ObjetosListActivity::class.java)
-                    intent.putExtra("idColeccion", coleccion.id)
-                    intent.putExtra("nombreColeccion", coleccion.nombre)
-                    startActivity(intent)
-                }
+            if (isSearching) {
+                // Búsqueda sin resultados - mostrar solo mensaje de búsqueda vacía
+                headerWithCollections.visibility = android.view.View.VISIBLE
+                collectionsContainer.visibility = android.view.View.GONE
+                emptyStateContainer.visibility = android.view.View.GONE
+                searchEmptyStateContainer.visibility = android.view.View.VISIBLE
+            } else {
+                // Estado inicial sin colecciones - mostrar estado vacío completo
+                headerWithCollections.visibility = android.view.View.GONE
+                collectionsContainer.visibility = android.view.View.GONE
+                emptyStateContainer.visibility = android.view.View.VISIBLE
+                searchEmptyStateContainer.visibility = android.view.View.GONE
             }
-            collectionsContainer.addView(collectionItem)
+        } else {
+            // Hay colecciones para mostrar
+            headerWithCollections.visibility = android.view.View.VISIBLE
+            collectionsContainer.visibility = android.view.View.VISIBLE
+            emptyStateContainer.visibility = android.view.View.GONE
+            searchEmptyStateContainer.visibility = android.view.View.GONE
+
+            coleccionesFiltradas.forEach { coleccion ->
+                val collectionItem = Button(this).apply {
+                    text = "${coleccion.nombre}\n${coleccion.descripcion}"
+                    setTextColor(resources.getColor(android.R.color.white))
+                    setBackgroundColor(resources.getColor(R.color.menu_unselected))
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(16)
+                    }
+
+                    // Al hacer clic en una colección, abrir la actividad de objetos
+                    setOnClickListener {
+                        val intent = Intent(this@CollectionActivity, ObjetosListActivity::class.java)
+                        intent.putExtra("idColeccion", coleccion.id)
+                        intent.putExtra("nombreColeccion", coleccion.nombre)
+                        startActivity(intent)
+                    }
+                }
+                collectionsContainer.addView(collectionItem)
+            }
         }
     }
 

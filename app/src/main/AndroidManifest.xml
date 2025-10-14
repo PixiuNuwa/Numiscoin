@@ -47,8 +47,8 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".LoginActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
         <activity
             android:name=".WelcomeActivity"
@@ -56,15 +56,17 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".CollectionActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:name=".CollectionActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".CalculatorActivity" />
+        <activity android:name=".CalculatorActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".CurrencyActivity" />
+        <activity android:name=".CurrencyActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".MarketplaceActivity" />
+        <activity android:name=".MarketplaceActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
         <activity android:name=".AddCoinActivity" />
 
@@ -72,17 +74,22 @@
 
         <activity android:name=".EditCoinActivity" />
 
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".RecoverPasswordActivity" />
+        <activity android:name=".RecoverPasswordActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".setting.ProfileActivity" />
+        <activity android:name=".setting.ProfileActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".setting.EditProfileActivity" android:exported="false" />
+        <activity android:name=".setting.EditProfileActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2" />
 
         <activity android:name=".HelpActivity" />
 
-        <activity android:name=".ObjetosListActivity" />
+        <activity android:name=".ObjetosListActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
         <activity android:name=".ObjetosPaisActivity" />
 
@@ -97,11 +104,14 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity android:name=".CreateCollectionActivity" />
-        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".setting.SettingsActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.LanguageActivity" />
-        <activity android:name=".setting.FAQActivity" />
+        <activity android:name=".setting.FAQActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.ContactActivity" />
-        <activity android:name=".setting.TermsActivity" />
+        <activity android:name=".setting.TermsActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.BackupActivity" />
 
         <activity android:name=".EventoDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

@@ -41,13 +41,25 @@ class CalendarioAdapter(
 
         val dia = getItem(position)
 
-        if (dia.isNotEmpty()) {
+        // PRIMERA FILA - ENCABEZADOS DE DÍAS DE LA SEMANA
+        if (position < 7) {
+            holder.diaText.text = dia
+            holder.diaText.setTextColor(Color.parseColor("#666666")) // Gris para encabezados
+            holder.diaText.textSize = 12f // Texto más pequeño para encabezados
+            holder.diaText.visibility = View.VISIBLE
+            holder.marcadorEvento.visibility = View.INVISIBLE
+            view.setBackgroundColor(Color.parseColor("#F0F0F0")) // Fondo gris claro para encabezados
+            view.alpha = 1.0f
+        }
+        // DÍAS DEL MES
+        else if (dia.isNotEmpty() && dia.toIntOrNull() != null) {
             holder.diaText.text = dia
             holder.diaText.setTextColor(Color.parseColor("#000000"))
+            holder.diaText.textSize = 14f // Tamaño normal para días
             holder.diaText.visibility = View.VISIBLE
 
-            // Verificar si este día tiene eventos
-            val tieneEvento = tieneEventoEnDia(dia.toInt())
+            // Verificar si este día tiene eventos ACTIVOS (no solo que empiecen)
+            val tieneEvento = tieneEventoActivoEnDia(dia.toInt())
             if (tieneEvento) {
                 holder.marcadorEvento.visibility = View.VISIBLE
                 holder.marcadorEvento.setBackgroundColor(Color.parseColor("#FF0000"))
@@ -81,6 +93,44 @@ class CalendarioAdapter(
         return view
     }
 
+    private fun tieneEventoActivoEnDia(dia: Int): Boolean {
+        return eventos.any { evento ->
+            // Crear Calendar para el día que estamos verificando (sin hora)
+            val diaCalendario = Calendar.getInstance().apply {
+                set(Calendar.YEAR, año)
+                set(Calendar.MONTH, mes - 1) // Calendar.MONTH es 0-based
+                set(Calendar.DAY_OF_MONTH, dia)
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            // Crear Calendar para fecha de inicio del evento (sin hora)
+            val inicioEvento = Calendar.getInstance().apply {
+                time = evento.fechaInicio
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            // Crear Calendar para fecha fin del evento (sin hora)
+            val finEvento = Calendar.getInstance().apply {
+                time = evento.fechaFin
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+
+            // Verificar si el día del calendario está dentro del rango del evento
+            // (incluyendo el día de inicio y el día de fin)
+            diaCalendario.time in inicioEvento.time..finEvento.time
+        }
+    }
+
+    // Método original (mantener por compatibilidad si es necesario)
     private fun tieneEventoEnDia(dia: Int): Boolean {
         return eventos.any { evento ->
             val calendar = Calendar.getInstance().apply {

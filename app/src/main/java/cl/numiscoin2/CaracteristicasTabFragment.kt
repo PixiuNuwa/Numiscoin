@@ -30,7 +30,7 @@ class CaracteristicasTabFragment : Fragment() {
         // Configurar los datos en la UI
         objeto.monedaInfo?.let { info ->
             view.findViewById<TextView>(R.id.tvVariante).text = info.variante ?: "No especificado"
-            view.findViewById<TextView>(R.id.tvCeca).text = info.ceca ?: "No especificado"
+            //view.findViewById<TextView>(R.id.tvCeca).text = info.ceca ?: "No especificado"
             view.findViewById<TextView>(R.id.tvTipo).text = info.tipo ?: "No especificado"
             view.findViewById<TextView>(R.id.tvDisenador).text = info.disenador ?: "No especificado"
             view.findViewById<TextView>(R.id.tvEstado).text = info.estado ?: "No especificado"

@@ -1,13 +1,39 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="200dp"
-    android:height="200dp"
-    android:viewportWidth="200"
-    android:viewportHeight="200">
-    <path
-        android:pathData="M100,20C56,20 20,56 20,100s36,80 80,80s80,-36 80,-80S144,20 100,20zM80,140L60,120l7,-7l13,13l33,-33l7,7L80,140z"
-        android:fillColor="#2196F3"/>
-    <path
-        android:pathData="M80,80h40v40h-40z"
-        android:fillColor="#2196F3"
-        android:fillAlpha="0.2"/>
+    android:width="299dp"
+    android:height="192dp"
+    android:viewportWidth="299"
+    android:viewportHeight="192">
+    <group>
+        <!-- Fondo -->
+        <rect
+            android:width="299dp"
+            android:height="192dp"
+            android:fillColor="#01b76a"
+            android:fillAlpha="0.1"/>
+        <!-- Icono de colección -->
+        <path
+            android:pathData="M50,50 L100,50 L100,100 L50,100 Z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="3"
+            android:fillColor="#00000000"/>
+        <path
+            android:pathData="M120,60 L180,60 L180,90 L120,90 Z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="2"
+            android:fillColor="#00000000"/>
+        <path
+            android:pathData="M200,70 L250,70 L250,110 L200,110 Z"
+            android:strokeColor="#01b76a"
+            android:strokeWidth="3"
+            android:fillColor="#00000000"/>
+        <!-- Texto placeholder -->
+        <text
+            android:text="Colección"
+            android:textSize="16sp"
+            android:textColor="#01b76a"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </group>
 </vector>

@@ -2,9 +2,12 @@ package cl.numiscoin2.setting
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.ExpandableListView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.BaseActivity
 import cl.numiscoin2.R
 
@@ -15,6 +18,15 @@ class FAQActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_faq)
 
         initData()
@@ -25,28 +37,28 @@ class FAQActivity : BaseActivity() {
 
     private fun initData() {
         faqList.add(FAQ(
-            "¿Qué es NumisCoin?",
-            "NumisCoin es una aplicación diseñada para coleccionistas de monedas que permite gestionar colecciones, calcular valores y conectarse con otros numismáticos."
+            "¿Quienes pueden ver mis colecciones?",
+            "Por defecto, solo tú puedes ver tus colecciones. Tu privacidad es nuestra prioridad. Si en algún momento deseas compartir los items de tu colección, puedes hacerlo fácilmente utilizando la función de compartir dentro de la App."
         ))
         faqList.add(FAQ(
-            "¿Cómo agrego monedas a mi colección?",
-            "Puedes agregar monedas desde la sección 'Mi Colección' usando el botón '+' y completando la información requerida de cada moneda."
+            "¿Pregunta 2?",
+            "bla bla bla yadda yadda."
         ))
         faqList.add(FAQ(
-            "¿La aplicación requiere conexión a internet?",
-            "Algunas funciones como la sincronización de datos y el marketplace requieren conexión, pero puedes ver tu colección offline."
+            "¿Pregunta 3?",
+            "bla bla bla yadda yadda."
         ))
         faqList.add(FAQ(
-            "¿Cómo cambio mi información de perfil?",
-            "Ve a Ajustes → Perfil para modificar tu información personal, foto y preferencias."
+            "¿Pregunta 4?",
+            "bla bla bla yadda yadda."
         ))
         faqList.add(FAQ(
-            "¿Puedo exportar mi colección?",
-            "Sí, en Ajustes → Descargar copia de seguridad puedes exportar tu colección en formato XML."
+            "¿Pregunta 5?",
+            "bla bla bla yadda yadda."
         ))
         faqList.add(FAQ(
-            "¿Cómo contacto con soporte?",
-            "Puedes usar la sección 'Contacto' en Ajustes para encontrar nuestros canales de comunicación."
+            "¿Pregunta 6?",
+            "bla bla bla yadda yadda."
         ))
     }
 

@@ -81,9 +81,11 @@ open class BaseActivity : AppCompatActivity() {
                 val menuText = menuItem.getChildAt(1) as TextView
 
                 if (menuId == selectedMenuId) {
-                    menuText.setTextColor(0xFF0000FF.toInt())
+                    // Menú seleccionado - Color #01B76A
+                    menuText.setTextColor(0xFF01B76A.toInt())
                 } else {
-                    menuText.setTextColor(0xFF888888.toInt())
+                    // Menú NO seleccionado - Color #FFF3D6
+                    menuText.setTextColor(0xFFFFF3D6.toInt())
                 }
             }
         }

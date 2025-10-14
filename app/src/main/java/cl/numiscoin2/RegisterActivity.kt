@@ -3,11 +3,16 @@ package cl.numiscoin2
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkUserUtils
 
 class RegisterActivity : AppCompatActivity() {
@@ -16,8 +21,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var lastNameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
+    private lateinit var confirmPasswordEditText: EditText
     private lateinit var createAccountButton: Button
-    private lateinit var selectPhotoButton: Button
+    //private lateinit var selectPhotoButton: Button
     private lateinit var profileImageView: ImageView
     private lateinit var progressBar: ProgressBar
 
@@ -29,6 +35,15 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+
         setContentView(R.layout.activity_register)
 
         initializeViews()
@@ -40,24 +55,26 @@ class RegisterActivity : AppCompatActivity() {
         lastNameEditText = findViewById(R.id.lastNameEditText)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
-        createAccountButton = findViewById(R.id.createAccountButton)
-        selectPhotoButton = findViewById(R.id.selectPhotoButton)
-        profileImageView = findViewById(R.id.profileImageView)
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
+        createAccountButton = findViewById(R.id.btnRegister)
+        //selectPhotoButton = findViewById(R.id.selectPhotoButton)
+        //profileImageView = findViewById(R.id.profileImageView)
         progressBar = findViewById(R.id.progressBar)
     }
 
     private fun setupListeners() {
-        selectPhotoButton.setOnClickListener {
+        /*selectPhotoButton.setOnClickListener {
             openImagePicker()
-        }
+        }*/
 
         createAccountButton.setOnClickListener {
             val nombre = nameEditText.text.toString()
             val apellido = lastNameEditText.text.toString()
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
+            val confirmPassword = confirmPasswordEditText.text.toString()
 
-            if (validateInputs(nombre, apellido, email, password)) {
+            if (validateInputs(nombre, apellido, email, password, confirmPassword)) {
                 showLoading(true)
                 registerUser(nombre, apellido, email, password)
             }
@@ -77,19 +94,34 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun validateInputs(nombre: String, apellido: String, email: String, password: String): Boolean {
-        if (nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    private fun validateInputs(nombre: String, apellido: String, email: String, password: String, confirmPassword: String): Boolean {
+        // Validación de campos vacíos
+        if (nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             return false
         }
 
+        // Validación de longitud de contraseña
         if (password.length < 6) {
             Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
             return false
         }
 
+        // Validación de formato de email básico
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Ingresa un email válido", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        // Validación de que el email termine en @gmail.com
+        if (!email.lowercase().endsWith("@gmail.com")) {
+            Toast.makeText(this, "El email debe ser de dominio @gmail.com", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        // Validación de que las contraseñas coincidan
+        if (password != confirmPassword) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -159,6 +191,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun showLoading(show: Boolean) {
         progressBar.visibility = if (show) View.VISIBLE else View.GONE
         createAccountButton.isEnabled = !show
-        selectPhotoButton.isEnabled = !show
+        //selectPhotoButton.isEnabled = !show
     }
 }

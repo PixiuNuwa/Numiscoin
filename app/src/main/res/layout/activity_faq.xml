@@ -1,50 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/background_dark"
     android:fitsSystemWindows="true">
 
+    <!-- Header -->
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomMenu"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="11dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:textColor="@color/text_light"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="PREGUNTAS FRECUENTES" />
+    </LinearLayout>
+
+    <!-- ExpandableListView - OCUPA LA MAYOR PARTE DE LA PANTALLA -->
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/header"
+        android:layout_above="@id/bottomSection"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:groupIndicator="@android:color/transparent"
+        android:childDivider="@android:color/transparent"
+        android:padding="16dp" />
+
+    <!-- Sección inferior -->
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomMenuContainer"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Título -->
         <TextView
-            android:layout_width="match_parent"
+            android:textColor="@color/text_light"
+            android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:text="Preguntas Frecuentes"
-            android:textColor="#FFFFFF"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:text="Estamos aquí para ayudarte. ¿Aún tienes dudas?, Escríbenos."
+            android:layout_marginBottom="16dp" />
 
-        <!-- Descripción -->
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Encuentra respuestas a las preguntas más comunes sobre NumisCoin"
-            android:textColor="#CCCCCC"
-            android:textSize="16sp"
-            android:layout_marginBottom="32dp" />
+            android:background="@drawable/btn_green_square"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="24dp"
+            android:elevation="6dp">
 
-        <!-- Lista expandible de FAQs - SIN ScrollView padre -->
-        <ExpandableListView
-            android:id="@+id/expandableListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="8dp"
-            android:groupIndicator="@android:color/transparent"
-            android:childDivider="@android:color/transparent" />
-
+            <TextView
+                android:textColor="@color/text_light"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="CONTÁCTANOS" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Menú inferior -->
-    <include layout="@layout/bottom_menu" />
+    <!-- Bottom Menu -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 
 </RelativeLayout>

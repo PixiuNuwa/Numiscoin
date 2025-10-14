@@ -1,9 +1,12 @@
 package cl.numiscoin2
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import cl.numiscoin2.network.NetworkDataUtils
 
@@ -33,6 +36,15 @@ class CurrencyActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_currency)
 
         initializeViews()
@@ -79,8 +91,8 @@ class CurrencyActivity : BaseActivity() {
                 }
             }
 
-            usdRateText.text = "1 USD = ${String.format("%.2f", usdRate)} CLP"
-            eurRateText.text = "1 EUR = ${String.format("%.2f", eurRate)} CLP"
+            usdRateText.text = "${String.format("%.2f", usdRate)} CLP"
+            eurRateText.text = "${String.format("%.2f", eurRate)} CLP"
         } else {
             // Si no hay datos en caché, cargar desde servidor
             NetworkDataUtils.getDivisas { divisas, error ->
@@ -93,8 +105,8 @@ class CurrencyActivity : BaseActivity() {
                                 "EUR" -> eurRate = divisa.valorEnCLP
                             }
                         }
-                        usdRateText.text = "1 USD = ${String.format("%.2f", usdRate)} CLP"
-                        eurRateText.text = "1 EUR = ${String.format("%.2f", eurRate)} CLP"
+                        usdRateText.text = "${String.format("%.2f", usdRate)} CLP"
+                        eurRateText.text = "${String.format("%.2f", eurRate)} CLP"
                     } else {
                         // Usar valores por defecto en caso de error
                         usdRate = 950.0

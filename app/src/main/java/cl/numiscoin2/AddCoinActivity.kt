@@ -4,8 +4,10 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -13,11 +15,12 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkDataUtils
 import cl.numiscoin2.network.NetworkObjectUtils
 import com.google.gson.Gson
 
-class AddCoinActivity : AppCompatActivity() {
+class AddCoinActivity : BaseActivity() {
 
     private lateinit var etNombre: EditText
     private lateinit var etDescripcion: EditText
@@ -25,18 +28,18 @@ class AddCoinActivity : AppCompatActivity() {
     private lateinit var etAnio: EditText
     private lateinit var etValorAdquirido: EditText
     private lateinit var etEstado: EditText
-    private lateinit var etFamilia: EditText
-    private lateinit var etIdFamilia: EditText
+    //private lateinit var etFamilia: EditText
+    //private lateinit var etIdFamilia: EditText
     private lateinit var etVariante: EditText
     private lateinit var etCeca: EditText
     private lateinit var etTipo: EditText
     private lateinit var etDisenador: EditText
     private lateinit var etTotalProducido: EditText
-    private lateinit var etValorSinCircular: EditText
+    //private lateinit var etValorSinCircular: EditText
     private lateinit var etValorComercial: EditText
     private lateinit var etObservaciones: EditText
-    private lateinit var etOrden: EditText
-    private lateinit var etAcunada: EditText
+    //private lateinit var etOrden: EditText
+    //private lateinit var etAcunada: EditText
     private lateinit var ivFoto: ImageView
     private lateinit var ivFoto2: ImageView
     private lateinit var ivFoto3: ImageView
@@ -81,6 +84,15 @@ class AddCoinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_add_coin)
 
         // Obtener los datos del usuario del Intent
@@ -124,18 +136,18 @@ class AddCoinActivity : AppCompatActivity() {
         etAnio = findViewById(R.id.etAnio)
         etValorAdquirido = findViewById(R.id.etValorAdquirido)
         etEstado = findViewById(R.id.etEstado)
-        etFamilia = findViewById(R.id.etFamilia)
-        etIdFamilia = findViewById(R.id.etIdFamilia)
+        //etFamilia = findViewById(R.id.etFamilia)
+        //etIdFamilia = findViewById(R.id.etIdFamilia)
         etVariante = findViewById(R.id.etVariante)
         etCeca = findViewById(R.id.etCeca)
         etTipo = findViewById(R.id.etTipo)
         etDisenador = findViewById(R.id.etDisenador)
         etTotalProducido = findViewById(R.id.etTotalProducido)
-        etValorSinCircular = findViewById(R.id.etValorSinCircular)
+        //etValorSinCircular = findViewById(R.id.etValorSinCircular)
         etValorComercial = findViewById(R.id.etValorComercial)
         etObservaciones = findViewById(R.id.etObservaciones)
-        etOrden = findViewById(R.id.etOrden)
-        etAcunada = findViewById(R.id.etAcunada)
+        //etOrden = findViewById(R.id.etOrden)
+        //etAcunada = findViewById(R.id.etAcunada)
 
         ivFoto = findViewById(R.id.ivFoto)
         ivFoto2 = findViewById(R.id.ivFoto2)
@@ -246,24 +258,61 @@ class AddCoinActivity : AppCompatActivity() {
         val nombre = etNombre.text.toString().trim()
         val descripcion = etDescripcion.text.toString().trim()
         val idPais = obtenerIdPaisSeleccionado()
-        val anio = etAnio.text.toString().trim().toIntOrNull()
-        val familia = etFamilia.text.toString().trim()
-        val idFamilia = etIdFamilia.text.toString().trim().toIntOrNull()
+        val anio = etAnio.text.toString().trim()
+        //val familia = etFamilia.text.toString().trim()
+        //val idFamilia = etIdFamilia.text.toString().trim().toIntOrNull()
         val variante = etVariante.text.toString().trim()
         val ceca = etCeca.text.toString().trim()
         val tipo = etTipo.text.toString().trim()
         val disenador = etDisenador.text.toString().trim()
         val totalProducido = etTotalProducido.text.toString().trim()
-        val valorSinCircular = etValorSinCircular.text.toString().trim()
+        //val valorSinCircular = etValorSinCircular.text.toString().trim()
         val valorComercial = etValorComercial.text.toString().trim()
         val valorAdquirido = etValorAdquirido.text.toString().trim()
         val estado = etEstado.text.toString().trim()
         val observaciones = etObservaciones.text.toString().trim()
-        val orden = etOrden.text.toString().trim().toIntOrNull()
-        val acunada = etAcunada.text.toString().trim()
+        //val orden = etOrden.text.toString().trim().toIntOrNull()
+        //val acunada = etAcunada.text.toString().trim()
 
-        if (nombre.isEmpty() || idPais == null || anio == null) {
-            Toast.makeText(this, "Por favor complete los campos obligatorios", Toast.LENGTH_SHORT).show()
+        // Validar campos obligatorios
+        val errores = mutableListOf<String>()
+
+        if (nombre.isEmpty()) errores.add("El nombre es obligatorio")
+        if (descripcion.isEmpty()) errores.add("La descripción es obligatoria")
+        if (idPais == null) errores.add("Debe seleccionar un país")
+        if (anio.isEmpty()) errores.add("El año es obligatorio")
+        if (variante.isEmpty()) errores.add("La variante es obligatoria")
+        if (ceca.isEmpty()) errores.add("La ceca es obligatoria")
+        if (tipo.isEmpty()) errores.add("El tipo es obligatorio")
+        if (disenador.isEmpty()) errores.add("El grabador es obligatorio")
+        if (totalProducido.isEmpty()) errores.add("El total producido es obligatorio")
+        if (valorComercial.isEmpty()) errores.add("El valor comercial es obligatorio")
+        if (valorAdquirido.isEmpty()) errores.add("El valor adquirido es obligatorio")
+        if (estado.isEmpty()) errores.add("El estado es obligatorio")
+        if (observaciones.isEmpty()) errores.add("Las observaciones son obligatorias")
+
+        // Validar formatos numéricos
+        val anioInt = anio.toIntOrNull()
+        if (anioInt == null) errores.add("El año debe ser un número válido")
+
+        val totalProducidoInt = totalProducido.toIntOrNull()
+        if (totalProducidoInt == null) errores.add("El total producido debe ser un número válido")
+
+        val valorComercialInt = valorComercial.toIntOrNull()
+        if (valorComercialInt == null) errores.add("El valor comercial debe ser un número válido")
+
+        val valorAdquiridoInt = valorAdquirido.toIntOrNull()
+        if (valorAdquiridoInt == null) errores.add("El valor adquirido debe ser un número válido")
+
+        // Mostrar errores si existen
+        if (errores.isNotEmpty()) {
+            val mensajeError = buildString {
+                append("Por favor corrija los siguientes errores:\n")
+                errores.forEachIndexed { index, error ->
+                    append("${index + 1}. $error\n")
+                }
+            }
+            Toast.makeText(this, mensajeError, Toast.LENGTH_LONG).show()
             return
         }
 
@@ -274,25 +323,25 @@ class AddCoinActivity : AppCompatActivity() {
         val monedaRequest = MonedaRequest(
             nombre = nombre,
             descripcion = if (descripcion.isEmpty()) null else descripcion,
-            idPais = idPais,
-            anio = anio,
+            idPais = idPais!!,
+            anio = anioInt!!,
             idTipoObjeto = 1, // Siempre 1 para monedas
             idUsuario = idUsuario,
             idColeccion = idColeccion,
-            familia = if (familia.isEmpty()) null else familia,
-            idFamilia = idFamilia,
+            familia = "NA",
+            idFamilia = 0,
             variante = if (variante.isEmpty()) null else variante,
             ceca = if (ceca.isEmpty()) null else ceca,
             tipo = if (tipo.isEmpty()) null else tipo,
             disenador = if (disenador.isEmpty()) null else disenador,
-            totalProducido = if (totalProducido.isEmpty()) null else totalProducido,
-            valorSinCircular = if (valorSinCircular.isEmpty()) null else valorSinCircular,
-            valorComercial = if (valorComercial.isEmpty()) null else valorComercial,
-            valorAdquirido = if (valorAdquirido.isEmpty()) null else valorAdquirido,
+            totalProducido = totalProducidoInt!!,
+            valorSinCircular = 0,
+            valorComercial = valorComercialInt!!,
+            valorAdquirido = valorAdquiridoInt!!,
             estado = if (estado.isEmpty()) null else estado,
             observaciones = if (observaciones.isEmpty()) null else observaciones,
-            orden = orden,
-            acunada = if (acunada.isEmpty()) null else acunada
+            orden = 0,
+            acunada = "NA"
         )
 
         // Enviar datos al servidor en un hilo separado
@@ -485,4 +534,11 @@ class AddCoinActivity : AppCompatActivity() {
         }
     }
 
+    fun String.toIntOrNull(): Int? {
+        return try {
+            this.toInt()
+        } catch (e: NumberFormatException) {
+            null
+        }
+    }
 }

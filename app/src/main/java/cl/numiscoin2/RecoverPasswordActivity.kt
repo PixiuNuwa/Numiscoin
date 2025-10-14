@@ -1,22 +1,34 @@
 package cl.numiscoin2
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkUserUtils
 
 class RecoverPasswordActivity : AppCompatActivity() {
 
     private lateinit var emailEditText: EditText
     private lateinit var sendButton: Button
-    private lateinit var progressBar: ProgressBar
+    //private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+
         setContentView(R.layout.activity_recover_password)
 
         initializeViews()
@@ -26,7 +38,7 @@ class RecoverPasswordActivity : AppCompatActivity() {
     private fun initializeViews() {
         emailEditText = findViewById(R.id.emailEditText)
         sendButton = findViewById(R.id.sendButton)
-        progressBar = findViewById(R.id.progressBar)
+        //progressBar = findViewById(R.id.progressBar)
     }
 
     private fun setupListeners() {
@@ -65,7 +77,7 @@ class RecoverPasswordActivity : AppCompatActivity() {
     }
 
     private fun showLoading(show: Boolean) {
-        progressBar.visibility = if (show) View.VISIBLE else View.GONE
+        //progressBar.visibility = if (show) View.VISIBLE else View.GONE
         sendButton.isEnabled = !show
         emailEditText.isEnabled = !show
     }

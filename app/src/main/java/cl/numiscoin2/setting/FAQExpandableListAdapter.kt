@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.R
 
 class FAQExpandableListAdapter(
@@ -44,6 +45,15 @@ class FAQExpandableListAdapter(
         val faq = getGroup(groupPosition) as FAQActivity.FAQ
         questionTextView.text = faq.question
         expandIcon.text = if (isExpanded) "−" else "+"
+
+        // Cambiar estilo cuando está expandido
+        if (isExpanded) {
+            questionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_light))
+            questionTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.background_dark))
+        } else {
+            questionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_light))
+            questionTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.background_dark))
+        }
 
         return view
     }

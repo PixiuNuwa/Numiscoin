@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="97dp"
+    android:height="93dp"
+    android:viewportWidth="97"
+    android:viewportHeight="93">
+
+    <!-- Fondo - Rectángulo sin unidades dp -->
+    <path
+        android:pathData="M0,0h97v93h-97z"
+        android:fillColor="@color/accent_green"/>
+
+    <!-- Texto "NC" simulado con paths -->
+    <!-- Letra N -->
+    <path
+        android:pathData="M25,30v33l15,-20v20"
+        android:strokeColor="@color/text_primary"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"/>
+
+    <!-- Letra C -->
+    <path
+        android:pathData="M60,30a18,18 0 0,1 0,33"
+        android:strokeColor="@color/text_primary"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
+
+</vector>

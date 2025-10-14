@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_dark"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     android:fitsSystemWindows="true">
 
     <!-- Contenido principal -->
@@ -12,42 +15,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_above="@+id/bottomMenu"
-        android:layout_alignParentTop="true">
+        android:layout_above="@+id/bottomMenuContainer"
+        android:layout_alignParentTop="true"
+        android:padding="16dp">
 
-        <!-- Header - Solo visible cuando hay colecciones -->
+        <!-- Header - Siempre visible -->
         <LinearLayout
-            android:id="@+id/headerWithCollections"
+            android:id="@+id/headerWithCollection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:text="Mis Colecciones"
-                android:textColor="@android:color/white"
+                android:textColor="#FFF3D6"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
 
-            <!-- Barra de búsqueda -->
-            <EditText
+            <!-- Barra de búsqueda - Siempre visible -->
+            <!--EditText
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:hint="Buscar por nombre de colección..."
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/darker_gray"
-                android:background="@drawable/edit_text_background"
-                android:padding="12dp" />
+                android:textColor="#0B0B0B"
+                android:textColorHint="#FFF3D6"
+                android:background="@drawable/btn_white_square"
+                android:padding="12dp" /-->
 
             <!-- Sección de Mis Colecciones -->
-            <LinearLayout
+            <!--LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -58,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Mis Colecciones"
-                    android:textColor="@android:color/white"
+                    android:textColor="#FFF3D6"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -70,9 +73,169 @@
                     android:background="#FF0000FF"
                     android:textColor="@android:color/white" />
 
-            </LinearLayout>
+            </LinearLayout-->
 
         </LinearLayout>
+        <!--LinearLayout
+            android:id="@+id/headerWithCollections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Buscar por nombre de colección..."
+                android:textColor="#0B0B0B"
+                android:textColorHint="#FFF3D6"
+                android:background="@drawable/btn_white_square"
+                android:padding="12dp" />
+
+        </LinearLayout-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/headerWithCollections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <!-- Contenedor principal que envuelve ambos LinearLayout -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Primer LinearLayout con el EditText -->
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:padding="16dp">
+
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Buscar por nombre de colección..."
+                        android:textColor="@color/text_dark"
+                        android:textSize="@dimen/text_size_small"
+                        android:textColorHint="#64748B"
+                        android:background="@drawable/btn_white_square"
+                        android:padding="12dp" />
+
+                </LinearLayout>
+
+                <!-- Segundo LinearLayout con las estadísticas -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Columna 1: Total Colección -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/totalColeccionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Colección"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/totalColeccionValor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$1.187.40"
+                            android:textColor="#1E293B"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- Columna 2: Items (círculo verde) -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <!-- Círculo verde con número -->
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/btn_green_circle"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/totalItemsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="500"
+                                android:textColor="@color/text_white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Items"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small" />
+
+                    </LinearLayout>
+
+                    <!-- Columna 3: Total Gastado -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/totalGastadoLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Gastado"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/totalGastadoValor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-$1.187.40"
+                            android:textColor="#DC2626"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Progress Bar -->
         <ProgressBar
@@ -80,19 +243,67 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
 
-        <!-- Contenedor para las colecciones - Solo visible cuando hay colecciones -->
+        <!-- ScrollView solo para las colecciones -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+            <!-- Contenedor para las colecciones -->
+            <LinearLayout
+                android:id="@+id/collectionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+        </ScrollView>
+
         <LinearLayout
-            android:id="@+id/collectionsContainer"
+            android:id="@+id/emptyStateContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone" />
+            android:gravity="center"
+            android:padding="40dp"
+            android:visibility="visible">
 
-        <!-- Estado vacío - Solo visible cuando NO hay colecciones -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No tienes colecciones creadas"
+                android:textColor="#FFF3D6"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Comienza creando tu primera colección para organizar tus objetos"
+                android:textColor="#FFF3D6"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
+
+            <!--Button
+                android:id="@+id/btnAddCollectionEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crear Primera Colección"
+                android:background="#FF0000FF"
+                android:textColor="@android:color/white" /-->
+
+        </LinearLayout>
+
+        <!-- Estado de búsqueda sin resultados - Solo visible cuando hay búsqueda sin resultados -->
         <LinearLayout
-            android:id="@+id/emptyStateContainer"
+            android:id="@+id/searchEmptyStateContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -104,8 +315,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="No tienes colecciones creadas"
-                android:textColor="@android:color/white"
+                android:text="No se encontraron colecciones"
+                android:textColor="#FFF3D6"
                 android:textSize="18sp"
                 android:layout_marginBottom="16dp" />
 
@@ -113,24 +324,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Comienza creando tu primera colección para organizar tus objetos"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                android:layout_marginBottom="24dp" />
-
-            <Button
-                android:id="@+id/btnAddCollectionEmpty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Crear Primera Colección"
-                android:background="#FF0000FF"
-                android:textColor="@android:color/white" />
+                android:text="Intenta con otros términos de búsqueda"
+                android:textColor="#FFF3D6"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Menú inferior (sin cambios) -->
-    <include layout="@layout/bottom_menu" />
+    <!-- Botón flotante CENTRADO justo antes del menú -->
+    <TextView
+        android:id="@+id/fabAddCollection"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_above="@+id/bottomMenuContainer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/fab_background"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="8dp" />
+
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#00272C"
+        android:paddingVertical="8dp">
+
+        <!-- INCLUIR EL LAYOUT ORIGINAL DEL MENÚ INFERIOR -->
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 
 </RelativeLayout>

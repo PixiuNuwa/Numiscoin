@@ -2,10 +2,14 @@ package cl.numiscoin2.setting
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.BaseActivity
 import cl.numiscoin2.MembershipActivity
 import cl.numiscoin2.network.NetworkConfig
@@ -21,6 +25,16 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_settings)
 
         setupUI()
@@ -54,16 +68,22 @@ class SettingsActivity : BaseActivity() {
         // Configurar botones
         setupButton(R.id.profileButton, ProfileActivity::class.java)
         setupButton(R.id.homeButton, WelcomeActivity::class.java)
-        setupButton(R.id.languageButton, LanguageActivity::class.java)
+        //setupButton(R.id.languageButton, LanguageActivity::class.java)
         setupButton(R.id.faqButton, FAQActivity::class.java)
         setupButton(R.id.contactButton, ContactActivity::class.java)
         setupButton(R.id.termsButton, TermsActivity::class.java)
         setupButton(R.id.membershipButton, MembershipActivity::class.java)
-        setupButton(R.id.backupButton, BackupActivity::class.java)
+        //setupButton(R.id.backupButton, BackupActivity::class.java)
     }
 
+    /*private fun setupButton(buttonId: Int, activityClass: Class<*>) {
+        findViewById<TextView>(buttonId).setOnClickListener {
+            val intent = Intent(this, activityClass)
+            startActivity(intent)
+        }
+    }*/
     private fun setupButton(buttonId: Int, activityClass: Class<*>) {
-        findViewById<Button>(buttonId).setOnClickListener {
+        findViewById<View>(buttonId).setOnClickListener {
             val intent = Intent(this, activityClass)
             startActivity(intent)
         }

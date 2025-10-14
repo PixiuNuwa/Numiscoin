@@ -1,202 +1,368 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/background_dark"
     android:fitsSystemWindows="true">
-
-    <!-- Contenido principal con ScrollView -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_dark"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <ScrollView
+        android:id="@+id/rsgs072g6cup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomMenu"
-        android:padding="16dp">
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#00272C">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <!-- Título -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ajustes"
-                android:textColor="#FFFFFF"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Información del usuario -->
             <LinearLayout
+                android:id="@+id/r0esxp7d3u958"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:layout_marginBottom="81dp"
+                android:layout_marginStart="112dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/rwbwgdrde3ec"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="19dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    android:id="@+id/r2h5jvm4bn1"
+                    android:textColor="@color/text_light"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="AJUSTES"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rd4jg65lkxj8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginBottom="32dp">
-
-                <!-- Foto del usuario -->
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="11dp"
+                android:orientation="vertical">
                 <ImageView
                     android:id="@+id/userPhoto"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/circle_white_background"
-                    android:scaleType="centerCrop"
-                    android:contentDescription="Foto de perfil"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- Nombre del usuario -->
+                    android:layout_width="106dp"
+                    android:layout_height="106dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ryev13f1jne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="105dp"
+                android:orientation="vertical">
+                <!--TextView
+                    android:id="@+id/rf868jtmnyep"
+                    android:textColor="#FFF3D6"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="92.765625dp"
+                    android:gravity="center"
+                    android:text="Guido Rojas"
+                    /-->
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textColor="@color/text_light"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:text="Guido Rojas"/>
 
-                <!-- Email del usuario -->
+
                 <TextView
                     android:id="@+id/userEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#CCCCCC"
-                    android:textSize="16sp" />
-
+                    android:textColor="@color/text_light"
+                    android:textSize="16sp"
+                    android:text="Guido Rojas"/>
             </LinearLayout>
-
-            <!-- Lista de botones de ajustes -->
             <LinearLayout
+                android:id="@+id/rhwjxkckjiwv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#1A1A1A"
-                android:padding="8dp"
-                android:clipToPadding="false">
-
-                <Button
-                    android:id="@+id/profileButton"
+                android:paddingTop="16dp"
+                android:layout_marginBottom="213dp"
+                android:layout_marginHorizontal="46dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/rvi50zs9ptd"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Perfil"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/homeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Inicio"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/faqButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Preguntas Frecuentes"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
-
-                <View
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rixlw59jex3h"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/profileButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Perfil"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/r4un4vi3p5yk"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/rsm6n6vfau6f"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/contactButton"
+                    android:layout_marginBottom="17dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <LinearLayout
+                    android:id="@+id/r0rktp39fb8tq"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Contacto"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rvoygt1n1bl"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/homeButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Inicio"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/roz187nz6b1"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/termsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Términos del Servicio"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/membershipButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Membresía"
-                    android:textColor="#FFFFFF"
-                    android:background="@android:color/transparent"
-                    android:textAllCaps="false"
-                    style="@style/SettingButtonStyle" />
-
-                <View
+                <ImageView
+                    android:id="@+id/rcix6jztklch"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/languageButton"
-                    style="@style/SettingButtonStyle"
+                    android:layout_marginBottom="17dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <LinearLayout
+                    android:id="@+id/r5cx2xm0fwsl"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@android:color/transparent"
-                    android:text="Idioma"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:visibility="gone" />
-
-                <View
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rnr1wto1cmkf"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/faqButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Preguntas Frecuentes"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/rsj2edr2cgcl"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/rf7p6bvrhx2w"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#333333" />
-
-                <Button
-                    android:id="@+id/backupButton"
-                    style="@style/SettingButtonStyle"
+                    android:layout_marginBottom="17dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <LinearLayout
+                    android:id="@+id/rfkgcdyyjzxi"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@android:color/transparent"
-                    android:text="Descargar copia de seguridad"
-                    android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
-                    android:visibility="gone" />
-
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rouk7qts8ai"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/contactButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Contacto"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/rgvwvqaay7fo"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/rokk9511449g"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="17dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <LinearLayout
+                    android:id="@+id/rvdwxu3wx3i"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rtkw7wy5gqvs"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/termsButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Términos del servicio"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/rzmp72r5mlt"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/rqfnb1s1guhg"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="17dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
+                <LinearLayout
+                    android:id="@+id/r32r1r4h6bul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/rikz8hxrr6j"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/membershipButton"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="Membresía"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/rrf6f5r7jps"
+                        android:layout_width="12dp"
+                        android:layout_height="11dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:scaleType="fitXY"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/r76r9wzyavey"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    />
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
-    <!-- Menú inferior (copiar el mismo de activity_welcome.xml) -->
-    <include layout="@layout/bottom_menu" />
+</LinearLayout>
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
 
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 </RelativeLayout>

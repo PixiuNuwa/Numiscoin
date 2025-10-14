@@ -2,21 +2,24 @@ package cl.numiscoin2
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkConfig
 import cl.numiscoin2.network.NetworkEventUtils
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EventoDetailActivity : AppCompatActivity() {
+class EventoDetailActivity : BaseActivity() {
 
     private val TAG = "EventoDetailActivity"
     private lateinit var backButton: ImageButton
@@ -25,10 +28,19 @@ class EventoDetailActivity : AppCompatActivity() {
     private lateinit var eventoFecha: TextView
     private lateinit var eventoDescripcion: TextView
     private lateinit var eventoBreveDescripcion: TextView
-    private lateinit var closeButton: Button
+    //private lateinit var closeButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_evento_detail)
 
         Log.d(TAG, "onCreate: EventoDetailActivity creada")
@@ -45,6 +57,9 @@ class EventoDetailActivity : AppCompatActivity() {
         initViews()
         setupClickListeners()
         cargarDetalleEvento(eventoId)
+
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuMarketplace)
     }
 
     private fun initViews() {
@@ -54,7 +69,7 @@ class EventoDetailActivity : AppCompatActivity() {
         eventoFecha = findViewById(R.id.eventoFecha)
         eventoDescripcion = findViewById(R.id.eventoDescripcion)
         eventoBreveDescripcion = findViewById(R.id.eventoBreveDescripcion)
-        closeButton = findViewById(R.id.closeButton)
+        //closeButton = findViewById(R.id.closeButton)
     }
 
     private fun setupClickListeners() {
@@ -63,10 +78,10 @@ class EventoDetailActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        closeButton.setOnClickListener {
+        /*closeButton.setOnClickListener {
             Log.d(TAG, "closeButton: Clic detectado, finalizando actividad")
             finish()
-        }
+        }*/
     }
 
     private fun cargarDetalleEvento(eventoId: Int) {

@@ -3,8 +3,10 @@ package cl.numiscoin2
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -23,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class CoinDetailActivity : AppCompatActivity() {
+class CoinDetailActivity : BaseActivity() {
 
     private lateinit var objeto: ObjetoColeccion
     private lateinit var deleteButton: Button
@@ -40,6 +42,15 @@ class CoinDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_coin_detail)
 
         // Obtener el objeto de la moneda
@@ -175,7 +186,7 @@ class CoinDetailActivity : AppCompatActivity() {
                 gravity = android.view.Gravity.CENTER
                 setBackgroundColor(
                     if (index == fotoSeleccionadaIndex) {
-                        ContextCompat.getColor(this@CoinDetailActivity, R.color.colorPrimary)
+                        ContextCompat.getColor(this@CoinDetailActivity, R.color.text_light)
                     } else {
                         ContextCompat.getColor(this@CoinDetailActivity, R.color.menu_unselected)
                     }
@@ -218,7 +229,7 @@ class CoinDetailActivity : AppCompatActivity() {
             val miniatura = llMiniaturas.getChildAt(i) as LinearLayout
             miniatura.setBackgroundColor(
                 if (i == selectedIndex) {
-                    ContextCompat.getColor(this, R.color.colorPrimary)
+                    ContextCompat.getColor(this, R.color.text_light)
                 } else {
                     ContextCompat.getColor(this, R.color.menu_unselected)
                 }

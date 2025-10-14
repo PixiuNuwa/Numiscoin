@@ -6,16 +6,6 @@
     android:padding="32dp"
     android:gravity="center">
 
-    <!-- Botón Saltar individual para cada pantalla -->
-    <!--Button
-        android:id="@+id/btnSkipIndividual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:background="@android:color/transparent"
-        android:text="Saltar"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" /-->
 
     <!-- Imagen -->
     <ImageView

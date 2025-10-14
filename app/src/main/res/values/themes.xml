@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Tema base de la aplicación -->
-    <style name="Theme.Numiscoin2" parent="Theme.Material3.DayNight">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+    <style name="Base.Theme.Numiscoin2" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#01b76a</item>
+        <item name="colorPrimaryVariant">#019456</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <item name="colorSecondary">#FFA000</item>
+        <item name="colorSecondaryVariant">#FF6F00</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <!-- CONFIGURACIÓN CRÍTICA PARA BARRA DE NAVEGACIÓN -->
+        <item name="android:navigationBarColor">#FF1A1A1A</item>
+        <item name="android:statusBarColor">#FF1A1A1A</item>
+
+        <!-- Forzar que el contenido NO se dibuje detrás de las barras -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">never</item>
+
+        <!-- Prevenir translucidez -->
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+
+        <!-- Color de íconos de navegación -->
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Forzar contraste -->
+        <item name="android:enforceNavigationBarContrast">true</item>
+        <item name="android:enforceStatusBarContrast">true</item>
     </style>
 
-    <!-- Tema sin ActionBar -->
-    <style name="Theme.Numiscoin2.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
+    <style name="Theme.Numiscoin2" parent="Base.Theme.Numiscoin2" />
 </resources>

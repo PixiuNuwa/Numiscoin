@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="280dp"
+    android:height="100dp"
+    android:viewportWidth="280"
+    android:viewportHeight="100">
+
+    <!-- Texto Principal: NUMISCOIN -->
+    <!-- Letra N -->
+    <path
+        android:pathData="M20,30 L20,70 L30,50 L30,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"/>
+    <!-- Letra U -->
+    <path
+        android:pathData="M40,30 L40,60 Q40,70 50,70 L60,70 Q70,70 70,60 L70,30"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"/>
+    <!-- Letra M -->
+    <path
+        android:pathData="M80,30 L80,70 L95,50 L110,70 L110,30"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"/>
+    <!-- Letra I -->
+    <path
+        android:pathData="M120,30 L120,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"/>
+    <!-- Letra S -->
+    <path
+        android:pathData="M130,30 Q140,30 140,40 L140,50 Q140,60 150,60 L160,60 Q170,60 170,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"/>
+    <!-- Letra C -->
+    <path
+        android:pathData="M180,30 Q170,30 170,50 L170,50 Q170,70 180,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"/>
+    <!-- Letra O -->
+    <path
+        android:pathData="M190,50 Q190,30 210,30 L220,30 Q240,30 240,50 L240,50 Q240,70 220,70 L210,70 Q190,70 190,50"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"/>
+    <!-- Letra I -->
+    <path
+        android:pathData="M250,30 L250,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"/>
+    <!-- Letra N -->
+    <path
+        android:pathData="M260,30 L260,70 L270,50 L270,70"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"/>
+
+    <!-- Línea divisoria sólida (en lugar de punteada) -->
+    <path
+        android:pathData="M20,75 L260,75"
+        android:strokeColor="#2C3E50"
+        android:strokeWidth="1"/>
+
+    <!-- Texto Secundario: NUMISMATICAL & ANTIQUITIES -->
+    <!-- NUMISMATICAL - Simulado con líneas -->
+    <path
+        android:pathData="M25,80 L35,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M40,80 L40,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M50,80 L60,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M65,80 L65,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M75,80 L85,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+
+    <!-- & Symbol simplificado -->
+    <path
+        android:pathData="M95,85 L100,80 L105,85 L100,90 L105,95 L100,100"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"/>
+
+    <!-- ANTIQUITIES - Simulado con líneas -->
+    <path
+        android:pathData="M110,80 L120,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M125,80 L125,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M135,80 L145,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M150,80 L150,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M160,80 L170,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M175,80 L175,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M185,80 L195,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M200,80 L200,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M210,80 L220,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M225,80 L225,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M235,80 L245,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+    <path
+        android:pathData="M250,80 L250,95"
+        android:strokeColor="#7F8C8D"
+        android:strokeWidth="1.5"/>
+
+</vector>

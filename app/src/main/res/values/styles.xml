@@ -5,12 +5,21 @@
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <!--item name="dialogCornerRadius">16dp</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
+    </style>
+
+    <style name="ShapeAppearance.NumisCoin.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
     <!-- Tema sin ActionBar -->
     <style name="Theme.Numiscoin3.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--item name="dialogCornerRadius">16dp</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
     </style>
 
     <style name="Theme.MyApp" parent="Theme.Material3.DayNight">
@@ -21,6 +30,8 @@
         <!-- Importante para evitar problemas -->
         <item name="android:enforceNavigationBarContrast">false</item>
         <item name="android:enforceStatusBarContrast">false</item>
+        <!--item name="dialogCornerRadius">16dp</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
     </style>
 
     <!-- Base application theme -->
@@ -29,6 +40,8 @@
         <item name="colorPrimaryVariant">@color/button_green</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:windowBackground">@color/background_dark</item>
+        <!--item name="dialogCornerRadius">16dp</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
     </style>
 
     <!-- Style for membership cards -->
@@ -53,14 +66,40 @@
         <item name="android:minHeight">0dp</item>
     </style>
 
-    <!-- Style for primary button nuevo -->
-    <!--style name="PrimaryButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/button_primary</item>
-        <item name="cornerRadius">@dimen/corner_radius</item>
-        <item name="android:textColor">@color/text_secondary</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:elevation">6dp</item>
-        <item name="android:translationZ">2dp</item>
-    </style-->
+    <style name="Theme.Numiscoin.Register" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/button_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="editTextStyle">@style/MyEditTextStyle</item>
+    </style>
+
+    <style name="MyEditTextStyle" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+    </style>
+
+    <style name="RoundedEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext_rounded_forced</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="cr20">
+        <item name="cornerSize">20dp</item>
+    </style>
+    <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">8sp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+    <style name="TextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">8sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>

@@ -1,91 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_dark"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/black">
-
-    <!-- Header -->
-    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/rvusqje5m3va"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:text="Crear Nueva Colección"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background_dark"
+        android:elevation="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/r5djndv9zyrt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="114dp"
+                android:layout_marginHorizontal="41dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/r17p1up5ldgv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="155dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/r4otzkfludi5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/rof5h0jb32cj"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="19dp"
+                            android:src="@mipmap/ic_launcher"
+                            android:scaleType="fitXY"
+                            />
+                        <TextView
+                            android:id="@+id/btnCancelar"
+                            android:textColor="@color/text_light"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="CREAR COLECCIÓN"
+                            />
 
-    <!-- Campo Nombre -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nombre de la colección *"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/rhjturjrrk3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_green_square"
+                    android:paddingVertical="32dp"
+                    android:layout_marginBottom="155dp"
+                    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="Ingresa el nombre"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edit_text_background"
-        android:padding="12dp" />
+                    <TextView
+                        android:id="@+id/r3e6py2iq9l9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="17dp"
+                        android:gravity="center"
+                        android:text="Crear Colección"
+                        android:textColor="@color/text_light"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/r90bnav5k8y"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="18dp"
+                        android:layout_marginHorizontal="27dp"
+                        android:orientation="vertical">
+                        <EditText
+                            android:inputType="text"
+                            android:hint="Nombre "
+                            android:id="@+id/etNombre"
+                            android:textColor="@color/text_gray"
+                            android:textSize="13sp"
+                            android:layout_marginBottom="14dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingVertical="11dp"
+                            android:paddingLeft="21dp"
+                            android:paddingRight="42dp"
+                            />
 
-    <!-- Campo Descripción -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Descripción"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp" />
+                        <LinearLayout
+                            android:id="@+id/rcirlbkg737"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btn_white_square"
+                            android:paddingTop="22dp"
+                            android:paddingBottom="114dp"
+                            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etDescripcion"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="24dp"
-        android:hint="Describe tu colección (opcional)"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/darker_gray"
-        android:background="@drawable/edit_text_background"
-        android:padding="12dp"
-        android:gravity="top"
-        android:inputType="textMultiLine" />
-
-    <!-- Botones -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="Cancelar"
-            android:background="@android:color/darker_gray"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btnCrear"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Crear Colección"
-            android:background="#FF0000FF"
-            android:textColor="@android:color/white" />
-
-    </LinearLayout>
-
+                            <EditText
+                                android:id="@+id/etDescripcion"
+                                android:layout_width="170dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_marginEnd="220dp"
+                                android:text="Descripción"
+                                android:textColor="@color/text_gray"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/rtu047drftt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/r5bjzk5knyl4"
+                            android:textColor="@color/text_light"
+                            android:textSize="9sp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="188.419921875dp"
+                            android:gravity="center"
+                            android:text="Una vez creada tu colección la podrás ver en el \nlistado de colecciones."
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/rvve1v14gvne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_green_square"
+                    android:paddingVertical="19dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginHorizontal="21dp"
+                    android:elevation="6dp"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/btnCrear"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Crear Colección"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/text_light" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

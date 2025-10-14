@@ -1,132 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/background_dark"
     android:fitsSystemWindows="true">
 
-    <!-- PRIMERO: ScrollView (fondo) -->
-    <ScrollView
+    <!-- Header Superior -->
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomMenu"
-        android:layout_alignParentTop="true"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#1E3A8A"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="16dp"
+        android:layout_alignParentTop="true">
 
+        <!-- Información del usuario a la izquierda -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <!-- Mensaje de bienvenida -->
             <TextView
                 android:id="@+id/welcomeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¡Bienvenido!"
                 android:textColor="#FFFFFF"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/welcomeMessage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Sección de Calendario -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Calendario de Eventos - Mes Actual"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <!-- GridView para el calendario -->
-            <GridView
-                android:id="@+id/calendarGridView"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:numColumns="7"
-                android:verticalSpacing="1dp"
-                android:horizontalSpacing="1dp"
-                android:background="#FFFFFF"
-                android:layout_marginBottom="32dp" />
-
-            <!-- Sección de Galería de Eventos -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Próximos Eventos"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <!-- GridView para posters de eventos -->
-            <GridView
-                android:id="@+id/eventosGridView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="2"
-                android:verticalSpacing="12dp"
-                android:horizontalSpacing="12dp"
-                android:gravity="center" />
-
-            <!-- Botón de cerrar sesión -->
-            <Button
-                android:id="@+id/logoutButton"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Cerrar Sesión"
-                android:textColor="#FFFFFF"
-                android:background="#0000FF"
-                android:layout_marginTop="32dp" />
+                android:textColor="#E2E8F0"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
 
         </LinearLayout>
-    </ScrollView>
 
-    <!-- SEGUNDO: Botones flotantes (encima del ScrollView) -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        <!-- Botones a la derecha -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <!-- Botón de ajustes -->
-        <ImageButton
-            android:id="@+id/settingsButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_white_background"
-            android:src="@drawable/ic_settings"
-            android:scaleType="centerInside"
-            android:contentDescription="Ajustes"
-            android:elevation="8dp" />
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/circle_white_20"
+                android:src="@drawable/ic_settings_white"
+                android:scaleType="centerInside"
+                android:contentDescription="Ajustes"
+                android:elevation="4dp" />
 
-        <!-- Botón de perfil existente -->
-        <ImageButton
-            android:id="@+id/profileButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/circle_white_background"
-            android:scaleType="centerCrop"
-            android:contentDescription="Perfil de usuario"
-            android:elevation="8dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- TERCERO: Bottom menu -->
-    <include layout="@layout/bottom_menu" />
+    <!-- Contenido Principal -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_above="@+id/bottomMenuContainer"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Tarjeta de Estadísticas de Colección -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Columna 1: Total Colección -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/totalColeccionLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Colección"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/totalColeccionValor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$1.187.40"
+                            android:textColor="#1E293B"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- Columna 2: Items (círculo verde) -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <!-- Círculo verde con número -->
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/btn_green_circle"
+                            android:gravity="center"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/totalItemsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="500"
+                                android:textColor="@color/text_white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Items"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small" />
+
+                    </LinearLayout>
+
+                    <!-- Columna 3: Total Gastado -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="end">
+
+                        <TextView
+                            android:id="@+id/totalGastadoLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Gastado"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_small"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/totalGastadoValor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-$1.187.40"
+                            android:textColor="#DC2626"
+                            android:textSize="@dimen/text_size_small"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+            <!-- Sección de Próximos Eventos con fondo verde claro y esquinas redondeadas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/btn_green_square"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Próximos Eventos"
+                    android:textColor="#1E293B"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- RecyclerView horizontal para eventos -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/eventosRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false" />
+
+                <!-- Separador -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E2E8F0"
+                    android:layout_marginVertical="16dp" />
+
+                <!-- Sección de Objetos Recientes -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Objetos Recientes"
+                    android:textColor="#1E293B"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- RecyclerView de objetos recientes (ya lo tienes) -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/objetosRecientesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false" />
+
+            </LinearLayout>
+
+            <!-- Botón de Cerrar Sesión -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <Button
+                    android:id="@+id/logoutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Cerrar Sesión"
+                    android:textColor="#DC2626"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:stateListAnimator="@null" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- Bottom Navigation Menu -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
 
 </RelativeLayout>
