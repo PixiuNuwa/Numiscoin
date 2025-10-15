@@ -1,46 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:padding="24dp"
-android:background="@android:color/black">
-
-<TextView
-    android:id="@+id/helpTitle"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:textColor="@android:color/white"
-    android:gravity="center"
-    android:layout_marginBottom="24dp" />
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:fitsSystemWindows="true">
 
-<TextView
-    android:id="@+id/helpDescription"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="18sp"
-    android:textColor="@android:color/white"
-    android:gravity="center"
-    android:layout_marginBottom="32dp" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_above="@+id/bottomMenuContainer"
+    android:background="@color/background_dark">
+        <!-- Título -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_vertical">
 
-<TextView
-    android:id="@+id/manualsList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:textColor="@android:color/white"
-    android:lineSpacingMultiplier="1.2" />
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"
+                app:tint="@color/text_light" />
 
-<Button
-    android:id="@+id/backButtonHelp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Volver"
-    android:layout_gravity="center"
-    android:layout_marginTop="32dp"
-    android:textColor="@android:color/white"
-    android:backgroundTint="@color/purple_200" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ayuda"
+                android:textColor="@color/text_light"
+                android:textSize="@dimen/text_xxl"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/helpDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/text_light"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:id="@+id/manualsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/text_light"
+        android:lineSpacingMultiplier="1.2" />
+
+
+    </LinearLayout>
+    <!-- Contenedor del menú inferior -->
+    <LinearLayout
+        android:id="@+id/bottomMenuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_dark"
+        android:paddingVertical="8dp">
+
+        <include layout="@layout/bottom_menu" />
+
+    </LinearLayout>
+</RelativeLayout>

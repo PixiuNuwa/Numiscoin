@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.ExpandableListView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import cl.numiscoin2.BaseActivity
@@ -31,6 +32,12 @@ class FAQActivity : BaseActivity() {
 
         initData()
         setupExpandableListView()
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
         setupBottomMenu()
         highlightMenuItem(R.id.menuHome)
     }

@@ -216,6 +216,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="14sp"
                             android:hint="Monto"
                             android:background="@null"
@@ -320,6 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="16sp"
                             android:padding="8dp"
                             android:text="Resultado" />
@@ -375,6 +377,7 @@
                         android:paddingHorizontal="89dp"
                         android:hint="CANTIDAD ORO"
                         android:textColor="@color/text_dark"
+                        android:textColorHint="@color/text_gray"
                         android:textSize="14sp"
                         android:inputType="numberDecimal"
                         android:layout_marginBottom="30dp" />
@@ -424,6 +427,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="kt"
                                 android:textColor="@color/text_dark"
+                                android:textColorHint="@color/text_gray"
                                 android:textSize="16sp"
                                 android:paddingVertical="5dp"
                                 android:gravity="center" />
@@ -480,7 +484,7 @@
                         android:paddingHorizontal="113dp"
                         android:text="CALCULAR"
                         android:textColor="@color/text_light"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_xs"
                         android:textStyle="bold"
                         android:backgroundTint="@android:color/transparent" />
 

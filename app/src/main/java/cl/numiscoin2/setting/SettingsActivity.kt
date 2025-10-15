@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -38,6 +39,12 @@ class SettingsActivity : BaseActivity() {
         setContentView(R.layout.activity_settings)
 
         setupUI()
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
         setupBottomMenu()
         highlightMenuItem(R.id.menuHome) // O el menú que corresponda
     }

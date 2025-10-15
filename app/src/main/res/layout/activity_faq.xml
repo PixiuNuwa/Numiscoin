@@ -6,30 +6,34 @@
     android:background="@color/background_dark"
     android:fitsSystemWindows="true">
 
-    <!-- Header -->
+
+    <!-- Título -->
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center_vertical">
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="11dp"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="fitXY" />
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Volver"
+            app:tint="@color/text_light" />
 
         <TextView
-            android:textColor="@color/text_light"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:id="@+id/title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="PREGUNTAS FRECUENTES" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Preguntas Frecuentes"
+            android:textColor="@color/text_light"
+            android:textSize="@dimen/text_xxl"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- ExpandableListView - OCUPA LA MAYOR PARTE DE LA PANTALLA -->

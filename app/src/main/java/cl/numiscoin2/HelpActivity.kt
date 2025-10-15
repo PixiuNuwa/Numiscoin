@@ -1,20 +1,37 @@
 package cl.numiscoin2
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
-class HelpActivity : AppCompatActivity() {
+class HelpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+        //
         setContentView(R.layout.activity_help)
 
-        val title = findViewById<TextView>(R.id.helpTitle)
-        val description = findViewById<TextView>(R.id.helpDescription)
-        val backButton = findViewById<Button>(R.id.backButtonHelp)
 
-        title.text = "Ayuda"
+        val description = findViewById<TextView>(R.id.helpDescription)
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+
         description.text = "Aquí van a ir todos los manuales de monedas"
 
         // Lista de manuales
@@ -29,8 +46,7 @@ class HelpActivity : AppCompatActivity() {
         val manualsTextView = findViewById<TextView>(R.id.manualsList)
         manualsTextView.text = manualsList.joinToString("\n\n")
 
-        backButton.setOnClickListener {
-            finish()
-        }
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuHome)
     }
 }

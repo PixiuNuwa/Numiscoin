@@ -36,6 +36,11 @@ class EditProfileActivity : AppCompatActivity() {
             return
         }
 
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
         // Inicializar vistas
         val profileAvatar = findViewById<ImageView>(R.id.editProfileAvatar)
         val editName = findViewById<EditText>(R.id.editProfileName)

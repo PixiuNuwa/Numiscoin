@@ -23,32 +23,32 @@
             android:gravity="center"
             android:padding="24dp">
 
-            <!-- Header con título AJUSTES -->
+            <!-- Título CREAR MONEDA -->
             <LinearLayout
-                android:id="@+id/r5at2ws48apt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
-                android:layout_marginBottom="81dp"
-                android:layout_marginStart="110dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/rmjs0n2m10a"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="19dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_back"
+                    android:contentDescription="Volver"
+                    app:tint="@color/text_light" />
+
                 <TextView
-                    android:id="@+id/r0e7do3kuqvj"
-                    android:textColor="@color/text_light"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="AJUSTES"
-                    />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Editar Perfil"
+                    android:textColor="@color/text_light"
+                    android:textSize="@dimen/text_xxl"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Foto de perfil con ícono de edición superpuesto -->
@@ -146,6 +146,7 @@
                             android:inputType="text"
                             android:hint="Nombre"
                             android:textColor="@color/text_gray"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="13sp"
                             android:layout_marginBottom="7dp"
                             android:background="@drawable/btn_white_square"
@@ -159,6 +160,7 @@
                             android:inputType="text"
                             android:hint="Apellido"
                             android:textColor="@color/text_gray"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp"
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/btn_white_square"
@@ -172,6 +174,7 @@
                             android:inputType="textEmailAddress"
                             android:hint="Email"
                             android:textColor="@color/text_gray"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp"
                             android:background="@drawable/btn_white_square"
                             android:paddingVertical="15dp"
@@ -216,7 +219,8 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:hint="Nueva Contraseña"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp"
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/btn_white_square"
@@ -229,7 +233,8 @@
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
                             android:hint="Confirmar Contraseña"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp"
                             android:background="@drawable/btn_white_square"
                             android:paddingVertical="14dp"
@@ -270,7 +275,8 @@
                         android:layout_marginTop="16dp"
                         android:textColor="@color/text_light"
                         android:backgroundTint="@android:color/darker_gray"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

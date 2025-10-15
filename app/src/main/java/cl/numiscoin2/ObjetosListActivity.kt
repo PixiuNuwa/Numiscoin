@@ -249,152 +249,72 @@ class ObjetosListActivity : BaseActivity() {
         val filtrosContainer = findViewById<LinearLayout>(R.id.filtrosContainer)
         filtrosContainer.removeAllViews()
 
-        // Verificar si la actividad está destruida
         if (isDestroyed || isFinishing) {
             Log.d(TAG, "Actividad destruida, no se pueden cargar imágenes")
             return
         }
 
-        // Crear ScrollView horizontal para las banderas
-        val horizontalScrollView = android.widget.HorizontalScrollView(this).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
+        val horizontalScrollView = android.widget.HorizontalScrollView(this)
+        val linearLayoutHorizontal = LinearLayout(this)
+        linearLayoutHorizontal.orientation = LinearLayout.HORIZONTAL
 
-        val linearLayoutHorizontal = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        // Botón para limpiar filtro (mostrar todas las monedas)
-        val clearFilterContainer = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt(),
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8, 0, 8, 0)
-            }
-            gravity = Gravity.CENTER
-            setBackgroundColor(ContextCompat.getColor(this@ObjetosListActivity, R.color.menu_unselected))
-        }
-
-        val clearFilterIcon = TextView(this).apply {
-            text = "❌"
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-            gravity = Gravity.CENTER
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 8, 0, 0)
-            }
-        }
-
-        val clearFilterText = TextView(this).apply {
-            text = "Todos"
-            setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
-            gravity = Gravity.CENTER
-            maxLines = 1
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(0, 4, 0, 8)
-            }
-        }
-
-        clearFilterContainer.addView(clearFilterIcon)
-        clearFilterContainer.addView(clearFilterText)
-
-        // Hacer clickable para limpiar filtro
-        clearFilterContainer.isClickable = true
-        clearFilterContainer.setOnClickListener {
-            limpiarFiltroPais()
-            actualizarEstiloFiltros()
-        }
-
-        linearLayoutHorizontal.addView(clearFilterContainer)
+        // Botón para limpiar filtro
+        val clearFilterView = crearCountryItemView("Todos", null, true)
+        linearLayoutHorizontal.addView(clearFilterView)
 
         // Agregar banderas de países
         paises.forEach { pais ->
-            val flagContainer = LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                layoutParams = LinearLayout.LayoutParams(
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80f, resources.displayMetrics).toInt(),
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(8, 0, 8, 0)
-                }
-                gravity = Gravity.CENTER
-                setBackgroundColor(ContextCompat.getColor(this@ObjetosListActivity, R.color.menu_unselected))
-            }
-
-            val imageView = ImageView(this).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50f, resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, resources.displayMetrics).toInt()
-                )
-                scaleType = ImageView.ScaleType.FIT_CENTER
-                adjustViewBounds = true
-            }
-
-            // Cargar bandera solo si la actividad no está destruida
-            if (!isDestroyed && !isFinishing && !pais.foto.isNullOrEmpty()) {
-                val fotoUrl = if (pais.foto.startsWith("http")) {
-                    pais.foto
-                } else {
-                    NetworkConfig.UPLOADS_BASE_URL + pais.foto
-                }
-
-                Glide.with(this)
-                    .load(fotoUrl)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_error)
-                    .into(imageView)
-            } else {
-                // Cargar placeholder si no se puede cargar la imagen
-                imageView.setImageResource(R.drawable.ic_placeholder)
-            }
-
-            val textView = TextView(this).apply {
-                text = pais.nombre
-                setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
-                setTextSize(TypedValue.COMPLEX_UNIT_SP, 10f)
-                gravity = Gravity.CENTER
-                maxLines = 1
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, 4, 0, 8)
-                }
-            }
-
-            flagContainer.addView(imageView)
-            flagContainer.addView(textView)
-
-            // Hacer clickable para filtro
-            flagContainer.isClickable = true
-            flagContainer.setOnClickListener {
-                // Verificar si la actividad sigue activa
+            val countryView = crearCountryItemView(pais.nombre, pais.foto, false)
+            countryView.setOnClickListener {
                 if (!isDestroyed && !isFinishing) {
                     filtrarPorPais(pais)
                     actualizarEstiloFiltros()
                 }
             }
-
-            linearLayoutHorizontal.addView(flagContainer)
+            linearLayoutHorizontal.addView(countryView)
         }
 
         horizontalScrollView.addView(linearLayoutHorizontal)
         filtrosContainer.addView(horizontalScrollView)
+        actualizarEstiloFiltros()
+    }
+
+    private fun crearCountryItemView(nombre: String, fotoUrl: String?, esBotonTodos: Boolean): LinearLayout {
+        val view = layoutInflater.inflate(R.layout.country_item, null) as LinearLayout
+        view.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { setMargins(4, 0, 4, 0) }
+
+        val countryFlag = view.findViewById<ImageView>(R.id.countryFlag)
+        val countryName = view.findViewById<TextView>(R.id.countryName)
+
+        countryName.text = nombre
+
+        if (esBotonTodos) {
+            countryFlag.setImageResource(android.R.drawable.ic_delete)
+        } else if (!fotoUrl.isNullOrEmpty()) {
+            val urlCompleta = NetworkConfig.construirUrlCompleta(fotoUrl)
+            Glide.with(this)
+                .load(urlCompleta)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(countryFlag)
+        } else {
+            countryFlag.setImageResource(R.drawable.ic_placeholder)
+        }
+
+        view.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
+        view.isClickable = true
+
+        if (esBotonTodos) {
+            view.setOnClickListener {
+                limpiarFiltroPais()
+                actualizarEstiloFiltros()
+            }
+        }
+
+        return view
     }
 
     private fun filtrarPorPais(pais: Pais) {
@@ -423,34 +343,42 @@ class ObjetosListActivity : BaseActivity() {
 
         // Recorrer todos los hijos del layout horizontal
         for (i in 0 until linearLayoutHorizontal.childCount) {
-            val child = linearLayoutHorizontal.getChildAt(i)
+            val child = linearLayoutHorizontal.getChildAt(i) as? LinearLayout
 
             when (i) {
                 0 -> {
                     // Primer hijo: botón "Limpiar filtro"
-                    val clearFilterContainer = child as? LinearLayout
-                    clearFilterContainer?.setBackgroundColor(
+                    if(paisSeleccionado==null) {
+                        child?.setBackgroundResource(R.drawable.btn_white_square)
+                    } else {
+                        child?.setBackgroundResource(R.drawable.btn_transparent_square)
+                    }
+                    /*child?.setBackgroundColor(
                         if (paisSeleccionado == null) {
-                            ContextCompat.getColor(this, R.color.colorPrimary)
+                            ContextCompat.getColor(this, R.color.colorPrimary) // Color cuando está seleccionado
                         } else {
-                            ContextCompat.getColor(this, R.color.menu_unselected)
+                            ContextCompat.getColor(this, R.color.transparent) // Color normal
                         }
-                    )
+                    )*/
                 }
                 else -> {
                     // Hijos restantes: banderas de países
-                    val flagContainer = child as? LinearLayout
                     val paisIndex = i - 1 // -1 porque el primer elemento es "Limpiar filtro"
 
                     if (paisIndex < paises.size) {
                         val pais = paises[paisIndex]
-                        flagContainer?.setBackgroundColor(
+                        if(paisSeleccionado?.idPais == pais.idPais) {
+                            child?.setBackgroundResource(R.drawable.btn_white_square)
+                        } else {
+                            child?.setBackgroundResource(R.drawable.btn_transparent_square)
+                        }
+                        /*child?.setBackgroundColor(
                             if (paisSeleccionado?.idPais == pais.idPais) {
-                                ContextCompat.getColor(this, R.color.colorPrimary)
+                                ContextCompat.getColor(this, R.color.colorPrimary) // Color cuando está seleccionado
                             } else {
-                                ContextCompat.getColor(this, R.color.menu_unselected)
+                                ContextCompat.getColor(this, R.color.transparent) // Color normal
                             }
-                        )
+                        )*/
                     }
                 }
             }

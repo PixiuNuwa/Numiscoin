@@ -31,30 +31,32 @@
                     android:layout_marginBottom="136dp"
                     android:layout_marginHorizontal="41dp"
                     android:orientation="vertical">
+                    <!-- Título CREAR MONEDA -->
                     <LinearLayout
-                        android:id="@+id/rlsc20h3d3ip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="131dp"
-                        android:layout_marginStart="49dp"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:id="@+id/r74iidxctbyd"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_marginEnd="11dp"
-                            android:src="@mipmap/ic_launcher"
-                            android:scaleType="fitXY"
-                            />
+                        android:layout_marginBottom="16dp"
+                        android:layout_gravity="center_vertical">
+
+                        <ImageButton
+                            android:id="@+id/btnBack"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_arrow_back"
+                            android:contentDescription="Volver"
+                            app:tint="@color/text_light" />
+
                         <TextView
-                            android:id="@+id/ryi5ajyeit6m"
-                            android:textColor="@color/title_text_light"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                            android:id="@+id/title"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:text="AYUDA Y CONTACTO"
-                            />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Ayuda y Contacto"
+                            android:textColor="@color/text_light"
+                            android:textSize="@dimen/text_xxl"
+                            android:textStyle="bold" />
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/rvx117319f5f"
@@ -86,7 +88,8 @@
                                 android:inputType="text"
                                 android:hint="Título"
                                 android:id="@+id/tituloEditText"
-                                android:textColor="@color/text_gray"
+                                android:textColor="@color/text_dark"
+                                android:textColorHint="@color/text_gray"
                                 android:textSize="12sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -153,7 +156,8 @@
                                 android:inputType="text"
                                 android:hint="Email"
                                 android:id="@+id/emailEditText"
-                                android:textColor="@color/text_gray"
+                                android:textColor="@color/text_dark"
+                                android:textColorHint="@color/text_gray"
                                 android:textSize="12sp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

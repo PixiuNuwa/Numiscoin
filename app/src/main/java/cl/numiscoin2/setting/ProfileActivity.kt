@@ -46,7 +46,6 @@ class ProfileActivity : AppCompatActivity() {
         //
         setContentView(R.layout.activity_profile)
 
-        val backButton = findViewById<Button>(R.id.backButton)
         val helpButton = findViewById<Button>(R.id.helpButton)
         val editButton = findViewById<Button>(R.id.editButton)
 
@@ -60,6 +59,7 @@ class ProfileActivity : AppCompatActivity() {
 
         cargarDatosUsuario()
 
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
         backButton.setOnClickListener {
             finish()
         }

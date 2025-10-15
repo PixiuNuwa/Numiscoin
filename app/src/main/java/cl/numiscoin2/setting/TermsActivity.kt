@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -49,6 +50,12 @@ class TermsActivity : BaseActivity() {
         initViews()
         setupBottomMenu()
         highlightMenuItem(R.id.menuHome)
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
 
         // Verificar estado de términos al cargar
         checkTermsStatus()
