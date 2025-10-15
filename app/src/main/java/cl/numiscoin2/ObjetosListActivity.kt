@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -26,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ObjetosListActivity : BaseActivity() {
 
     private val TAG = "ObjetosListActivity"
-    private var idColeccion: Int = 0
+    private var idColeccion: Long = 0L
     private var nombreColeccion: String = ""
     private var paises: List<Pais> = emptyList()
     private var objetos: List<ObjetoColeccion> = emptyList()
@@ -52,16 +53,27 @@ class ObjetosListActivity : BaseActivity() {
         highlightMenuItem(R.id.menuCollection)
 
         // Obtener parámetros del intent
-        idColeccion = intent.getIntExtra("idColeccion", 0)
+        idColeccion = intent.getLongExtra("idColeccion", 0L)
         nombreColeccion = intent.getStringExtra("nombreColeccion") ?: ""
 
         Log.d(TAG, "onCreate: idColeccion=$idColeccion, nombreColeccion=$nombreColeccion")
 
+        // Validar que el idColeccion sea válido
+        if (idColeccion <= 0L) {
+            Log.e(TAG, "onCreate: ID de colección no válido: $idColeccion")
+            Toast.makeText(this, "Error: Colección no válida", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
         // Configurar UI
         val title = findViewById<TextView>(R.id.title)
         title.text = nombreColeccion
 
-        val backButton = findViewById<Button>(R.id.backButton)
+        /*val backButton = findViewById<Button>(R.id.backButton)
+        backButton.setOnClickListener {
+            finish()
+        }*/
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
         backButton.setOnClickListener {
             finish()
         }
@@ -70,7 +82,7 @@ class ObjetosListActivity : BaseActivity() {
         configurarBusqueda()
 
         // Configurar FAB para agregar monedas
-        val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
+        val fabAddCoin = findViewById<TextView>(R.id.fabAddCoin)
         fabAddCoin.setOnClickListener {
             val usuarioActual = usuario
             if (usuarioActual == null) {
@@ -144,7 +156,9 @@ class ObjetosListActivity : BaseActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = android.view.View.VISIBLE
 
-        NetworkCollectionUtils.getCollectionObjects(idColeccion) { objetos, error ->
+        val idColeccionInt = idColeccion.toInt()
+
+        NetworkCollectionUtils.getCollectionObjects(idColeccionInt) { objetos, error ->
             runOnUiThread {
                 progressBar.visibility = android.view.View.GONE
 
@@ -171,7 +185,7 @@ class ObjetosListActivity : BaseActivity() {
 
     private fun mostrarEstadoVacio() {
         val emptyStateContainer = findViewById<LinearLayout>(R.id.emptyStateContainer)
-        val fabAddCoin = findViewById<FloatingActionButton>(R.id.fabAddCoin)
+        val fabAddCoin = findViewById<TextView>(R.id.fabAddCoin)
 
         emptyStateContainer.visibility = android.view.View.VISIBLE
         fabAddCoin.visibility = android.view.View.VISIBLE
@@ -186,8 +200,9 @@ class ObjetosListActivity : BaseActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = android.view.View.VISIBLE
 
+        val idColeccionInt = idColeccion.toInt()
         // Usar idTipoObjeto = 1 para monedas
-        NetworkCollectionUtils.getPaisesPorColeccionYTipo(idColeccion, 1) { paises, error ->
+        NetworkCollectionUtils.getPaisesPorColeccionYTipo(idColeccionInt, 1) { paises, error ->
             runOnUiThread {
                 progressBar.visibility = android.view.View.GONE
 
@@ -224,7 +239,7 @@ class ObjetosListActivity : BaseActivity() {
         mostrarObjetos()
 
         // Mostrar FAB
-        findViewById<FloatingActionButton>(R.id.fabAddCoin).visibility = android.view.View.VISIBLE
+        findViewById<TextView>(R.id.fabAddCoin).visibility = android.view.View.VISIBLE
 
         // Ocultar estado vacío
         findViewById<LinearLayout>(R.id.emptyStateContainer).visibility = android.view.View.GONE
@@ -442,7 +457,7 @@ class ObjetosListActivity : BaseActivity() {
         }
     }
 
-    private fun mostrarObjetos() {
+    /*private fun mostrarObjetos() {
         val objetosContainer = findViewById<LinearLayout>(R.id.objetosContainer)
         objetosContainer.removeAllViews()
 
@@ -488,6 +503,69 @@ class ObjetosListActivity : BaseActivity() {
             }
 
             objetosContainer.addView(objetoItem)
+        }
+    }*/
+    private fun mostrarObjetos() {
+        val objetosContainer = findViewById<LinearLayout>(R.id.objetosContainer)
+        objetosContainer.removeAllViews()
+
+        if (objetosFiltrados.isEmpty()) {
+            val emptyText = TextView(this).apply {
+                text = when {
+                    paisSeleccionado != null && textoBusqueda.isNotBlank() ->
+                        "No hay monedas de ${paisSeleccionado?.nombre} que coincidan con '$textoBusqueda'"
+                    paisSeleccionado != null ->
+                        "No hay monedas de ${paisSeleccionado?.nombre} en esta colección"
+                    textoBusqueda.isNotBlank() ->
+                        "No hay monedas que coincidan con '$textoBusqueda'"
+                    else ->
+                        "No se encontraron objetos"
+                }
+                setTextColor(ContextCompat.getColor(this@ObjetosListActivity, android.R.color.white))
+                gravity = Gravity.CENTER
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                setPadding(0, 32, 0, 32)
+            }
+            objetosContainer.addView(emptyText)
+            return
+        }
+
+        objetosFiltrados.forEach { objeto ->
+            // Inflar el layout personalizado para cada moneda
+            val monedaItemView = layoutInflater.inflate(R.layout.moneda_item, objetosContainer, false)
+
+            // Configurar los textos
+            val tvMonedaNombre = monedaItemView.findViewById<TextView>(R.id.tvMonedaNombre)
+            val tvMonedaDescripcion = monedaItemView.findViewById<TextView>(R.id.tvMonedaDescripcion)
+            val ivMoneda = monedaItemView.findViewById<ImageView>(R.id.ivMoneda)
+
+            tvMonedaNombre.text = objeto.nombre
+            tvMonedaDescripcion.text = objeto.descripcion ?: "Sin descripción"
+
+            // Cargar la primera foto de la moneda si existe
+            if (!objeto.fotos.isNullOrEmpty()) {
+                val primeraFoto = objeto.fotos[0]
+                val fotoUrl = NetworkConfig.construirUrlCompleta(primeraFoto.url)
+
+                Log.d("ObjetosListActivity","esta es la url de la foto: ${fotoUrl}")
+                Glide.with(this)
+                    .load(fotoUrl)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_error)
+                    .into(ivMoneda)
+            } else {
+                // Si no hay fotos, usar placeholder
+                ivMoneda.setImageResource(R.drawable.ic_placeholder)
+            }
+
+            // Configurar el clic en el item completo (para abrir los detalles de la moneda)
+            monedaItemView.setOnClickListener {
+                val intent = Intent(this@ObjetosListActivity, CoinDetailActivity::class.java)
+                intent.putExtra("moneda", objeto)
+                startActivity(intent)
+            }
+
+            objetosContainer.addView(monedaItemView)
         }
     }
 

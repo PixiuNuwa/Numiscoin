@@ -37,64 +37,8 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Barra de búsqueda - Siempre visible -->
-            <!--EditText
-                android:id="@+id/etSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:hint="Buscar por nombre de colección..."
-                android:textColor="#0B0B0B"
-                android:textColorHint="#FFF3D6"
-                android:background="@drawable/btn_white_square"
-                android:padding="12dp" /-->
-
-            <!-- Sección de Mis Colecciones -->
-            <!--LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Mis Colecciones"
-                    android:textColor="#FFF3D6"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnAddCollection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+ Agregar"
-                    android:background="#FF0000FF"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout-->
-
         </LinearLayout>
-        <!--LinearLayout
-            android:id="@+id/headerWithCollections"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible">
 
-            <EditText
-                android:id="@+id/etSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:hint="Buscar por nombre de colección..."
-                android:textColor="#0B0B0B"
-                android:textColorHint="#FFF3D6"
-                android:background="@drawable/btn_white_square"
-                android:padding="12dp" />
-
-        </LinearLayout-->
         <androidx.cardview.widget.CardView
             android:id="@+id/headerWithCollections"
             android:layout_width="match_parent"
@@ -108,7 +52,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@drawable/btn_green_square">
 
                 <!-- Primer LinearLayout con el EditText -->
                 <LinearLayout
@@ -152,7 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Colección"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
 
@@ -161,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$1.187.40"
-                            android:textColor="#1E293B"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 
@@ -198,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Items"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small" />
 
                     </LinearLayout>
@@ -216,7 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Gastado"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
 
@@ -338,9 +283,10 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_above="@+id/bottomMenuContainer"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/fab_background"
+        android:background="@drawable/btn_green_circle"
         android:gravity="center"
         android:text="+"
         android:textColor="@android:color/white"
@@ -356,7 +302,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#00272C"
+        android:background="@color/background_dark"
         android:paddingVertical="8dp">
 
         <!-- INCLUIR EL LAYOUT ORIGINAL DEL MENÚ INFERIOR -->

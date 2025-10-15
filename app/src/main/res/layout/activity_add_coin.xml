@@ -1,416 +1,713 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
+    android:background="#00272C"
     android:fitsSystemWindows="true">
+
     <ScrollView
+        android:id="@+id/rh92n2z44exe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_above="@+id/bottomMenuContainer"
         android:layout_alignParentTop="true"
-        android:fillViewport="true"
-        android:scrollbars="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="#00272C">
 
-        <!-- Título -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Agregar Nueva Moneda"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Campos obligatorios -->
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre (moneda) *"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-			
-		<EditText
-			android:id="@+id/etDescripcion"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:hint="Descripción"
-			android:textColor="@android:color/white"
-			android:textColorHint="#AAAAAA"
-			android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/spPais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/white"
-            android:padding="12dp"/>
-
-        <EditText
-            android:id="@+id/etAnio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Año *"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Campos de información básica -->
-        <!--EditText
-            android:id="@+id/etFamilia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Familia"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" /-->
-
-        <!--EditText
-            android:id="@+id/etIdFamilia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ID Familia"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" /-->
-
-        <EditText
-            android:id="@+id/etVariante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Variante"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/etCeca"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ceca"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/etTipo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tipo"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/etDisenador"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Grabador"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Campos de valores -->
-        <EditText
-            android:id="@+id/etTotalProducido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Total Producido"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <!--EditText
-            android:id="@+id/etValorSinCircular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Valor Sin Circular"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" /-->
-
-        <EditText
-            android:id="@+id/etValorComercial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Valor Comercial"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/etValorAdquirido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Valor Adquirido"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Estado y observaciones -->
-        <EditText
-            android:id="@+id/etEstado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Estado"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" />
-
-        <EditText
-            android:id="@+id/etObservaciones"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="Observaciones"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:gravity="top"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Campos adicionales -->
-        <!--EditText
-            android:id="@+id/etOrden"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Orden"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="8dp" /-->
-
-        <!--EditText
-            android:id="@+id/etAcunada"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Acuñada"
-            android:textColor="@android:color/white"
-            android:textColorHint="#AAAAAA"
-            android:layout_marginBottom="24dp" /-->
-
-        <!-- Sección de foto -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Fotos de la moneda"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Foto 1 -->
         <LinearLayout
+            android:id="@+id/mainContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:padding="16dp"
+            android:layout_above="@+id/bottomMenuContainer"
+            android:layout_alignParentTop="true">
 
-            <ImageView
-                android:id="@+id/ivFoto"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:background="#333333"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp" />
+            <!-- Título CREAR MONEDA -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center_vertical">
 
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_back"
+                    android:contentDescription="Volver"
+                    app:tint="@color/text_light" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Crear Moneda"
+                    android:textColor="@color/text_light"
+                    android:textSize="@dimen/text_xxl"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Nombre -->
+            <TextView
+                android:id="@+id/rkefw73aih9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Nombre *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el nombre de la moneda"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Año -->
+            <TextView
+                android:id="@+id/r4uo8gqan1y5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Año *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etAnio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el año"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- País -->
+            <TextView
+                android:id="@+id/rrt8mms9ty9k"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="País *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <Spinner
+                android:id="@+id/spPais"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_white_square"
+                android:padding="12dp" />
+
+            <!-- Variante -->
+            <TextView
+                android:id="@+id/rivg4fzwqnf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Variante *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etVariante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese la variante"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Ceca -->
+            <TextView
+                android:id="@+id/r8hpb5k853ob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Ceca *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etCeca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese la ceca"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Tipo -->
+            <TextView
+                android:id="@+id/rwh5t9oi5di"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Tipo *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etTipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el tipo"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Descripción -->
+            <TextView
+                android:id="@+id/rb1pv2lcjwwm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Descripción *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese la descripción"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:gravity="top"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Grabador -->
+            <TextView
+                android:id="@+id/rpz7n1f0lmp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Grabador *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etDisenador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el grabador"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Total Producido -->
+            <TextView
+                android:id="@+id/r3hsza23tvfj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Total Producido *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etTotalProducido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el total producido"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Estado -->
+            <TextView
+                android:id="@+id/rgda4uij13iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Estado *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el estado"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Valor adquirido -->
+            <TextView
+                android:id="@+id/ru8xk9a46uuo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Valor adquirido *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etValorAdquirido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el valor adquirido"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Valor Comercial -->
+            <TextView
+                android:id="@+id/r5o8hugrdkt6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Valor Comercial *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etValorComercial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Ingrese el valor comercial"
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Observaciones -->
+            <TextView
+                android:id="@+id/ru2d3jziyat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Observaciones *"
+                android:textColor="#FFF3D6"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etObservaciones"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="24dp"
+                android:hint="Ingrese observaciones"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:gravity="top"
+                android:backgroundTint="#FFF3D6" />
+
+            <!-- Sección de Fotos -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fotos de la moneda"
+                android:textColor="#FFF3D6"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Foto 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/btnGaleria1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Galería 1"
-                    android:textColor="@android:color/white"
-                    android:background="#FF0000FF"
-                    android:layout_marginEnd="4dp"/>
+                <ImageView
+                    android:id="@+id/ivFoto"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:background="#333333"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
 
-                <Button
-                    android:id="@+id/btnCamara1"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Cámara 1"
-                    android:textColor="@android:color/white"
-                    android:background="#FFFF0000"
-                    android:layout_marginStart="4dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnGaleria1"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Galería 1"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnCamara1"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Camara 1"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <!--Button
+                        android:id="@+id/btnGaleria1"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Galería 1"
+                        android:textColor="@android:color/white"
+                        android:background="#FF0000FF"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/btnCamara1"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Cámara 1"
+                        android:textColor="@android:color/white"
+                        android:background="#FFFF0000"
+                        android:layout_marginStart="4dp"/-->
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Foto 2 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:id="@+id/ivFoto2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:background="#333333"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp" />
-
+            <!-- Foto 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/btnGaleria2"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Galería 2"
-                    android:textColor="@android:color/white"
-                    android:background="#FF0000FF"
-                    android:layout_marginEnd="4dp"/>
+                <ImageView
+                    android:id="@+id/ivFoto2"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:background="#333333"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
 
-                <Button
-                    android:id="@+id/btnCamara2"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Cámara 2"
-                    android:textColor="@android:color/white"
-                    android:background="#FFFF0000"
-                    android:layout_marginStart="4dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnGaleria2"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Galería 2"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnCamara2"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Camara 2"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <!--Button
+                        android:id="@+id/btnGaleria2"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Galería 2"
+                        android:textColor="@android:color/white"
+                        android:background="#FF0000FF"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/btnCamara2"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Cámara 2"
+                        android:textColor="@android:color/white"
+                        android:background="#FFFF0000"
+                        android:layout_marginStart="4dp"/-->
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Foto 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp">
-
-            <ImageView
-                android:id="@+id/ivFoto3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:background="#333333"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp" />
-
+            <!-- Foto 3 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/btnGaleria3"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Galería 3"
-                    android:textColor="@android:color/white"
-                    android:background="#FF0000FF"
-                    android:layout_marginEnd="4dp"/>
+                <ImageView
+                    android:id="@+id/ivFoto3"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:background="#333333"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
 
-                <Button
-                    android:id="@+id/btnCamara3"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Cámara 3"
-                    android:textColor="@android:color/white"
-                    android:background="#FFFF0000"
-                    android:layout_marginStart="4dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnGaleria3"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Galería 3"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnCamara3"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Camara 3"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+
+                    <!--Button
+                        android:id="@+id/btnGaleria3"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Galería 3"
+                        android:textColor="@android:color/white"
+                        android:background="#FF0000FF"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/btnCamara3"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Cámara 3"
+                        android:textColor="@android:color/white"
+                        android:background="#FFFF0000"
+                        android:layout_marginStart="4dp"/-->
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Foto 4 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
-
-            <ImageView
-                android:id="@+id/ivFoto4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:background="#333333"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp" />
-
+            <!-- Foto 4 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
 
-                <Button
-                    android:id="@+id/btnGaleria4"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Galería 4"
-                    android:textColor="@android:color/white"
-                    android:background="#FF0000FF"
-                    android:layout_marginEnd="4dp"/>
+                <ImageView
+                    android:id="@+id/ivFoto4"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:background="#333333"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
 
-                <Button
-                    android:id="@+id/btnCamara4"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Cámara 4"
-                    android:textColor="@android:color/white"
-                    android:background="#FFFF0000"
-                    android:layout_marginStart="4dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnGaleria4"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Galería 4"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_green_square"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="21dp"
+                        android:elevation="6dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnCamara4"
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:text="Camara 4"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_light" />
+                    </LinearLayout>
+                    <!--Button
+                        android:id="@+id/btnGaleria41"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Galería 4"
+                        android:textColor="@android:color/white"
+                        android:background="#FF0000FF"
+                        android:layout_marginEnd="4dp"/>
+
+                    <Button
+                        android:id="@+id/btnCamara41"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="Cámara 4"
+                        android:textColor="@android:color/white"
+                        android:background="#FFFF0000"
+                        android:layout_marginStart="4dp"/-->
+                </LinearLayout>
             </LinearLayout>
+
+            <!-- Botón Guardar -->
+            <!--Button
+                android:id="@+id/btnGuardar2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Guardar Moneda"
+                android:textColor="@android:color/white"
+                android:background="#FF00FF00"
+                android:layout_marginBottom="16dp" /-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_green_square"
+                android:paddingVertical="5dp"
+                android:paddingLeft="10dp"
+                android:layout_marginHorizontal="21dp"
+                android:elevation="6dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Crear"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/text_light" />
+            </LinearLayout>
+
+            <!-- Texto campos obligatorios -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* Campos obligatorios"
+                android:textColor="#AAAAAA"
+                android:textSize="12sp"
+                android:layout_marginBottom="16dp" />
+
         </LinearLayout>
-
-        <!-- Botón guardar -->
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Guardar Moneda"
-            android:textColor="@android:color/white"
-            android:background="#FF00FF00" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="* Campos obligatorios"
-            android:textColor="#AAAAAA"
-            android:textSize="12sp"
-            android:layout_marginTop="8dp" />
-
-    </LinearLayout>
-
     </ScrollView>
+
     <!-- Bottom Navigation Menu -->
     <LinearLayout
         android:id="@+id/bottomMenuContainer"

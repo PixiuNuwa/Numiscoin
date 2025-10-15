@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#1E3A8A"
+        android:background="@color/background_dark"
         android:paddingHorizontal="20dp"
         android:paddingVertical="16dp"
         android:layout_alignParentTop="true">
@@ -55,7 +55,7 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginEnd="12dp"
-                android:background="@drawable/circle_white_20"
+                android:background="@drawable/btn_darkgreen_circle"
                 android:src="@drawable/ic_settings_white"
                 android:scaleType="centerInside"
                 android:contentDescription="Ajustes"
@@ -93,7 +93,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="20dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:background="@drawable/btn_green_square">
 
                     <!-- Columna 1: Total Colección -->
                     <LinearLayout
@@ -107,7 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Colección"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
 
@@ -116,7 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$1.187.40"
-                            android:textColor="#1E293B"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 
@@ -153,7 +154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Items"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small" />
 
                     </LinearLayout>
@@ -171,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total Gastado"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
 
@@ -202,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Próximos Eventos"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/text_light"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />
@@ -227,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Objetos Recientes"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/text_light"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />

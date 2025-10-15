@@ -24,7 +24,8 @@
                     android:text="Variante:"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp"
+                    android:textSize="@dimen/text_size_small"/>
 
                 <TextView
                     android:id="@+id/tvVariante"
@@ -32,7 +33,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@android:color/white"
-                    android:text="No especificado"/>
+                    android:text="No especificado"
+                    android:textSize="@dimen/text_size_small"/>
             </TableRow>
 
         <!--TableRow
@@ -66,7 +68,8 @@
                 android:text="Tipo:"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/text_size_small"/>
 
             <TextView
                 android:id="@+id/tvTipo"
@@ -74,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@android:color/white"
-                android:text="No especificado"/>
+                android:text="No especificado"
+                android:textSize="@dimen/text_size_small"/>
         </TableRow>
 
         <TableRow
@@ -84,10 +88,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Diseñador:"
+                android:text="Grabador:"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/text_size_small"/>
 
             <TextView
                 android:id="@+id/tvDisenador"
@@ -95,7 +100,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@android:color/white"
-                android:text="No especificado"/>
+                android:text="No especificado"
+                android:textSize="@dimen/text_size_small"/>
         </TableRow>
 
         <TableRow
@@ -108,7 +114,8 @@
                 android:text="Estado:"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/text_size_small"/>
 
             <TextView
                 android:id="@+id/tvEstado"
@@ -116,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@android:color/white"
-                android:text="No especificado"/>
+                android:text="No especificado"
+                android:textSize="@dimen/text_size_small"/>
         </TableRow>
 
         <TableRow
@@ -126,19 +134,44 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Observaciones:"
+                android:text="Ceca:"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingEnd="8dp"/>
+                android:paddingEnd="8dp"
+                android:textSize="@dimen/text_size_small"/>
 
             <TextView
-                android:id="@+id/tvObservaciones"
+                android:id="@+id/tvCeca"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@android:color/white"
-                android:text="Sin observaciones"/>
+                android:text="Sin observaciones"
+                android:textSize="@dimen/text_size_small"/>
         </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Observaciones:"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:paddingEnd="8dp"
+                    android:textSize="@dimen/text_size_small"/>
+
+                <TextView
+                    android:id="@+id/tvObservaciones"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/white"
+                    android:text="Sin observaciones"
+                    android:textSize="@dimen/text_size_small"/>
+            </TableRow>
 
     </TableLayout>
 

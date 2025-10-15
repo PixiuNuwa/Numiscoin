@@ -6,6 +6,7 @@ import cl.numiscoin2.ObjetoColeccion
 import cl.numiscoin2.Pais
 import cl.numiscoin2.TipoObjeto
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
@@ -157,6 +158,79 @@ object NetworkCollectionUtils {
                 connection.disconnect()
             } catch (e: Exception) {
                 callback(null, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun updateCollection(collectionId: Long, nombre: String, descripcion: String, callback: (Boolean, String?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/colecciones/$collectionId")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "PUT"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.setRequestProperty("Accept", "application/json")
+                connection.doOutput = true
+
+                // Crear JSON con los datos actualizados de la colección
+                val jsonInputString = """
+                {
+                    "nombre": "$nombre",
+                    "descripcion": "$descripcion"
+                }
+            """.trimIndent()
+
+                connection.outputStream.use { os ->
+                    val input = jsonInputString.toByteArray(Charsets.UTF_8)
+                    os.write(input, 0, input.size)
+                }
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    callback(true, null)
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(false, "Error del servidor: $responseCode - $errorResponse")
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(false, "Error de conexión: ${e.message}")
+            }
+        }.start()
+    }
+
+    fun deleteCollection(collectionId: Long, callback: (Boolean, String?, Int?) -> Unit) {
+        Thread {
+            try {
+                val url = URL("${NetworkConfig.BASE_URL}/api/jdbc/colecciones/$collectionId")
+                val connection = url.openConnection() as HttpsURLConnection
+                connection.requestMethod = "DELETE"
+                connection.setRequestProperty("Accept", "application/json")
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    callback(true, null, null)
+                } else if (responseCode == HttpsURLConnection.HTTP_CONFLICT) {
+                    // La colección tiene objetos, obtener información del error
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+
+                    try {
+                        val errorJson = gson.fromJson(errorResponse, JsonObject::class.java)
+                        val cantidadObjetos = errorJson.get("cantidadObjetos")?.asInt ?: 0
+                        callback(false, "La colección contiene objetos", cantidadObjetos)
+                    } catch (e: Exception) {
+                        callback(false, "No se puede eliminar la colección porque contiene objetos", null)
+                    }
+                } else {
+                    val errorResponse = connection.errorStream?.bufferedReader()?.use { it.readText() }
+                        ?: "Error sin mensaje"
+                    callback(false, "Error del servidor: $responseCode - $errorResponse", null)
+                }
+                connection.disconnect()
+            } catch (e: Exception) {
+                callback(false, "Error de conexión: ${e.message}", null)
             }
         }.start()
     }

@@ -68,11 +68,14 @@
         <activity android:name=".MarketplaceActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".AddCoinActivity" />
+        <activity android:name=".AddCoinActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".CoinDetailActivity" />
+        <activity android:name=".CoinDetailActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".EditCoinActivity" />
+        <activity android:name=".EditCoinActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
         <activity android:name=".RegisterActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
@@ -91,7 +94,8 @@
         <activity android:name=".ObjetosListActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
 
-        <activity android:name=".ObjetosPaisActivity" />
+        <activity android:name=".ObjetosPaisActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
         <activity
             android:name=".CameraWithOverlayActivity"
@@ -103,18 +107,23 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <activity android:name=".CreateCollectionActivity" />
+        <activity android:name=".CreateCollectionActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.SettingsActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.LanguageActivity" />
         <activity android:name=".setting.FAQActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
-        <activity android:name=".setting.ContactActivity" />
+        <activity android:name=".setting.ContactActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.TermsActivity" android:exported="false"
             android:theme="@style/Theme.Numiscoin2"/>
         <activity android:name=".setting.BackupActivity" />
 
-        <activity android:name=".EventoDetailActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".EventoDetailActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
 
+        <activity android:name="EditCollectionActivity" android:exported="false"
+            android:theme="@style/Theme.Numiscoin2"/>
     </application>
 </manifest>

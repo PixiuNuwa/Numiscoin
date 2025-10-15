@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -65,6 +66,14 @@ class CoinDetailActivity : BaseActivity() {
         // Configurar botones
         setupDeleteButton()
         setupEditButton()
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuCollection)
     }
 
     private fun initViews() {

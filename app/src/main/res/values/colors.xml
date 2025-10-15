@@ -58,6 +58,7 @@
     <color name="background_card">#f8f9fe</color>
     <color name="background_search">#008e5c</color>
     <color name="background_red">#FF5858</color>
+    <color name="background_blue">#0000FF</color>
 
     <!-- Component Colors -->
     <color name="button_primary">#008e5c</color>

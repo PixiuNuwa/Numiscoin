@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@drawable/btn_white_square"
+        android:gravity="center_vertical">
+
+        <!-- Imagen de la moneda (a la izquierda) -->
+        <ImageView
+            android:id="@+id/ivMoneda"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:background="@color/background_light"
+            android:src="@drawable/ic_placeholder"
+            android:contentDescription="Imagen de la moneda"
+            android:layout_marginEnd="16dp" />
+
+        <!-- Información de la moneda (en el centro) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="16dp">
+
+            <TextView
+                android:id="@+id/tvMonedaNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Moneda"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_s"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvMonedaDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción de la moneda"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/text_xs"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+        </LinearLayout>
+
+        <!-- Flecha hacia la derecha -->
+        <ImageView
+            android:id="@+id/ivFlecha"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_forward"
+            android:contentDescription="Ver detalles"
+            app:tint="@color/text_gray" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

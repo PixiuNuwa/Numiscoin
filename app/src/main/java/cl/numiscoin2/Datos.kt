@@ -16,7 +16,7 @@ data class Moneda(
 ): Parcelable
 
 data class Coleccion(
-    val id: Int,
+    val id: Long,
     val nombre: String,
     val descripcion: String,
     val idUsuario: Int,

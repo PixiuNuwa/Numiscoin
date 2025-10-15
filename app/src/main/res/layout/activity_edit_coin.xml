@@ -19,6 +19,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Header con botón de volver -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"
+                app:tint="@color/text_light" />
+
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Editar Moneda"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_xxl"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
         <!-- Sección de Fotos -->
         <TextView
             android:layout_width="match_parent"

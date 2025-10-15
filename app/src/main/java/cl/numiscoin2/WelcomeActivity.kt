@@ -30,7 +30,8 @@ import java.util.Locale
 class WelcomeActivity : BaseActivity() {
 
     private val TAG = "WelcomeActivity"
-    private lateinit var eventosGridView: GridView
+    //private lateinit var eventosGridView: GridView
+
     private lateinit var objetosRecientesGridView: GridView
     private lateinit var settingsButton: ImageButton
     private lateinit var totalColeccionValor: TextView
@@ -82,7 +83,7 @@ class WelcomeActivity : BaseActivity() {
             return
         }
 
-        eventosGridView = findViewById(R.id.eventosGridView)
+        //eventosRecyclerView = findViewById(R.id.eventosRecyclerView)
         //objetosRecientesGridView = findViewById(R.id.objetosRecientesGridView)
 
         // Inicializar adapter para objetos recientes

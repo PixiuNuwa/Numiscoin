@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 
-class EditCoinActivity : AppCompatActivity() {
+class EditCoinActivity : BaseActivity() {
 
     private lateinit var objeto: ObjetoColeccion
     private val fotosSeleccionadas = mutableListOf<Uri?>()
@@ -110,6 +110,14 @@ class EditCoinActivity : AppCompatActivity() {
         initFotosSeleccionadas()
         setupUI()
         setupButtons()
+
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
+
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuCollection)
     }
 
     private fun initViews() {

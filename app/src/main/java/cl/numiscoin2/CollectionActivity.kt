@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -16,7 +17,10 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import cl.numiscoin2.network.NetworkCollectionUtils
+import cl.numiscoin2.network.NetworkObjectUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.NumberFormat
+import java.util.Locale
 
 class CollectionActivity : BaseActivity() {
 
@@ -25,6 +29,10 @@ class CollectionActivity : BaseActivity() {
     private var colecciones: List<Coleccion> = emptyList()
     private var coleccionesFiltradas: List<Coleccion> = emptyList()
     private val REQUEST_CREATE_COLLECTION = 100
+    private val REQUEST_EDIT_COLLECTION = 101 // Nuevo código para edición
+    private lateinit var totalColeccionValor: TextView
+    private lateinit var totalItemsCount: TextView
+    private lateinit var totalGastadoValor: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,21 +56,9 @@ class CollectionActivity : BaseActivity() {
         // Configurar barra de búsqueda
         configurarBusqueda()
 
-        // Configurar botón de agregar colección
-        /*val btnAddCollection = findViewById<Button>(R.id.btnAddCollection)
-        btnAddCollection.setOnClickListener {
-            Log.d(TAG, "btnAddCollection: Abriendo vista para crear colección")
-            val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
-            startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
-        }*/
+        inicializarVistasTotales()
 
-        // Configurar botón de agregar colección en estado vacío
-        /*val btnAddCollectionEmpty = findViewById<Button>(R.id.btnAddCollectionEmpty)
-        btnAddCollectionEmpty.setOnClickListener {
-            Log.d(TAG, "btnAddCollectionEmpty: Abriendo vista para crear colección")
-            val intent = Intent(this@CollectionActivity, CreateCollectionActivity::class.java)
-            startActivityForResult(intent, REQUEST_CREATE_COLLECTION)
-        }*/
+        cargarTotalesUsuario()
 
         // Cargar colecciones del usuario
         cargarColeccionesDesdeServidor()
@@ -108,19 +104,37 @@ class CollectionActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == REQUEST_CREATE_COLLECTION) {
-            when (resultCode) {
-                RESULT_OK -> {
-                    val idColeccion = data?.getLongExtra("id_coleccion", -1L) ?: -1L
-                    val nombreColeccion = data?.getStringExtra("nombre_coleccion") ?: ""
+        when (requestCode) {
+            REQUEST_CREATE_COLLECTION -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        val idColeccion = data?.getLongExtra("id_coleccion", -1L) ?: -1L
+                        val nombreColeccion = data?.getStringExtra("nombre_coleccion") ?: ""
 
-                    Log.d(TAG, "Colección creada exitosamente - ID: $idColeccion, Nombre: $nombreColeccion")
-                    Toast.makeText(this, "Colección '$nombreColeccion' creada exitosamente", Toast.LENGTH_SHORT).show()
-                    cargarColeccionesDesdeServidor()
+                        Log.d(TAG, "Colección creada exitosamente - ID: $idColeccion, Nombre: $nombreColeccion")
+                        Toast.makeText(this, "Colección '$nombreColeccion' creada exitosamente", Toast.LENGTH_SHORT).show()
+                        cargarColeccionesDesdeServidor()
+                    }
+                    RESULT_CANCELED -> {
+                        // El usuario canceló la creación
+                        Log.d(TAG, "Creación de colección cancelada por el usuario")
+                    }
                 }
-                RESULT_CANCELED -> {
-                    // El usuario canceló la creación
-                    Log.d(TAG, "Creación de colección cancelada por el usuario")
+            }
+            REQUEST_EDIT_COLLECTION -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        val coleccionEditada = data?.getBooleanExtra("coleccion_editada", false) ?: false
+                        if (coleccionEditada) {
+                            Log.d(TAG, "Colección editada exitosamente")
+                            Toast.makeText(this, "Colección actualizada exitosamente", Toast.LENGTH_SHORT).show()
+                            cargarColeccionesDesdeServidor()
+                        }
+                    }
+                    RESULT_CANCELED -> {
+                        // El usuario canceló la edición
+                        Log.d(TAG, "Edición de colección cancelada por el usuario")
+                    }
                 }
             }
         }
@@ -185,28 +199,93 @@ class CollectionActivity : BaseActivity() {
             searchEmptyStateContainer.visibility = android.view.View.GONE
 
             coleccionesFiltradas.forEach { coleccion ->
-                val collectionItem = Button(this).apply {
-                    text = "${coleccion.nombre}\n${coleccion.descripcion}"
-                    setTextColor(resources.getColor(android.R.color.white))
-                    setBackgroundColor(resources.getColor(R.color.menu_unselected))
-                    layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply {
-                        setMargins(16)
-                    }
+                // Inflar el layout personalizado para cada colección
+                val collectionItemView = layoutInflater.inflate(R.layout.collection_item, collectionsContainer, false)
 
-                    // Al hacer clic en una colección, abrir la actividad de objetos
-                    setOnClickListener {
-                        val intent = Intent(this@CollectionActivity, ObjetosListActivity::class.java)
-                        intent.putExtra("idColeccion", coleccion.id)
-                        intent.putExtra("nombreColeccion", coleccion.nombre)
-                        startActivity(intent)
-                    }
+                // Configurar los textos
+                val tvCollectionName = collectionItemView.findViewById<TextView>(R.id.tvCollectionName)
+                val tvCollectionDescription = collectionItemView.findViewById<TextView>(R.id.tvCollectionDescription)
+                val btnEdit = collectionItemView.findViewById<ImageButton>(R.id.btnEdit)
+                val btnDelete = collectionItemView.findViewById<ImageButton>(R.id.btnDelete)
+
+                tvCollectionName.text = coleccion.nombre
+                tvCollectionDescription.text = coleccion.descripcion
+
+                // Configurar el clic en el item completo (para abrir la colección)
+                collectionItemView.setOnClickListener {
+                    val intent = Intent(this@CollectionActivity, ObjetosListActivity::class.java)
+                    intent.putExtra("idColeccion", coleccion.id)
+                    intent.putExtra("nombreColeccion", coleccion.nombre)
+                    startActivity(intent)
                 }
-                collectionsContainer.addView(collectionItem)
+
+                // Configurar botón Editar
+                btnEdit.setOnClickListener {
+                    Log.d(TAG, "Botón editar clickeado para colección ID: ${coleccion.id}")
+                    // Abrir actividad de edición
+                    val intent = Intent(this@CollectionActivity, EditCollectionActivity::class.java)
+                    intent.putExtra("idColeccion", coleccion.id)
+                    intent.putExtra("nombreColeccion", coleccion.nombre)
+                    intent.putExtra("descripcionColeccion", coleccion.descripcion)
+                    startActivityForResult(intent, REQUEST_EDIT_COLLECTION)
+                }
+
+                // Configurar botón Eliminar
+                btnDelete.setOnClickListener {
+                    Log.d(TAG, "Botón eliminar clickeado para colección ID: ${coleccion.id}")
+                    // Llamar al método para eliminar la colección
+                    eliminarColeccion(coleccion)
+                }
+
+                collectionsContainer.addView(collectionItemView)
             }
         }
+    }
+
+    private fun eliminarColeccion(coleccion: Coleccion) {
+        Log.d(TAG, "eliminarColeccion: Iniciando eliminación de colección ID: ${coleccion.id}")
+
+        // Mostrar diálogo de confirmación
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Eliminar Colección")
+            .setMessage("¿Estás seguro de que quieres eliminar la colección '${coleccion.nombre}'?")
+            .setPositiveButton("Eliminar") { dialog, which ->
+                // Llamar al servicio para eliminar la colección
+                NetworkCollectionUtils.deleteCollection(coleccion.id) { success, error, cantidadObjetos ->
+                    runOnUiThread {
+                        if (success) {
+                            Log.d(TAG, "eliminarColeccion: Colección eliminada exitosamente")
+                            Toast.makeText(
+                                this@CollectionActivity,
+                                "Colección '${coleccion.nombre}' eliminada exitosamente",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            // Recargar la lista de colecciones
+                            cargarColeccionesDesdeServidor()
+                        } else {
+                            if (cantidadObjetos != null && cantidadObjetos > 0) {
+                                // Error porque la colección tiene objetos
+                                Log.w(TAG, "eliminarColeccion: La colección tiene $cantidadObjetos objetos, no se puede eliminar")
+                                Toast.makeText(
+                                    this@CollectionActivity,
+                                    "No se puede eliminar la colección porque contiene $cantidadObjetos objeto(s). Debe eliminar o mover todos los objetos primero.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                // Otro tipo de error
+                                Log.e(TAG, "eliminarColeccion: Error al eliminar colección - $error")
+                                Toast.makeText(
+                                    this@CollectionActivity,
+                                    "Error al eliminar la colección: $error",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
     private fun cargarColeccionesDesdeServidor() {
@@ -236,5 +315,69 @@ class CollectionActivity : BaseActivity() {
                 mostrarColecciones()
             }
         }
+    }
+
+    private fun cargarTotalesUsuario() {
+        usuario?.idUsuario?.let { idUsuario ->
+            Log.d(TAG, "cargarTotalesUsuario: Solicitando totales para usuario ID: $idUsuario")
+
+            NetworkObjectUtils.obtenerTotalesPorUsuario(idUsuario.toLong()) { totales, error ->
+                runOnUiThread {
+                    if (error == null && totales != null) {
+                        Log.d(TAG, "cargarTotalesUsuario: Totales recibidos - " +
+                                "Colección: ${totales.totalColeccion}, " +
+                                "Gastado: ${totales.totalGastado}, " +
+                                "Items: ${totales.totalItems}")
+
+                        actualizarVistasConTotales(totales)
+                    } else {
+                        Log.e(TAG, "cargarTotalesUsuario: Error al cargar totales - $error")
+                        mostrarTotalesPorDefecto()
+                        Toast.makeText(this, "Error al cargar estadísticas: $error", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        } ?: run {
+            Log.e(TAG, "cargarTotalesUsuario: ID de usuario no disponible")
+            mostrarTotalesPorDefecto()
+        }
+    }
+
+    private fun inicializarVistasTotales() {
+        totalColeccionValor = findViewById(R.id.totalColeccionValor)
+        totalItemsCount = findViewById(R.id.totalItemsCount)
+        totalGastadoValor = findViewById(R.id.totalGastadoValor)
+    }
+
+    private fun actualizarVistasConTotales(totales: TotalesUsuarioResponse) {
+        try {
+            // Formatear valores monetarios
+            val formatoMoneda = NumberFormat.getCurrencyInstance(Locale("es", "CL"))
+            formatoMoneda.maximumFractionDigits = 0
+
+            // Total Colección
+            totalColeccionValor.text = formatoMoneda.format(totales.totalColeccion ?: 0)
+
+            // Total Items
+            totalItemsCount.text = (totales.totalItems ?: 0).toString()
+
+            // Total Gastado (en negativo y en rojo como en el diseño original)
+            val totalGastado = totales.totalGastado ?: 0
+            totalGastadoValor.text = "-${formatoMoneda.format(totalGastado)}"
+
+            Log.d(TAG, "actualizarVistasConTotales: Vistas actualizadas correctamente")
+        } catch (e: Exception) {
+            Log.e(TAG, "actualizarVistasConTotales: Error al formatear valores", e)
+            mostrarTotalesPorDefecto()
+        }
+    }
+
+    private fun mostrarTotalesPorDefecto() {
+        val formatoMoneda = NumberFormat.getCurrencyInstance(Locale("es", "CL"))
+        formatoMoneda.maximumFractionDigits = 0
+
+        totalColeccionValor.text = formatoMoneda.format(0)
+        totalItemsCount.text = "0"
+        totalGastadoValor.text = "-${formatoMoneda.format(0)}"
     }
 }

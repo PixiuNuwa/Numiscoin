@@ -1,12 +1,16 @@
 package cl.numiscoin2
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import cl.numiscoin2.network.NetworkCollectionUtils
 
 class CreateCollectionActivity : BaseActivity() {
@@ -15,6 +19,14 @@ class CreateCollectionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background_dark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background_dark)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
         setContentView(R.layout.activity_create_collection)
 
         Log.d(TAG, "onCreate: CreateCollectionActivity creada")
@@ -22,7 +34,7 @@ class CreateCollectionActivity : BaseActivity() {
         val etNombre = findViewById<EditText>(R.id.etNombre)
         val etDescripcion = findViewById<EditText>(R.id.etDescripcion)
         val btnCrear = findViewById<Button>(R.id.btnCrear)
-        val btnCancelar = findViewById<TextView>(R.id.btnCancelar)
+
 
         btnCrear.setOnClickListener {
             val nombre = etNombre.text.toString().trim()
@@ -35,12 +47,12 @@ class CreateCollectionActivity : BaseActivity() {
 
             crearColeccion(nombre, descripcion)
         }
-
-        btnCancelar.setOnClickListener {
-            Log.d(TAG, "btnCancelar: Cancelando creación de colección")
-            setResult(RESULT_CANCELED)
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
             finish()
         }
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuCollection)
     }
 
     private fun crearColeccion(nombre: String, descripcion: String) {

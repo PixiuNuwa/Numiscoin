@@ -11,16 +11,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import cl.numiscoin2.adapters.EventoHorizontalAdapter
 import cl.numiscoin2.network.NetworkEventUtils
 import java.util.Calendar
 
 class MarketplaceActivity : BaseActivity() {
 
     private val TAG = "MarketplaceActivity"
-    private lateinit var eventosGridView: GridView
+    private lateinit var eventosRecyclerView: RecyclerView
     private lateinit var calendarGridView: GridView
     private var eventosList: List<Evento> = emptyList()
     private var eventosDelMes: List<Evento> = emptyList()
+
+    // Adapter para eventos horizontales (igual que en WelcomeActivity)
+    private lateinit var eventosAdapter: EventoHorizontalAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +41,20 @@ class MarketplaceActivity : BaseActivity() {
         //
         setContentView(R.layout.activity_marketplace)
 
-        eventosGridView = findViewById(R.id.eventosGridView)
+        // Inicializar RecyclerView para eventos (igual que en WelcomeActivity)
+        eventosRecyclerView = findViewById(R.id.eventosRecyclerView)
         calendarGridView = findViewById(R.id.calendarGridView)
 
-        // Cargar eventos futuros para la galería
+        // Configurar LayoutManager horizontal para eventos (igual que en WelcomeActivity)
+        val eventosLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        eventosRecyclerView.layoutManager = eventosLayoutManager
+        eventosRecyclerView.setHasFixedSize(true)
+
+        // Inicializar adapter para eventos (igual que en WelcomeActivity)
+        eventosAdapter = EventoHorizontalAdapter()
+        eventosRecyclerView.adapter = eventosAdapter
+
+        // Cargar eventos futuros para la galería (usando el mismo patrón que WelcomeActivity)
         cargarEventosFuturos()
 
         // Cargar eventos del mes actual para el calendario
@@ -46,7 +62,7 @@ class MarketplaceActivity : BaseActivity() {
 
         // Configurar menú inferior
         setupBottomMenu()
-        highlightMenuItem(R.id.menuMarketplace) // Marcar Home como seleccionado
+        highlightMenuItem(R.id.menuMarketplace)
     }
 
     private fun cargarEventosFuturos() {
@@ -54,12 +70,12 @@ class MarketplaceActivity : BaseActivity() {
             runOnUiThread {
                 if (error == null && eventos != null) {
                     this.eventosList = eventos
-                    val adapter = EventoAdapter(this, eventos)
-                    eventosGridView.adapter = adapter
 
-                    eventosGridView.setOnItemClickListener { _, _, position, _ ->
-                        val evento = eventos[position]
-                        //mostrarDetalleEvento(evento)
+                    // Actualizar adapter con los eventos (igual que en WelcomeActivity)
+                    eventosAdapter.actualizarEventos(eventos)
+
+                    // Configurar click listener (igual que en WelcomeActivity)
+                    eventosAdapter.onItemClick = { evento ->
                         EventoDetailActivity.start(this, evento.idEvento)
                     }
 
@@ -140,5 +156,4 @@ class MarketplaceActivity : BaseActivity() {
 
         Log.d(TAG, "Calendario configurado: $diasEnMes días, $totalCeldas celdas, ${diasCalendario.size} items")
     }
-
 }

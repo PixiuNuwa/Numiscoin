@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
@@ -76,7 +77,7 @@ class AddCoinActivity : BaseActivity() {
     private var progressDialog: ProgressDialog? = null
 
     // Variables para almacenar los datos del usuario
-    private var idUsuario: Int = 0
+    private var idUsuario: Long = 0L
     private var idColeccion: Int = 0
 
     private var listaPaises: List<Pais> = emptyList()
@@ -95,13 +96,22 @@ class AddCoinActivity : BaseActivity() {
         //
         setContentView(R.layout.activity_add_coin)
 
+        setupBottomMenu()
+        highlightMenuItem(R.id.menuCollection)
+
         // Obtener los datos del usuario del Intent
         obtenerDatosUsuario()
 
+        val backButton = findViewById<ImageButton>(R.id.btnBack)
+        backButton.setOnClickListener {
+            finish()
+        }
         initViews()
         cargarPaises()
         setupListeners()
         setupProgressDialog()
+
+
     }
 
     private fun obtenerDatosUsuario() {
@@ -109,12 +119,15 @@ class AddCoinActivity : BaseActivity() {
         val usuario = SessionManager.usuario
 
         if (usuario != null) {
-            idUsuario = usuario.idUsuario.toInt() // Obtener idUsuario del objeto Usuario
-            idColeccion = intent.getIntExtra("idColeccion", 0) // Obtener idColeccion del extra individual
+            idUsuario = usuario.idUsuario // Obtener idUsuario del objeto Usuario
+
+            // CAMBIO AQUÍ: Obtener como Long y convertir a Int
+            idColeccion = intent.getLongExtra("idColeccion", 0L).toInt()
+            // O también puedes usar: idColeccion = intent.getIntExtra("idColeccion", 0)
 
             Log.d(TAG, "Datos usuario recibidos - idUsuario: $idUsuario, idColeccion: $idColeccion")
 
-            if (idUsuario == 0 || idColeccion == 0) {
+            if (idUsuario == 0L || idColeccion == 0) {
                 Log.w(TAG, "Advertencia: Datos incompletos - idUsuario: $idUsuario, idColeccion: $idColeccion")
                 Toast.makeText(this, "Error: No se pudo identificar la colección", Toast.LENGTH_SHORT).show()
             }
@@ -245,7 +258,7 @@ class AddCoinActivity : BaseActivity() {
 
     private fun guardarMoneda() {
         // Verificar que tenemos los datos del usuario
-        if (idUsuario == 0 || idColeccion == 0) {
+        if (idUsuario == 0L || idColeccion == 0) {
             Toast.makeText(this, "Error: No se pudo identificar la colección del usuario", Toast.LENGTH_SHORT).show()
             return
         }
@@ -326,7 +339,7 @@ class AddCoinActivity : BaseActivity() {
             idPais = idPais!!,
             anio = anioInt!!,
             idTipoObjeto = 1, // Siempre 1 para monedas
-            idUsuario = idUsuario,
+            idUsuario = idUsuario.toInt(),
             idColeccion = idColeccion,
             familia = "NA",
             idFamilia = 0,

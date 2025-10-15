@@ -30,7 +30,7 @@ class ValoresTabFragment : Fragment() {
         // Configurar los datos en la UI
         objeto.monedaInfo?.let { info ->
             view.findViewById<TextView>(R.id.tvTotalProducido).text = info.totalProducido ?: "No especificado"
-            view.findViewById<TextView>(R.id.tvValorSinCircular).text = info.valorSinCircular ?: "No especificado"
+            //view.findViewById<TextView>(R.id.tvValorSinCircular).text = info.valorSinCircular ?: "No especificado"
             view.findViewById<TextView>(R.id.tvValorComercial).text = info.valorComercial ?: "No especificado"
             view.findViewById<TextView>(R.id.tvValorAdquirido).text = info.valorAdquirido ?: "No especificado"
         }

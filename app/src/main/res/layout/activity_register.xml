@@ -104,7 +104,8 @@
                             android:paddingLeft="21dp"
                             android:paddingRight="42dp"
                             android:paddingVertical="11dp"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="13sp" />
 
                         <!-- Apellido -->
@@ -119,7 +120,8 @@
                             android:paddingLeft="21dp"
                             android:paddingRight="42dp"
                             android:paddingVertical="14dp"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp" />
 
                         <!-- Email -->
@@ -134,7 +136,8 @@
                             android:paddingLeft="21dp"
                             android:paddingRight="42dp"
                             android:paddingVertical="14dp"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp" />
 
                         <!-- Contraseña -->
@@ -149,7 +152,8 @@
                             android:paddingLeft="21dp"
                             android:paddingRight="42dp"
                             android:paddingVertical="16dp"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp" />
 
                         <!-- Confirmar Contraseña -->
@@ -163,7 +167,8 @@
                             android:paddingLeft="21dp"
                             android:paddingRight="42dp"
                             android:paddingVertical="14dp"
-                            android:textColor="@color/text_gray"
+                            android:textColor="@color/text_dark"
+                            android:textColorHint="@color/text_gray"
                             android:textSize="12sp" />
                     </LinearLayout>
 
