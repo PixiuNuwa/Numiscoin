@@ -12,7 +12,7 @@
         android:id="@+id/onboardingImage"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:scaleType="centerInside" />
 
     <!-- Título -->
@@ -20,11 +20,11 @@
         android:id="@+id/onboardingTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:text="Título"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textColor="@color/text_light"
+        android:textSize="@dimen/text_xl"
         android:textStyle="bold" />
 
     <!-- Descripción -->
@@ -36,7 +36,7 @@
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:text="Descripción"
-        android:textColor="@color/gray"
-        android:textSize="16sp" />
+        android:textColor="@color/text_light"
+        android:textSize="@dimen/text_l" />
 
 </LinearLayout>
