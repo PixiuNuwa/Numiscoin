@@ -48,16 +48,16 @@ class FAQActivity : BaseActivity() {
             "Por defecto, solo tú puedes ver tus colecciones. Tu privacidad es nuestra prioridad. Si en algún momento deseas compartir los items de tu colección, puedes hacerlo fácilmente utilizando la función de compartir dentro de la App."
         ))
         faqList.add(FAQ(
-            "¿Pregunta 2?",
-            "bla bla bla yadda yadda."
+            "¿Cuantas fotos puedo subir?",
+            "Tu aplicación tiene 3 estatus silver, gold y platinoum; y según ese estatus es la cantidad de fotos que puedes subir."
         ))
         faqList.add(FAQ(
-            "¿Pregunta 3?",
-            "bla bla bla yadda yadda."
+            "¿Puedo sólo incorporar monedas?",
+            "No, tu aplicación pronto te permitirá coleccionar medallas, billetes y otras antiguedades, te estaremos avisando."
         ))
         faqList.add(FAQ(
-            "¿Pregunta 4?",
-            "bla bla bla yadda yadda."
+            "¿Si tengo dudas luego de haber adquirido la aplicación,  como obtendré ayuda?",
+            "No te preocupes en contacto siempre tendrás alguien que te ayude con el uso de la misma, pero además contarás con nuestro tutorial."
         ))
         faqList.add(FAQ(
             "¿Pregunta 5?",

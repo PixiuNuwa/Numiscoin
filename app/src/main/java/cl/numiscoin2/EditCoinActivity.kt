@@ -6,11 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import cl.numiscoin2.network.NetworkConfig
 import cl.numiscoin2.network.NetworkObjectUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -237,10 +239,11 @@ class EditCoinActivity : BaseActivity() {
         val eliminarButtons = listOf(btnEliminarFoto1, btnEliminarFoto2, btnEliminarFoto3, btnEliminarFoto4)
 
         for (i in 0 until 4) {
-            val uri = fotosSeleccionadas[i]
+            val uri = NetworkConfig.construirUrlCompleta(fotosSeleccionadas[i].toString())
             val imageView = imageViews[i]
+            Log.d("EditCoinActivity","esta es la foto: ${uri}")
 
-            if (uri != null) {
+            if (fotosSeleccionadas[i] != null) {
                 // Forzar recarga evitando cache
                 Glide.with(this)
                     .load(uri)
