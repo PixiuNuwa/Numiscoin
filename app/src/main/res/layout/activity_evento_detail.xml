@@ -54,7 +54,6 @@
                         android:id="@+id/eventoPoster"
                         android:layout_width="match_parent"
                         android:layout_height="295dp"
-                        android:background="@drawable/lr2701a1a1ad91a1a1a00"
                         android:scaleType="centerCrop" />
 
                     <!-- Contenedor título y fecha -->

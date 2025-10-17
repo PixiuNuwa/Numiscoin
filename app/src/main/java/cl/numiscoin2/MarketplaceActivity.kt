@@ -22,6 +22,7 @@ class MarketplaceActivity : BaseActivity() {
     private val TAG = "MarketplaceActivity"
     private lateinit var eventosRecyclerView: RecyclerView
     private lateinit var calendarGridView: GridView
+    private lateinit var calendarTitleTextView: TextView // Nuevo TextView para el título
     private var eventosList: List<Evento> = emptyList()
     private var eventosDelMes: List<Evento> = emptyList()
 
@@ -44,6 +45,7 @@ class MarketplaceActivity : BaseActivity() {
         // Inicializar RecyclerView para eventos (igual que en WelcomeActivity)
         eventosRecyclerView = findViewById(R.id.eventosRecyclerView)
         calendarGridView = findViewById(R.id.calendarGridView)
+        calendarTitleTextView = findViewById(R.id.calendarTitleTextView) // Inicializar el TextView
 
         // Configurar LayoutManager horizontal para eventos (igual que en WelcomeActivity)
         val eventosLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -109,6 +111,9 @@ class MarketplaceActivity : BaseActivity() {
     }
 
     private fun configurarCalendario(año: Int, mes: Int, eventos: List<Evento>) {
+        // Actualizar el título del calendario con mes y año
+        actualizarTituloCalendario(mes, año)
+
         val calendar = Calendar.getInstance().apply {
             set(Calendar.YEAR, año)
             set(Calendar.MONTH, mes - 1)
@@ -155,5 +160,16 @@ class MarketplaceActivity : BaseActivity() {
         calendarGridView.adapter = adapter
 
         Log.d(TAG, "Calendario configurado: $diasEnMes días, $totalCeldas celdas, ${diasCalendario.size} items")
+    }
+
+    private fun actualizarTituloCalendario(mes: Int, año: Int) {
+        val nombresMeses = arrayOf(
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        )
+
+        val nombreMes = nombresMeses.getOrElse(mes - 1) { "Mes $mes" }
+        val titulo = "$nombreMes $año"
+        calendarTitleTextView.text = titulo
     }
 }

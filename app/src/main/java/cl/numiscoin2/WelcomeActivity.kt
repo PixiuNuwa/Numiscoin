@@ -1,3 +1,4 @@
+//<<WelcomeActivity.kt
 package cl.numiscoin2
 
 import android.content.Context
@@ -9,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.GridView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -33,7 +35,7 @@ class WelcomeActivity : BaseActivity() {
     //private lateinit var eventosGridView: GridView
 
     private lateinit var objetosRecientesGridView: GridView
-    private lateinit var settingsButton: ImageButton
+    private lateinit var settingsButton: ImageView
     private lateinit var totalColeccionValor: TextView
     private lateinit var totalItemsCount: TextView
     private lateinit var totalGastadoValor: TextView
@@ -77,6 +79,10 @@ class WelcomeActivity : BaseActivity() {
         try {
             settingsButton = findViewById(R.id.settingsButton)
             Log.d(TAG, "onCreate: settingsButton encontrado - $settingsButton")
+
+            // CARGAR FOTO DEL USUARIO EN EL BOTÓN
+            cargarFotoUsuario()
+
         } catch (e: Exception) {
             Log.e(TAG, "onCreate: ERROR - No se pudo encontrar settingsButton", e)
             Toast.makeText(this, "Error: No se encontró el botón de configuración", Toast.LENGTH_LONG).show()
@@ -154,6 +160,39 @@ class WelcomeActivity : BaseActivity() {
         Log.d(TAG, "onCreate: UI configurada correctamente")
     }
 
+    private fun cargarFotoUsuario() {
+        usuario?.let { usuario ->
+            try {
+                // Verificar si el usuario tiene una foto
+                if (usuario.foto.isNotEmpty()) {
+                    // Construir la URL completa de la foto
+                    //val fotoUrl = "${NetworkConfig.BASE_URL}${usuario.foto}"
+                    val fotoUrl = NetworkConfig.construirUrlCompleta(usuario.foto)
+                    Log.d(TAG, "cargarFotoUsuario: Cargando foto desde: $fotoUrl")
+
+                    // Usar Glide para cargar la imagen en el ImageButton
+                    Glide.with(this)
+                        .load(fotoUrl)
+                        .placeholder(R.drawable.ic_settings_white) // Placeholder por si falla
+                        .error(R.drawable.ic_settings_white) // Imagen de error
+                        .circleCrop() // Recortar en círculo para que quede bien en el botón redondo
+                        .into(settingsButton)
+
+                    Log.d(TAG, "cargarFotoUsuario: Foto cargada exitosamente")
+                } else {
+                    Log.d(TAG, "cargarFotoUsuario: El usuario no tiene foto, usando ícono por defecto")
+                    settingsButton.setImageResource(R.drawable.ic_settings_white)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "cargarFotoUsuario: Error al cargar la foto del usuario", e)
+                settingsButton.setImageResource(R.drawable.ic_settings_white)
+            }
+        } ?: run {
+            Log.e(TAG, "cargarFotoUsuario: No hay usuario disponible")
+            settingsButton.setImageResource(R.drawable.ic_settings_white)
+        }
+    }
+
     private fun inicializarVistasTotales() {
         totalColeccionValor = findViewById(R.id.totalColeccionValor)
         totalItemsCount = findViewById(R.id.totalItemsCount)
@@ -227,7 +266,7 @@ class WelcomeActivity : BaseActivity() {
 
             // Total Gastado (en negativo y en rojo como en el diseño original)
             val totalGastado = totales.totalGastado ?: 0
-            totalGastadoValor.text = "-${formatoMoneda.format(totalGastado)}"
+            totalGastadoValor.text = formatoMoneda.format(totalGastado)
 
             Log.d(TAG, "actualizarVistasConTotales: Vistas actualizadas correctamente")
         } catch (e: Exception) {
@@ -242,7 +281,8 @@ class WelcomeActivity : BaseActivity() {
 
         totalColeccionValor.text = formatoMoneda.format(0)
         totalItemsCount.text = "0"
-        totalGastadoValor.text = "-${formatoMoneda.format(0)}"
+        //totalGastadoValor.text = "-${formatoMoneda.format(0)}"
+        totalGastadoValor.text = formatoMoneda.format(0)
     }
 
     /*private fun cargarEventosFuturos() {
@@ -304,4 +344,3 @@ class WelcomeActivity : BaseActivity() {
         }
     }
 }
-//>>WelcomeActivity.kt (modificado)

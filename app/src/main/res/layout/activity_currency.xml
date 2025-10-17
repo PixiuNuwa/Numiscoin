@@ -35,7 +35,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="19dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/ic_currency"
                     android:scaleType="fitXY" />
 
                 <TextView
@@ -99,7 +99,7 @@
                                 android:layout_width="12dp"
                                 android:layout_height="12dp"
                                 android:layout_marginEnd="5dp"
-                                android:src="@mipmap/ic_launcher"
+                                android:src="@drawable/ic_usd"
                                 android:scaleType="fitXY" />
 
                             <TextView
@@ -147,7 +147,7 @@
                                 android:layout_width="12dp"
                                 android:layout_height="12dp"
                                 android:layout_marginEnd="5dp"
-                                android:src="@mipmap/ic_launcher"
+                                android:src="@drawable/ic_eur"
                                 android:scaleType="fitXY" />
 
                             <TextView
@@ -202,7 +202,7 @@
                     <!-- Input de monto y spinner FROM -->
                     <LinearLayout
                         android:id="@+id/rzhh92htdbf"
-                        android:layout_width="300dp"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:background="@drawable/btn_white_square"
@@ -256,7 +256,7 @@
                     android:id="@+id/rqjyieyp1jwi"
                     android:layout_width="43dp"
                     android:layout_height="21dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/ic_arrow_down"
                     android:scaleType="fitXY" />
             </LinearLayout>
 
@@ -288,7 +288,7 @@
                     <!-- Spinner TO -->
                     <LinearLayout
                         android:id="@+id/rs1hazobtbtf"
-                        android:layout_width="300dp"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:background="@drawable/btn_white_square"

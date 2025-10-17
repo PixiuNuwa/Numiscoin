@@ -50,16 +50,26 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <ImageButton
-                android:id="@+id/settingsButton"
+            <!-- Foto de perfil redonda en lugar del engranaje -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginEnd="12dp"
-                android:background="@drawable/btn_darkgreen_circle"
-                android:src="@drawable/ic_settings_white"
-                android:scaleType="centerInside"
-                android:contentDescription="Ajustes"
-                android:elevation="4dp" />
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/settingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Foto de perfil"
+                    android:src="@drawable/ic_profile" />
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
@@ -107,7 +117,7 @@
                             android:id="@+id/totalColeccionLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Colección"
+                            android:text="Total Valor Comercial"
                             android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
@@ -171,7 +181,7 @@
                             android:id="@+id/totalGastadoLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Gastado"
+                            android:text="Total Valor Adquirido"
                             android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
@@ -180,8 +190,8 @@
                             android:id="@+id/totalGastadoValor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-$1.187.40"
-                            android:textColor="#DC2626"
+                            android:text="$1.187.40"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 

@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -74,8 +75,10 @@ class RegisterActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
             val confirmPassword = confirmPasswordEditText.text.toString()
 
+            Log.d("RegisterActivity","setupListeners")
             if (validateInputs(nombre, apellido, email, password, confirmPassword)) {
                 showLoading(true)
+                Log.d("RegisterActivity","datos validos")
                 registerUser(nombre, apellido, email, password)
             }
         }
@@ -95,6 +98,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun validateInputs(nombre: String, apellido: String, email: String, password: String, confirmPassword: String): Boolean {
+        Log.d("RegisterActivity","validando inputs")
         // Validación de campos vacíos
         if (nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -129,6 +133,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun registerUser(nombre: String, apellido: String, email: String, password: String) {
+        Log.d("RegisterActivity","A registrar usuario")
         NetworkUserUtils.performRegister(nombre, apellido, email, password) { success, message, usuario ->
             runOnUiThread {
                 if (success && usuario != null) {

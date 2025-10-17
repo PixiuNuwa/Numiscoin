@@ -96,7 +96,7 @@
                             android:id="@+id/totalColeccionLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Colección"
+                            android:text="Total Valor Comercial"
                             android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
@@ -160,7 +160,7 @@
                             android:id="@+id/totalGastadoLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Gastado"
+                            android:text="Total Valor Adquirido"
                             android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:layout_marginBottom="4dp" />
@@ -170,7 +170,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-$1.187.40"
-                            android:textColor="#DC2626"
+                            android:textColor="@color/text_dark"
                             android:textSize="@dimen/text_size_small"
                             android:textStyle="bold" />
 

@@ -1,106 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/background_dark"
+android:fitsSystemWindows="true">
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
-    android:fitsSystemWindows="true">
+    android:layout_above="@+id/bottomMenuContainer"
+    android:fillViewport="true">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomMenuContainer"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <LinearLayout
+        <!-- Tarjeta de Calendario -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
 
-            <!-- Tarjeta de Calendario -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="@color/background_green">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Calendario de Eventos"
-                        android:textColor="@color/text_light"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp" />
-
-                    <!-- GridView del calendario -->
-                    <GridView
-                        android:id="@+id/calendarGridView"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:numColumns="7"
-                        android:verticalSpacing="1dp"
-                        android:horizontalSpacing="1dp"
-                        android:background="@color/primary_green"
-                        android:padding="4dp" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Sección de Próximos Eventos - Mismo estilo que WelcomeActivity -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/btn_green_square"
                 android:padding="16dp"
-                android:layout_marginBottom="16dp">
+                android:background="@color/background_green">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Próximos Eventos"
+                    android:text="Calendario de Eventos"
                     android:textColor="@color/text_light"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />
 
-                <!-- RecyclerView horizontal para eventos - Mismo que WelcomeActivity -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/eventosRecyclerView"
+                <!-- Nuevo TextView para mostrar mes y año -->
+                <TextView
+                    android:id="@+id/calendarTitleTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:paddingHorizontal="8dp"
-                    android:clipToPadding="false" />
+                    android:layout_height="wrap_content"
+                    android:text="Mes Año"
+                    android:textColor="@color/text_light"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp"
+                    android:padding="8dp"
+                    android:background="@drawable/btn_darkgreen_square" />
+
+                <!-- GridView del calendario -->
+                <GridView
+                    android:id="@+id/calendarGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:numColumns="7"
+                    android:verticalSpacing="1dp"
+                    android:horizontalSpacing="1dp"
+                    android:background="@color/primary_green"
+                    android:padding="4dp" />
 
             </LinearLayout>
 
+        </androidx.cardview.widget.CardView>
+
+        <!-- Sección de Próximos Eventos - Mismo estilo que WelcomeActivity -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/btn_green_square"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Próximos Eventos"
+                android:textColor="@color/text_light"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <!-- RecyclerView horizontal para eventos - Mismo que WelcomeActivity -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/eventosRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingHorizontal="8dp"
+                android:clipToPadding="false" />
+
         </LinearLayout>
 
-    </ScrollView>
-
-    <!-- Contenedor del menú inferior -->
-    <LinearLayout
-        android:id="@+id/bottomMenuContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/background_dark"
-        android:paddingVertical="8dp">
-
-        <include layout="@layout/bottom_menu" />
-
     </LinearLayout>
+
+</ScrollView>
+
+<!-- Contenedor del menú inferior -->
+<LinearLayout
+    android:id="@+id/bottomMenuContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/background_dark"
+    android:paddingVertical="8dp">
+
+    <include layout="@layout/bottom_menu" />
+
+</LinearLayout>
 
 </RelativeLayout>

@@ -34,16 +34,6 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
     </style>
 
-    <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primary_green</item>
-        <item name="colorPrimaryVariant">@color/button_green</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/background_dark</item>
-        <!--item name="dialogCornerRadius">16dp</item>
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.NumisCoin.Small</item-->
-    </style>
-
     <!-- Style for membership cards -->
     <style name="MembershipCardStyle" parent="Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">@dimen/card_corner_radius</item>
@@ -101,5 +91,18 @@
         <item name="android:textSize">8sp</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BaseAppTheme" parent="Theme.Material3.DayNight">
+        <item name="android:fontFamily">@font/arial</item>
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/button_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

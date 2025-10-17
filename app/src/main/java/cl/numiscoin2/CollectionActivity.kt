@@ -363,7 +363,7 @@ class CollectionActivity : BaseActivity() {
 
             // Total Gastado (en negativo y en rojo como en el diseño original)
             val totalGastado = totales.totalGastado ?: 0
-            totalGastadoValor.text = "-${formatoMoneda.format(totalGastado)}"
+            totalGastadoValor.text = formatoMoneda.format(totalGastado)
 
             Log.d(TAG, "actualizarVistasConTotales: Vistas actualizadas correctamente")
         } catch (e: Exception) {
@@ -378,6 +378,6 @@ class CollectionActivity : BaseActivity() {
 
         totalColeccionValor.text = formatoMoneda.format(0)
         totalItemsCount.text = "0"
-        totalGastadoValor.text = "-${formatoMoneda.format(0)}"
+        totalGastadoValor.text = formatoMoneda.format(0)
     }
 }

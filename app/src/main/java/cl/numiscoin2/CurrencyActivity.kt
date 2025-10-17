@@ -263,7 +263,7 @@ class CurrencyActivity : BaseActivity() {
         val toCurrency = toSpinner.selectedItem.toString()
 
         val result = convertCurrency(amount, fromCurrency, toCurrency)
-        resultText.text = String.format("%,.2f %s = %,.2f %s", amount, fromCurrency, result, toCurrency)
+        resultText.text = String.format("%,.2f",  result)//String.format("%,.2f %s = %,.2f %s", amount, fromCurrency, result, toCurrency)
     }
 
     private fun performGoldConversion() {

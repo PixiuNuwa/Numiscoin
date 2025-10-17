@@ -79,7 +79,7 @@
                             android:layout_height="106dp"
                             android:src="@mipmap/ic_launcher"
                             android:scaleType="centerCrop"
-                            android:background="@drawable/cr20" />
+                            android:background="@drawable/btn_darkgreen_square" />
 
                         <!-- Ícono de edición superpuesto -->
                         <ImageButton
@@ -130,7 +130,7 @@
                     android:id="@+id/rlyzir81kbjs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/cr20"
+                    android:background="@drawable/btn_darkgreen_square"
                     android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/rqdwwb60ki7"
