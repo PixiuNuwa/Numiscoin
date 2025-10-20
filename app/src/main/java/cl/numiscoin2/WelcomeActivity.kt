@@ -110,10 +110,9 @@ class WelcomeActivity : BaseActivity() {
         objetosRecientesAdapter = ObjetoRecienteHorizontalAdapter()
         objetosRecientesRecyclerView.adapter = objetosRecientesAdapter
 
-        welcomeMessage.text = "Bienvenido $userName."
+        welcomeTitle.text = "Hola $userName,"
 
-        welcomeMessage.text = "Hola $userName, bienvenido a NumisCoin.\n" +
-                "Aquí podrás ver los próximos eventos numismáticos."
+        welcomeMessage.text = "bienvenido a Numiscoin, aquí están tus próximos eventos numismáticos."
 
         settingsButton.setOnClickListener {
             Log.d(TAG, "settingsButton: Clic detectado en botón configuración")

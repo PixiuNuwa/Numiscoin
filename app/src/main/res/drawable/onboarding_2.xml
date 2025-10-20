@@ -1,46 +1,17 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="296dp"
-    android:height="235dp"
-    android:viewportWidth="296"
-    android:viewportHeight="235">
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo semitransparente -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/background_dark" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
 
-    <group>
-        <!-- Fondo -->
-        <path
-            android:pathData="M0,0h296v235h-296z"
-            android:fillColor="#01b76a"
-            android:fillAlpha="0.1"/>
-
-        <!-- Iconos de herramientas - Cuadrado -->
-        <path
-            android:pathData="M80,80 L120,80 L120,120 L80,120 Z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="2"
-            android:fillColor="#00000000"
-            android:strokeLineCap="round"
-            android:strokeLineJoin="round"/>
-
-        <!-- Círculo -->
-        <path
-            android:pathData="M180,100 a20,20 0 1,1 0.1,0z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="2"
-            android:fillColor="#00000000"/>
-
-        <!-- Línea horizontal -->
-        <path
-            android:pathData="M100,150 L220,150"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="3"
-            android:strokeLineCap="round"/>
-
-        <!-- Icono calculadora -->
-        <path
-            android:pathData="M130,170 L170,170 L170,190 L130,190 Z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="2"
-            android:fillColor="#00000000"
-            android:strokeLineCap="round"
-            android:strokeLineJoin="round"/>
-    </group>
-</vector>
+    <!-- Imagen de colección -->
+    <item
+        android:drawable="@drawable/onboard_2"
+        android:gravity="center"
+        android:width="240dp"
+        android:height="140dp" />
+</layer-list>

@@ -120,11 +120,12 @@
             </com.google.android.material.tabs.TabLayout>
 
             <!-- ViewPager para el contenido de las tabs -->
+            <!-- Reemplaza el ViewPager2 actual por este: -->
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerInfo"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:minHeight="400dp"
                 android:layout_marginBottom="24dp" />
 
             <!-- Botones de acción -->

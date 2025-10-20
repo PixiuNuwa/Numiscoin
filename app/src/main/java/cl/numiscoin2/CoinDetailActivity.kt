@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
@@ -250,8 +251,16 @@ class CoinDetailActivity : BaseActivity() {
         val viewPager = findViewById<ViewPager2>(R.id.viewPagerInfo)
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
-        val adapter = InfoPagerAdapter(this) // Pasar 'this' como FragmentActivity
+        val adapter = InfoPagerAdapter(this)
         viewPager.adapter = adapter
+
+        // Configurar altura dinámica
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                adjustViewPagerHeight(viewPager, position)
+            }
+        })
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
@@ -261,6 +270,36 @@ class CoinDetailActivity : BaseActivity() {
                 else -> "Tab"
             }
         }.attach()
+
+        // Ajustar altura inicial
+        viewPager.post {
+            adjustViewPagerHeight(viewPager, 0)
+        }
+    }
+
+    private fun adjustViewPagerHeight(viewPager: ViewPager2, position: Int) {
+        val currentFragment = getFragmentAtPosition(position)
+        val fragmentView = currentFragment?.view
+
+        fragmentView?.post {
+            // Medir la altura necesaria
+            fragmentView.measure(
+                View.MeasureSpec.makeMeasureSpec(viewPager.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            )
+
+            val measuredHeight = fragmentView.measuredHeight
+            if (measuredHeight > 0) {
+                val layoutParams = viewPager.layoutParams
+                // Agregar un pequeño margen para evitar cortes
+                layoutParams.height = measuredHeight + 50
+                viewPager.layoutParams = layoutParams
+            }
+        }
+    }
+
+    private fun getFragmentAtPosition(position: Int): Fragment? {
+        return supportFragmentManager.findFragmentByTag("f$position")
     }
 
     private inner class InfoPagerAdapter(fragmentActivity: FragmentActivity) :

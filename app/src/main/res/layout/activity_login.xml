@@ -71,7 +71,7 @@
                         android:id="@+id/r29scd7955ui"
                         android:layout_width="97dp"
                         android:layout_height="93dp"
-                        android:src="@drawable/logo_numiscoin"
+                        android:src="@drawable/numiscoin_logo"
                         android:scaleType="fitXY"
                         android:contentDescription="@string/app_logo" />
 

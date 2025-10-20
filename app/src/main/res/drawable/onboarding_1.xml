@@ -1,39 +1,17 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="299dp"
-    android:height="192dp"
-    android:viewportWidth="299"
-    android:viewportHeight="192">
-    <group>
-        <!-- Fondo -->
-        <rect
-            android:width="299dp"
-            android:height="192dp"
-            android:fillColor="#01b76a"
-            android:fillAlpha="0.1"/>
-        <!-- Icono de colección -->
-        <path
-            android:pathData="M50,50 L100,50 L100,100 L50,100 Z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="3"
-            android:fillColor="#00000000"/>
-        <path
-            android:pathData="M120,60 L180,60 L180,90 L120,90 Z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="2"
-            android:fillColor="#00000000"/>
-        <path
-            android:pathData="M200,70 L250,70 L250,110 L200,110 Z"
-            android:strokeColor="#01b76a"
-            android:strokeWidth="3"
-            android:fillColor="#00000000"/>
-        <!-- Texto placeholder -->
-        <text
-            android:text="Colección"
-            android:textSize="16sp"
-            android:textColor="#01b76a"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </group>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo semitransparente -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/background_dark" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <!-- Imagen de colección -->
+    <item
+        android:drawable="@drawable/onboard_1"
+        android:gravity="center"
+        android:width="240dp"
+        android:height="140dp" />
+</layer-list>

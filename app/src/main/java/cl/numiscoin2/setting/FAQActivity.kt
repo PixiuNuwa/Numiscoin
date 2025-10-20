@@ -60,12 +60,12 @@ class FAQActivity : BaseActivity() {
             "No te preocupes en contacto siempre tendrás alguien que te ayude con el uso de la misma, pero además contarás con nuestro tutorial."
         ))
         faqList.add(FAQ(
-            "¿Pregunta 5?",
-            "bla bla bla yadda yadda."
+            "¿Donde puedo obtener información para clasificar monedas?",
+            "Pronto estaremos subiendo catálogos que servirán y a los que accederes por el sólo hecho de formar parte de Numiscoin."
         ))
         faqList.add(FAQ(
-            "¿Pregunta 6?",
-            "bla bla bla yadda yadda."
+            "¿Sí mas adelante quiero vender mi colección, la aplicación me servirá?",
+            "Sí,  pronto estará activo nuestro Markplace."
         ))
     }
 
