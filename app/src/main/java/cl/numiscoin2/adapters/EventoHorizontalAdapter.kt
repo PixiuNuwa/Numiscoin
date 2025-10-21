@@ -1,6 +1,7 @@
 package cl.numiscoin2.adapters
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class EventoHorizontalAdapter : RecyclerView.Adapter<EventoHorizontalAdapter.Eve
         holder.eventName.setTextColor(Color.parseColor("#000000"))
 
         holder.eventDate.text = formatDate(evento.fechaInicio)
+        Log.d("EventHorizontalAdapter","fecha inicio evento: ${evento.fechaInicio}")
         holder.eventDate.setTextColor(Color.parseColor("#696969"))
     }
 

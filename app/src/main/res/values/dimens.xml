@@ -93,6 +93,7 @@
     <dimen name="spacing_xxxl">32dp</dimen>
 
     <!-- Tamaños de texto -->
+    <dimen name="text_xxs">8sp</dimen>
     <dimen name="text_xs">10sp</dimen>
     <dimen name="text_s">12sp</dimen>
     <dimen name="text_m">14sp</dimen>

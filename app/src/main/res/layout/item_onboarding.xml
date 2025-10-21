@@ -37,6 +37,6 @@
         android:lineSpacingExtra="4dp"
         android:text="Descripción"
         android:textColor="@color/text_light"
-        android:textSize="@dimen/text_l" />
+        android:textSize="@dimen/text_xxs" />
 
 </LinearLayout>

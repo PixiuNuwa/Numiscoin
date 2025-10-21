@@ -284,32 +284,12 @@ class WelcomeActivity : BaseActivity() {
         totalGastadoValor.text = formatoMoneda.format(0)
     }
 
-    /*private fun cargarEventosFuturos() {
-        NetworkEventUtils.getEventosFuturos { eventos, error ->
-            runOnUiThread {
-                if (error == null && eventos != null) {
-                    this.eventosList = eventos
-                    val adapter = EventoAdapter(this, eventos)
-                    eventosGridView.adapter = adapter
-
-                    eventosGridView.setOnItemClickListener { _, _, position, _ ->
-                        val evento = eventos[position]
-                        EventoDetailActivity.start(this, evento.idEvento)
-                    }
-
-                    Log.d(TAG, "Cargados ${eventos.size} eventos futuros")
-                } else {
-                    Toast.makeText(this, "Error al cargar eventos futuros: $error", Toast.LENGTH_LONG).show()
-                    Log.e(TAG, "Error al cargar eventos futuros: $error")
-                }
-            }
-        }
-    }*/
     private fun cargarEventosFuturos() {
         NetworkEventUtils.getEventosFuturos { eventos, error ->
             runOnUiThread {
                 if (error == null && eventos != null) {
                     this.eventosList = eventos
+                    Log.d("WelcomeActivity","eventos: ${eventos}")
                     eventosAdapter.actualizarEventos(eventos)
 
                     // Configurar click listener

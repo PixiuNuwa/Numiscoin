@@ -123,6 +123,7 @@ class EventoDetailActivity : BaseActivity() {
         eventoBreveDescripcion.text = evento.breveDescripcion
         eventoDescripcion.text = evento.descripcion
 
+        Log.d("EventoDetailActivity", "Fecha Ini: ${formatearFecha(evento.fechaInicio)}")
         // Formatear fecha
         val fechaFormateada = if (evento.fechaInicio == evento.fechaFin) {
             "Fecha: ${formatearFecha(evento.fechaInicio)}"

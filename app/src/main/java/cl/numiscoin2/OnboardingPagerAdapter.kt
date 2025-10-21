@@ -14,18 +14,18 @@ class OnboardingPagerAdapter(private val activity: Activity) : RecyclerView.Adap
 
     private val onboardingItems = listOf(
         OnboardingItem(
-            "Bienvenido",
-            "Descubre todas las funcionalidades de nuestra aplicación",
+            "Tu colección, siempre contigo",
+            "Organiza, visualiza y protege tus tesoros numismáticos en un solo lugar. Desde monedas raras hasta billetes históricos, tu colección cobra vida con orden y estilo.",
             R.drawable.onboarding_1
         ),
         OnboardingItem(
-            "Conecta con otros",
-            "Encuentra y conecta con personas que comparten tus intereses",
+            "Herramientas que te organizan",
+            "Planifica tus intercambios, calcula precios y lleva el control de tus eventos con nuestra agenda y calculadora integrada. Todo lo que necesitas, al alcance de tu dedo.",
             R.drawable.onboarding_2
         ),
         OnboardingItem(
-            "Comienza ahora",
-            "Todo está listo para que empieces tu experiencia",
+            "Cambio en tiempo real",
+            "Consulta el valor actual del euro, dólar y oro en tiempo real. Toma decisiones informadas y mantente al día con el mercado numismático.",
             R.drawable.onboarding_3
         )
     )
