@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import cl.numiscoin2.network.NetworkCollectionUtils
 import cl.numiscoin2.network.NetworkConfig
+import cl.numiscoin2.network.NetworkObjectUtils
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -94,6 +95,25 @@ class ObjetosListActivity : BaseActivity() {
             intent.putExtra("idColeccion", idColeccion)
             Log.d(TAG, "Enviando idColeccion: $idColeccion a AddCoinActivity")
             startActivity(intent)
+            // VERIFICAR LÍMITE DE MONEDAS ANTES DE PROCEDER
+            /*verificarLimiteMonedas(usuarioActual.idUsuario, usuarioActual.cantidadMonedas) { puedeAgregar ->
+                if (puedeAgregar) {
+                    // Si puede agregar, abrir la actividad para agregar moneda
+                    val intent = Intent(this@ObjetosListActivity, AddCoinActivity::class.java)
+                    intent.putExtra("idColeccion", idColeccion)
+                    Log.d(TAG, "Enviando idColeccion: $idColeccion a AddCoinActivity")
+                    startActivity(intent)
+                } else {
+                    // Si no puede agregar, mostrar toast
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@ObjetosListActivity,
+                            "No se pueden agregar más monedas. Límite de membresía alcanzado.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }*/
         }
 
         // Ocultar secciones inicialmente
@@ -101,6 +121,30 @@ class ObjetosListActivity : BaseActivity() {
 
         // Cargar objetos de la colección para determinar si hay monedas
         cargarObjetosDeColeccion()
+    }
+
+    private fun verificarLimiteMonedas(idUsuario: Long, limiteMonedas: Int, callback: (Boolean) -> Unit) {
+        NetworkObjectUtils.obtenerTotalesPorUsuario(idUsuario) { totales, error ->
+            if (error != null) {
+                Log.e(TAG, "Error obteniendo totales: $error")
+                // En caso de error, permitir agregar por seguridad
+                callback(true)
+                return@obtenerTotalesPorUsuario
+            }
+
+            if (totales == null) {
+                Log.e(TAG, "No se pudieron obtener los totales")
+                // En caso de error, permitir agregar por seguridad
+                callback(true)
+                return@obtenerTotalesPorUsuario
+            }
+
+            Log.d(TAG, "Total items: ${totales.totalItems}, Límite: $limiteMonedas")
+
+            // Verificar si el total de items es menor que el límite permitido
+            val puedeAgregar = totales.totalItems!! < limiteMonedas
+            callback(puedeAgregar)
+        }
     }
 
     private fun configurarBusqueda() {

@@ -247,6 +247,7 @@ class EditCoinActivity : BaseActivity() {
                 // Forzar recarga evitando cache
                 Glide.with(this)
                     .load(uri)
+                    .placeholder(R.drawable.ic_placeholder)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .into(imageView)
@@ -368,6 +369,7 @@ class EditCoinActivity : BaseActivity() {
                 imageView?.let {
                     Glide.with(this)
                         .load(uri)
+                        .placeholder(R.drawable.ic_placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
                         .into(it)

@@ -44,7 +44,7 @@ class EventoAdapter(private val context: Context, private val eventos: List<Even
             val posterUrl = NetworkConfig.construirUrlCompleta(evento.fotoPoster)
             Glide.with(context)
                 .load(posterUrl)
-                .placeholder(R.drawable.circle_white_background)
+                .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.circle_white_background)
                 .into(holder.posterImage)
         } else {

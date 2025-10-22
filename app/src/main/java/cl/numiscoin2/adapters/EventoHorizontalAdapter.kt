@@ -46,7 +46,7 @@ class EventoHorizontalAdapter : RecyclerView.Adapter<EventoHorizontalAdapter.Eve
             val posterUrl = NetworkConfig.construirUrlCompleta(evento.fotoPoster)
             Glide.with(holder.itemView.context)
                 .load(posterUrl)
-                .placeholder(R.drawable.circle_white_background)
+                .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.circle_white_background)
                 .into(holder.posterImage)
         } else {

@@ -113,7 +113,7 @@ class EventoDetailActivity : BaseActivity() {
             val posterUrl = NetworkConfig.construirUrlCompleta(evento.fotoPoster)
             Glide.with(this)
                 .load(posterUrl)
-                .placeholder(R.drawable.circle_white_background)
+                .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.circle_white_background)
                 .into(eventoPoster)
         }

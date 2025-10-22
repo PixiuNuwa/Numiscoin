@@ -172,7 +172,7 @@ class WelcomeActivity : BaseActivity() {
                     // Usar Glide para cargar la imagen en el ImageButton
                     Glide.with(this)
                         .load(fotoUrl)
-                        .placeholder(R.drawable.ic_settings_white) // Placeholder por si falla
+                        .placeholder(R.drawable.ic_placeholder) // Placeholder por si falla
                         .error(R.drawable.ic_settings_white) // Imagen de error
                         .circleCrop() // Recortar en círculo para que quede bien en el botón redondo
                         .into(settingsButton)

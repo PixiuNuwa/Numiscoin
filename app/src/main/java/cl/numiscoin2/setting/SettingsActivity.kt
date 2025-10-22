@@ -61,7 +61,7 @@ class SettingsActivity : BaseActivity() {
                 val fotoUrl = NetworkConfig.construirUrlCompleta(user.foto)
                 Glide.with(this)
                     .load(fotoUrl)
-                    .placeholder(R.drawable.circle_white_background)
+                    .placeholder(R.drawable.ic_placeholder)
                     .error(R.drawable.circle_white_background)
                     .circleCrop()
                     .into(userPhoto)

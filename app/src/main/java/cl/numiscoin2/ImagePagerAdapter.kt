@@ -41,6 +41,7 @@ class ImagePagerAdapter(private val fotos: List<FotoObjeto>) : RecyclerView.Adap
             // Cargar imagen con Glide
             Glide.with(itemView.context)
                 .load(imageUrl)
+                .placeholder(R.drawable.ic_placeholder)
                 .into(imageView)
         }
 

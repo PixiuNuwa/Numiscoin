@@ -118,7 +118,7 @@ class ProfileActivity : AppCompatActivity() {
                     Glide.with(this)
                         .load(fotoUrl)
                         .apply(requestOptions)
-                        .placeholder(android.R.color.darker_gray)
+                        .placeholder(R.drawable.ic_placeholder)
                         .error(android.R.drawable.ic_menu_gallery)
                         .into(profileAvatar)
                 } catch (e: Exception) {

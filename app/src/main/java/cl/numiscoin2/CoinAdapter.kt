@@ -54,7 +54,7 @@ class CoinAdapter(
             val imageUrl = construirUrlCompleta(primeraFoto.url)
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
-                .placeholder(android.R.drawable.ic_menu_gallery)
+                .placeholder(R.drawable.ic_placeholder)
                 .error(android.R.drawable.ic_delete)
                 .into(holder.coinImage)
             holder.coinImage.visibility = View.VISIBLE

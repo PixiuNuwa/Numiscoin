@@ -55,7 +55,7 @@ class ObjetoRecienteHorizontalAdapter(
                 val imageUrl = NetworkConfig.construirUrlCompleta(primeraFoto.url)
                 Glide.with(itemView.context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.placeholder_image)
+                    .placeholder(R.drawable.ic_placeholder)
                     .error(R.drawable.placeholder_image)
                     .centerCrop()
                     .into(imageView)
