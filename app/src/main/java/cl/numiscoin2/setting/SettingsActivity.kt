@@ -75,23 +75,25 @@ class SettingsActivity : BaseActivity() {
         // Configurar botones
         setupButton(R.id.profileButton, ProfileActivity::class.java)
         setupButton(R.id.homeButton, WelcomeActivity::class.java)
-        //setupButton(R.id.languageButton, LanguageActivity::class.java)
         setupButton(R.id.faqButton, FAQActivity::class.java)
         setupButton(R.id.contactButton, ContactActivity::class.java)
         setupButton(R.id.termsButton, TermsActivity::class.java)
-        setupButton(R.id.membershipButton, MembershipActivity::class.java)
-        //setupButton(R.id.backupButton, BackupActivity::class.java)
+
+        // Configurar botón de membresía para abrir URL
+        setupMembershipButton()
     }
 
-    /*private fun setupButton(buttonId: Int, activityClass: Class<*>) {
-        findViewById<TextView>(buttonId).setOnClickListener {
-            val intent = Intent(this, activityClass)
-            startActivity(intent)
-        }
-    }*/
     private fun setupButton(buttonId: Int, activityClass: Class<*>) {
         findViewById<View>(buttonId).setOnClickListener {
             val intent = Intent(this, activityClass)
+            startActivity(intent)
+        }
+    }
+
+    private fun setupMembershipButton() {
+        findViewById<View>(R.id.membershipButton).setOnClickListener {
+            val url = "https://dev.osu.xecuoia.com:8445/numiscoin.html"
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))
             startActivity(intent)
         }
     }

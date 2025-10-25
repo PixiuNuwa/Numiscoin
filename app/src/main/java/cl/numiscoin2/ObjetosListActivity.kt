@@ -91,12 +91,13 @@ class ObjetosListActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this@ObjetosListActivity, AddCoinActivity::class.java)
+            // SIN VERIFICAR LÍMITE DE MONEDAS ANTES DE PROCEDER
+            /*val intent = Intent(this@ObjetosListActivity, AddCoinActivity::class.java)
             intent.putExtra("idColeccion", idColeccion)
             Log.d(TAG, "Enviando idColeccion: $idColeccion a AddCoinActivity")
-            startActivity(intent)
+            startActivity(intent)*/
             // VERIFICAR LÍMITE DE MONEDAS ANTES DE PROCEDER
-            /*verificarLimiteMonedas(usuarioActual.idUsuario, usuarioActual.cantidadMonedas) { puedeAgregar ->
+            verificarLimiteMonedas(usuarioActual.idUsuario, usuarioActual.cantidadMonedas) { puedeAgregar ->
                 if (puedeAgregar) {
                     // Si puede agregar, abrir la actividad para agregar moneda
                     val intent = Intent(this@ObjetosListActivity, AddCoinActivity::class.java)
@@ -113,7 +114,7 @@ class ObjetosListActivity : BaseActivity() {
                         ).show()
                     }
                 }
-            }*/
+            }
         }
 
         // Ocultar secciones inicialmente
